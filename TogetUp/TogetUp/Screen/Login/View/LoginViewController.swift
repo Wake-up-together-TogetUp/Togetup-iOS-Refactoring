@@ -13,7 +13,12 @@ import AuthenticationServices
 import KeychainAccess
 
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    let disposeBag = DisposeBag()
+    // MARK: - Properties
+    
+    
+    
+    private let viewModel = LoginViewModel()
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,18 +28,42 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         return self.view.window!
     }
     
+    // MARK: - Apple Login
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let authorizationCode = appleIDCredential.authorizationCode
-            let identityToken = appleIDCredential.identityToken
+            print("===========loginWithApple() success.=============")
             let userIdentifier = appleIDCredential.user
-
             KeyChainManager.shared.saveUserIdentifier(userIdentifier)
+            
+            if let name = appleIDCredential.fullName?.givenName,
+               let email = appleIDCredential.email {
+                KeyChainManager.shared.saveUserInformation(givenName: name, email: email)
+            }
+            
+            guard
+                let authorizationCode = appleIDCredential.authorizationCode,
+                let identityToken = appleIDCredential.identityToken,
+                let authString = String(data: authorizationCode, encoding: .utf8),
+                let tokenString = String(data: identityToken, encoding: .utf8)
+            else { return }
+            
+            print("authString: \(authString)")
+            print("tokenString: \(tokenString)")
+            
+            UserDefaults.standard.set("Apple", forKey: "loginMethod")
+            var userName: String?
+            let givenNameAndEmailInfoFromKeychain = KeyChainManager.shared.getUserInformation()
+            
+            if givenNameAndEmailInfoFromKeychain.givenName != nil {
+                userName = givenNameAndEmailInfoFromKeychain.givenName
+            }
+            
+            guard userName != nil else { return }
+            
+            let loginRequest = LoginRequest(oauthAccessToken: tokenString, loginType: "APPLE", userName: userName)
+            self.sendLoginRequest(with : loginRequest )
+            
             switchView()
-
-            print("authorizationCode: \(authorizationCode)")
-            print("identityToken: \(identityToken)")
-            print("user: \(userIdentifier)")
         }
     }
     
@@ -43,7 +72,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     private func switchView() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else {
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else {
             return
         }
         vc.modalPresentationStyle = .fullScreen
@@ -56,7 +85,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     @IBAction func appleLoginButtonTapped(_ sender: UIButton) {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName]
+        request.requestedScopes = [.fullName, .email]
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
@@ -68,14 +97,43 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         if (UserApi.isKakaoTalkLoginAvailable()) {
             UserApi.shared.rx.loginWithKakaoTalk()
                 .subscribe(onNext:{ (oauthToken) in
-                    print("loginWithKakaoTalk() success.")
-                    print(oauthToken)
-                    self.switchView()
+                    print("===========loginWithKakaoTalk() success.=============")
+                    UserDefaults.standard.set("Kakao", forKey: "loginMethod")
+                    let loginRequest = LoginRequest(oauthAccessToken : oauthToken.accessToken,
+                                                    loginType : "KAKAO")
+                    print(oauthToken.accessToken)
+                    self.sendLoginRequest(with : loginRequest)
                 }, onError: {error in
                     print(error.localizedDescription)
                     print("카카오톡 설치 필요")
                 })
                 .disposed(by: disposeBag)
+        } else {
+            UserApi.shared.rx.loginWithKakaoAccount()
+                .subscribe(onNext:{ (oauthToken) in
+                    print("===========loginWithKakaoAccount() success.===========")
+                    let loginRequest = LoginRequest(oauthAccessToken : oauthToken.accessToken, loginType : "KAKAO")
+                    self.sendLoginRequest(with : loginRequest)
+                }, onError: {error in
+                    print(error.localizedDescription)
+                })
+                .disposed(by: disposeBag)
         }
+    }
+    
+    private func sendLoginRequest(with request : LoginRequest) {
+        viewModel.loginReqeust(param:request)
+            .subscribe(onNext:{ [weak self] response in
+                print("회원가입 성공")
+                KeyChainManager.shared.saveToken(response.result!.accessToken)
+                KeyChainManager.shared.saveUserInformation(givenName: response.result!.userName , email: response.result?.email ?? "")
+                print(response)
+                self?.switchView()
+            }, onError:{ error in
+                let alertController = UIAlertController(title: nil, message: "잠시후 다시 시도해주세요", preferredStyle: .actionSheet)
+                let cancelAction = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                print(error.localizedDescription)
+            }).disposed(by:self.disposeBag)
     }
 }
