@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="yso-Th-bhi" kind="relationship" relationship="rootViewController" id="kpA-9p-gd5"/>
+                        <segue destination="LVu-1I-Ni5" kind="relationship" relationship="rootViewController" id="jzP-RH-A1K"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gkj-wc-s8i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -28,34 +28,18 @@
             <point key="canvasLocation" x="-695" y="5"/>
         </scene>
         <!--GroupListViewController-->
-        <scene sceneID="VRK-1D-DoF">
+        <scene sceneID="UAn-ci-BvE">
             <objects>
-                <viewController storyboardIdentifier="GroupListViewController" title="GroupListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yso-Th-bhi" customClass="GroupListViewController" customModule="TogetUp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Kpu-sO-Jzl">
+                <viewController storyboardIdentifier="GroupListViewController" title="GroupListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LVu-1I-Ni5" customClass="GroupListViewController" customModule="TogetUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C0e-tJ-yPu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="그룹" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfp-A4-CfH">
-                                <rect key="frame" x="20" y="115" width="45" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="6Vq-vN-oDF"/>
-                                    <constraint firstAttribute="width" constant="45" id="QK8-TV-13z"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Cyi-HB-nh4"/>
+                        <viewLayoutGuide key="safeArea" id="oxg-sK-EWK"/>
                         <color key="backgroundColor" name="primary025"/>
-                        <constraints>
-                            <constraint firstItem="lfp-A4-CfH" firstAttribute="leading" secondItem="Cyi-HB-nh4" secondAttribute="leading" constant="20" id="FFM-C5-ZBU"/>
-                            <constraint firstItem="lfp-A4-CfH" firstAttribute="top" secondItem="Cyi-HB-nh4" secondAttribute="top" constant="12" id="Qr2-tX-kco"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mCX-pP-ei2"/>
+                    <navigationItem key="navigationItem" id="0l2-kS-DWQ"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S2Z-IJ-cLJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JA0-m9-7rv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="135.19999999999999" y="4.0479760119940034"/>
         </scene>
