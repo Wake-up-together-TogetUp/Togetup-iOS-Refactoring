@@ -2,29 +2,94 @@
 //  GroupListCollectionViewCell.swift
 //  TogetUp
 //
-//  Created by 이예원 on 2023/10/12.
+//  Created by nayeon  on 2/22/24.
 //
 
 import UIKit
+import SnapKit
 
-class GroupListCollectionViewCell: UICollectionViewCell {
+final class GroupListCollectionViewCell: UICollectionViewCell {
+    //MARK: - Property
     static let identifier = "GroupListCollectionViewCell"
-
-    @IBOutlet weak var iconLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var missionLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        self.layer.cornerRadius = 12
-        self.layer.borderWidth = 2
-        self.layer.borderColor = UIColor.black.cgColor
+    var img: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "addAlarmBtn")
+        return img
+    }()
+    
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹방 이름"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
+    
+    let missionLable: UILabel = {
+        let label = UILabel()
+        label.text = "MISSION"
+        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 8)
+        return label
+    }()
+    
+    var subTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "인증 내용"
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
+    private lazy var allStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, missionStackView])
+        stackView.spacing = 6
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution = UIStackView.Distribution.fill
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var missionStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [missionLable, subTitleLabel])
+        stackView.spacing = 8
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution = UIStackView.Distribution.fill
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
     }
     
-    func setAttributes(with model: GroupListResult) {
-        iconLabel.text = model.icon
-        nameLabel.text = model.name
-        missionLabel.text = model.mission
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - UI Setup
+    private func setupUI() {
+        self.backgroundColor = UIColor(named: "secondary025")
+         self.layer.cornerRadius = 10
+         self.layer.masksToBounds = true
+         self.layer.borderWidth = 1
+         self.layer.borderColor = UIColor.black.cgColor 
+        
+        contentView.addSubview(img)
+        contentView.addSubview(allStackView)
+        
+        img.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(14)
+            $0.width.equalTo(32)
+            $0.height.equalTo(32)
+        }
+        
+        allStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(img.snp.trailing).offset(12)
+            $0.trailing.equalToSuperview().offset(-12)
+        }
     }
 }
