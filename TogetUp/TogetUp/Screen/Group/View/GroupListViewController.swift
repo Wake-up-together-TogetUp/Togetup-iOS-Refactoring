@@ -21,7 +21,7 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
         return label
     }()
     
-    let addButton: UIButton = {
+    let inviteButton: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "user-plus-01")
         button.setImage(image, for: .normal)
@@ -29,7 +29,7 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
         return button
     }()
     
-    let messageButton: UIButton = {
+    let createButton: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "message-plus-square")
         button.setImage(image, for: .normal)
@@ -52,27 +52,27 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupButtonActions()
     }
     
     // MARK: - UI Setup
-    func setupUI() {
+    override func setupUI() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(-22)
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
         
-        view.addSubview(messageButton)
-        messageButton.snp.makeConstraints { make in
+        view.addSubview(createButton)
+        createButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel)
             make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
         }
         
-        view.addSubview(addButton)
-        addButton.snp.makeConstraints { make in
+        view.addSubview(inviteButton)
+        inviteButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel)
-            make.trailing.equalTo(messageButton.snp.leading).offset(-10)
+            make.trailing.equalTo(createButton.snp.leading).offset(-10)
         }
         
         view.addSubview(collectionView)
@@ -80,6 +80,21 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    // MARK: - Button Actions
+    func setupButtonActions() {
+        createButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.showCreateViewController()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Navigation
+    func showCreateViewController() {
+        let createVC = CreateGroupViewController()
+        navigationController?.pushViewController(createVC, animated: true)
     }
     
     // MARK: - UICollectionViewDataSource
