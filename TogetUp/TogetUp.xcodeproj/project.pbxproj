@@ -11,6 +11,7 @@
 		952AD2852B82661500598680 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2842B82661500598680 /* SnapKit-Dynamic */; };
 		952AD2D32B87099000598680 /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */; };
 		95AC03D62B7C7FE400173FB5 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AC03D52B7C7FE400173FB5 /* BaseVC.swift */; };
+		95B4F2DA2BA00EE500AB4952 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */; };
 		95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */; };
 		95B4F3212BB2E79B00AB4952 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */; };
 		F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915B38D2A8F99BA00E4696C /* SettingViewController.swift */; };
@@ -102,6 +103,7 @@
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		95AC03D52B7C7FE400173FB5 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		F915B38D2A8F99BA00E4696C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				F931405D2A8FB014000FB717 /* Group.storyboard */,
 				F93140592A8FAFE2000FB717 /* GroupListViewController.swift */,
 				952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */,
+				95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */,
 				95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */,
 			);
 			path = View;
@@ -755,6 +758,7 @@
 				F9D679D62AC1A177006B1643 /* MissionDetectModel.swift in Sources */,
 				F9D679D12AC1786F006B1643 /* UIImagePickerController + Extension.swift in Sources */,
 				F98600F22AAEC1A400595646 /* MissionService.swift in Sources */,
+				95B4F2DA2BA00EE500AB4952 /* CreateGroupViewController.swift in Sources */,
 				F9D679D32AC19FB9006B1643 /* MissionProcessViewModel.swift in Sources */,
 				F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */,
 				F97A896F2AADA34C00EBFB36 /* AlarmModel.swift in Sources */,
