@@ -11,6 +11,8 @@
 		952AD2852B82661500598680 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2842B82661500598680 /* SnapKit-Dynamic */; };
 		952AD2D32B87099000598680 /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */; };
 		95AC03D62B7C7FE400173FB5 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AC03D52B7C7FE400173FB5 /* BaseVC.swift */; };
+		95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */; };
+		95B4F3212BB2E79B00AB4952 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */; };
 		F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915B38D2A8F99BA00E4696C /* SettingViewController.swift */; };
 		F919A9122ACEA09600D02125 /* progress.json in Resources */ = {isa = PBXBuildFile; fileRef = F919A9112ACEA09600D02125 /* progress.json */; };
 		F91AA8882AB890BE00BDA437 /* AppStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91AA8872AB890BE00BDA437 /* AppStatusManager.swift */; };
@@ -100,6 +102,8 @@
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		95AC03D52B7C7FE400173FB5 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
+		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		F915B38D2A8F99BA00E4696C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F919A9112ACEA09600D02125 /* progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = progress.json; sourceTree = "<group>"; };
 		F91AA8872AB890BE00BDA437 /* AppStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatusManager.swift; sourceTree = "<group>"; };
@@ -210,6 +214,21 @@
 			path = Class;
 			sourceTree = "<group>";
 		};
+		95B4F31E2BB2E74E00AB4952 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		95B4F31F2BB2E75C00AB4952 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		F915B3872A8F8D6900E4696C /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,7 +242,9 @@
 		F915B3882A8F8D8D00E4696C /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				95B4F31E2BB2E74E00AB4952 /* Model */,
 				F93140552A8FAFAF000FB717 /* View */,
+				95B4F31F2BB2E75C00AB4952 /* ViewModel */,
 			);
 			path = Group;
 			sourceTree = "<group>";
@@ -300,6 +321,7 @@
 				F931405D2A8FB014000FB717 /* Group.storyboard */,
 				F93140592A8FAFE2000FB717 /* GroupListViewController.swift */,
 				952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */,
+				95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -703,6 +725,7 @@
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */,
+				95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */,
 				F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */,
 				F98600FE2AB0B07E00595646 /* Alarm.swift in Sources */,
 				F9944F242ACD8FD800B39476 /* UIImageView + Extension.swift in Sources */,
@@ -710,6 +733,7 @@
 				F97CDC2A2B15DDA50057AA82 /* FloatingPanelViewModel.swift in Sources */,
 				F9DA5D842AC146C1008E16A6 /* MissionPerformViewModel.swift in Sources */,
 				F98600F42AAEF3E900595646 /* MissionModel.swift in Sources */,
+				95B4F3212BB2E79B00AB4952 /* CreateGroupViewModel.swift in Sources */,
 				F945D14F2AA4AA1E0093F896 /* WithdrawlModel.swift in Sources */,
 				F98600F62AAF701E00595646 /* AlarmListCollectionViewCell.swift in Sources */,
 				F931405A2A8FAFE2000FB717 /* GroupListViewController.swift in Sources */,
