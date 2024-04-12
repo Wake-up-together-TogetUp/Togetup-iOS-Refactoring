@@ -14,6 +14,8 @@
 		95B4F2DA2BA00EE500AB4952 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */; };
 		95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */; };
 		95B4F3212BB2E79B00AB4952 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */; };
+		95B4F3232BB2EEF900AB4952 /* CreateAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */; };
+		95B4F3252BB2F39B00AB4952 /* CreateAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */; };
 		F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915B38D2A8F99BA00E4696C /* SettingViewController.swift */; };
 		F919A9122ACEA09600D02125 /* progress.json in Resources */ = {isa = PBXBuildFile; fileRef = F919A9112ACEA09600D02125 /* progress.json */; };
 		F91AA8882AB890BE00BDA437 /* AppStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91AA8872AB890BE00BDA437 /* AppStatusManager.swift */; };
@@ -106,6 +108,8 @@
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
+		95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewController.swift; sourceTree = "<group>"; };
+		95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		F915B38D2A8F99BA00E4696C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F919A9112ACEA09600D02125 /* progress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = progress.json; sourceTree = "<group>"; };
 		F91AA8872AB890BE00BDA437 /* AppStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStatusManager.swift; sourceTree = "<group>"; };
@@ -325,6 +329,8 @@
 				952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */,
 				95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */,
 				95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */,
+				95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */,
+				95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -762,11 +768,13 @@
 				F9D679D32AC19FB9006B1643 /* MissionProcessViewModel.swift in Sources */,
 				F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */,
 				F97A896F2AADA34C00EBFB36 /* AlarmModel.swift in Sources */,
+				95B4F3252BB2F39B00AB4952 /* CreateAlarmView.swift in Sources */,
 				F97A896B2AA9A61000EBFB36 /* EditAlarmViewModel.swift in Sources */,
 				F9E50D182A95E6BE0076FEF1 /* EditAlarmViewController.swift in Sources */,
 				F93140662A8FBBFB000FB717 /* TabBarViewController.swift in Sources */,
 				F99BE8062AA1CC740005E66F /* LoginViewModel.swift in Sources */,
 				F99BE7FC2A9F8EAC0005E66F /* LoginModel.swift in Sources */,
+				95B4F3232BB2EEF900AB4952 /* CreateAlarmViewController.swift in Sources */,
 				F91BEF132AF503D3003395A0 /* FloatingPannelViewController.swift in Sources */,
 				F91D01962AC2C74F003841D8 /* AlarmScheduleManager.swift in Sources */,
 				F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */,
