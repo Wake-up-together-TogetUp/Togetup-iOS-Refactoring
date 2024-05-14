@@ -45,6 +45,7 @@
     </scenes>
     <resources>
         <image name="group" width="24" height="24"/>
+        <image name="groupMainV1Image" width="42" height="60"/>
         <image name="group_selected" width="24" height="24"/>
         <namedColor name="primary025">
             <color red="0.96470588235294119" green="0.97647058823529409" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
