@@ -23,8 +23,8 @@ class CreateGroupViewController: BaseVC {
     // MARK: - UI Setup
     override func setupUI() {
         navigationItem.title = "그룹 개설하기"
-        navigationItem.leftBarButtonItem =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(addAlarmButtonTapped))
-        navigationItem.rightBarButtonItem =  UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(addAlarmButtonTapped))
+        navigationItem.leftBarButtonItem =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem =  UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(saveButtonTapped))
         view.backgroundColor = .white
         
         customView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,5 +49,13 @@ class CreateGroupViewController: BaseVC {
     // MARK: - Button Actions
     @objc private func addAlarmButtonTapped() {
        
+    }
+    
+    @objc private func cancelButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func saveButtonTapped() {
+        
     }
 }

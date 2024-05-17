@@ -32,7 +32,7 @@ class CreateGroupView: UIView {
     let groupIntroLabel: UILabel = {
         let label = UILabel()
         label.text = "소개"
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
         label.textAlignment = .center
         label.backgroundColor = .white
         return label
@@ -155,7 +155,7 @@ class CreateGroupView: UIView {
         addAlarmButton.snp.makeConstraints { make in
             make.top.equalTo(alarmSubLabel.snp.bottom).offset(20)
             make.leading.equalTo(self.snp.leading).offset(20)
-            make.width.equalTo(335)
+            make.trailing.equalTo(self.snp.trailing).offset(-20)
             make.height.equalTo(82)
         }
 

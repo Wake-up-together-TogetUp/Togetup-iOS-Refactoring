@@ -17,12 +17,4 @@ class CreateAlarmViewController: BaseVC {
         super.viewDidLoad()
         view.backgroundColor = .white
     }
-    override func setupUI() {
-        createAlarmView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(view.snp.leading)
-            make.trailing.equalTo(view.snp.trailing)
-            make.bottom.equalTo(view.snp.bottom)
-        }
-    }
 }
