@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M3N-2E-hhE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iLP-og-Pcm">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -10,58 +9,43 @@
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
-        <scene sceneID="zEA-Lk-e8V">
+        <scene sceneID="uvB-Gf-FlY">
             <objects>
-                <navigationController id="M3N-2E-hhE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="group" selectedImage="group_selected" id="iil-ml-gKS"/>
+                <navigationController id="iLP-og-Pcm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="group" selectedImage="group_selected" id="zXS-ED-WI2"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="N7h-tg-jsC">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QLq-lf-wjp">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="yso-Th-bhi" kind="relationship" relationship="rootViewController" id="kpA-9p-gd5"/>
+                        <segue destination="Z9j-BZ-jma" kind="relationship" relationship="rootViewController" id="wlX-0U-OWO"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gkj-wc-s8i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ikn-ke-ws5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-695" y="5"/>
         </scene>
         <!--GroupListViewController-->
-        <scene sceneID="VRK-1D-DoF">
+        <scene sceneID="t66-Bt-MYa">
             <objects>
-                <viewController storyboardIdentifier="GroupListViewController" title="GroupListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yso-Th-bhi" customClass="GroupListViewController" customModule="TogetUp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Kpu-sO-Jzl">
+                <viewController storyboardIdentifier="GroupListViewController" title="GroupListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Z9j-BZ-jma" customClass="GroupListViewController" customModule="TogetUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xur-Co-Fds">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="그룹" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfp-A4-CfH">
-                                <rect key="frame" x="20" y="115" width="45" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="6Vq-vN-oDF"/>
-                                    <constraint firstAttribute="width" constant="45" id="QK8-TV-13z"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Cyi-HB-nh4"/>
+                        <viewLayoutGuide key="safeArea" id="gZ4-RR-dXD"/>
                         <color key="backgroundColor" name="primary025"/>
-                        <constraints>
-                            <constraint firstItem="lfp-A4-CfH" firstAttribute="leading" secondItem="Cyi-HB-nh4" secondAttribute="leading" constant="20" id="FFM-C5-ZBU"/>
-                            <constraint firstItem="lfp-A4-CfH" firstAttribute="top" secondItem="Cyi-HB-nh4" secondAttribute="top" constant="12" id="Qr2-tX-kco"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mCX-pP-ei2"/>
+                    <navigationItem key="navigationItem" id="S5d-t3-UtJ"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S2Z-IJ-cLJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D6W-Li-95q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135.19999999999999" y="4.0479760119940034"/>
+            <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>
         <image name="group" width="24" height="24"/>
+        <image name="groupMainV1Image" width="42" height="60"/>
         <image name="group_selected" width="24" height="24"/>
         <namedColor name="primary025">
             <color red="0.96470588235294119" green="0.97647058823529409" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

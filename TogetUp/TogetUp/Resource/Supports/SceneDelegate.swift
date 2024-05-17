@@ -17,19 +17,18 @@ import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    var alarmId: Int?
     
-    func navigateToMissionPerformViewController() {
+    func navigateToMissionPerformViewController(with alarmId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let missionPerformVC = storyboard.instantiateViewController(withIdentifier: "MissionPerformViewController") as? MissionPerformViewController {
-            let realmInstance = try! Realm()
-            if let alarm = realmInstance.objects(Alarm.self).filter("id == \(alarmId!)").first {
+            let realm = try? Realm()
+            if let alarm = realm?.object(ofType: Alarm.self, forPrimaryKey: alarmId) {
                 missionPerformVC.alarmIcon = alarm.icon
                 missionPerformVC.alarmName = alarm.name
                 missionPerformVC.missionObject = alarm.missionName
                 missionPerformVC.objectEndpoint = alarm.missionEndpoint
                 missionPerformVC.missionId = alarm.missionId
-                missionPerformVC.isSnoozeActivated = alarm.isSnoozeActivated
+                missionPerformVC.alarmId = alarm.id
                 
                 let navigationController = UINavigationController(rootViewController: missionPerformVC)
                 window?.rootViewController = navigationController
@@ -58,9 +57,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
+        guard let realm = try? Realm() else { return }
+        let currentTime = Date()
+        let calendar = Calendar.current
+        let currentComponents = calendar.dateComponents([.hour, .minute, .weekday], from: currentTime)
         
+        let activeAlarms = realm.objects(Alarm.self).filter("isActivated == true").sorted(byKeyPath: "id", ascending: false)
+        
+        var latestAlarm: Alarm? = nil
+        
+        for alarm in activeAlarms {
+            if let alarmTime = alarm.getAlarmTime(),
+               calendar.component(.hour, from: alarmTime) == currentComponents.hour,
+               calendar.component(.minute, from: alarmTime) == currentComponents.minute {
+
+                let weekday = currentComponents.weekday!
+                if alarm.isRepeatAlarm() && !alarm.isActive(on: weekday) {
+                    continue
+                }
+                
+                if let completedTime = alarm.completedTime,
+                   calendar.isDate(completedTime, equalTo: currentTime, toGranularity: .minute) {
+                    continue
+                }
+                if latestAlarm == nil || alarm.id > latestAlarm?.id ?? -1 {
+                    latestAlarm = alarm
+                }
+            }
+        }
+        
+        if let alarmToNavigate = latestAlarm {
+            navigateToMissionPerformViewController(with: alarmToNavigate.id)
+        }
     }
 
+
+    
     func sceneWillResignActive(_ scene: UIScene) {
         
     }

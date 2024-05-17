@@ -15,11 +15,14 @@ class AlarmListViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var personalCollectionView: UICollectionView!
     @IBOutlet weak var addAlarmButton: UIButton!
+    @IBOutlet weak var groupLockerView: UIView!
+    @IBOutlet weak var noExistingAlarmLabel: UILabel!
+    @IBOutlet weak var setAlarmLabel: UILabel!
     
     // MARK: - Properties
     private let viewModel = AlarmListViewModel()
     private let disposeBag = DisposeBag()
-    let realm = try! Realm()
+    private let realmManger = RealmAlarmDataManager()
     private lazy var leadingDistance: NSLayoutConstraint = {
         return underLineView.leadingAnchor.constraint(equalTo: segmentedControl.leadingAnchor)
     }()
@@ -34,12 +37,9 @@ class AlarmListViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let alarms = realm.objects(Alarm.self)
-        for alarm in alarms {
-            print("Alarm ID: \(alarm.id), Name: \(alarm.name), Time: \(alarm.alarmHour):\(alarm.alarmMinute)")
-        }
-        requestAuthorization()
-        fetchAndSaveAlarmsIfFirstLaunch()
+        customUI()
+        bindLabels()
+        fetchAndSaveAlarmsIfFirstLogin()
         setUpNavigationBar()
         customSegmentedControl()
         setCollectionViewFlowLayout()
@@ -48,26 +48,47 @@ class AlarmListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        print(#function)
-//        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-//            for request in requests {
-//                print("----------request:---------------")
-//                print(request.identifier)
-//            }
-//        }
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
+//        printScheduledLocalNotifications()
+        printAllAlarms()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     // MARK: - Custom Method
-    private func requestAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization (
-            options: [.alert, .sound],
-            completionHandler: { (granted, error) in
-                print("granted notification, \(granted)")
-            }
-        )
+    private func customUI() {
+        groupLockerView.layer.cornerRadius = 12
     }
+    private func bindLabels() {
+        viewModel.isAlarmEmpty
+            .map { !$0 }
+            .bind(to: noExistingAlarmLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.isAlarmEmpty
+            .map { !$0 }
+            .bind(to: setAlarmLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+    }
+    
+    func printAllAlarms() {
+        let realm = try! Realm() // Realm 인스턴스 생성 시 발생할 수 있는 예외를 무시
+        let alarms = realm.objects(Alarm.self) // 모든 Alarm 객체를 조회
+
+        // 조회된 Alarm 객체들을 순회하며 출력
+        alarms.forEach { alarm in
+//            print("Alarm ID: \(alarm.id), Name: \(alarm.name), Is Activated: \(alarm.isActivated), Is Alarmed: \(alarm.isAlarmed)")
+            // 필요에 따라 더 많은 필드를 출력할 수 있습니다.
+        }
+    }
+
+//    private func customUI() {
+//        groupLockerView.layer.cornerRadius = 12
+//    }
     
     private func setCollectionView() {
         self.personalCollectionView.delegate = nil
@@ -110,13 +131,13 @@ class AlarmListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func editIsActivatedToggle(for alarm: Alarm) {
-        viewModel.editAlarmToggle(alarmId: alarm.id)
+    private func editIsActivatedToggle(for alarm: Alarm) {
+        viewModel.deactivateAlarm(alarmId: alarm.id)
     }
     
-    func showDeleteAlert(for alarm: Alarm) {
+    private func showDeleteAlert(for alarm: Alarm) {
         let alertController = UIAlertController(title: nil, message: "삭제하시겠습니까?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
             self?.viewModel.deleteAlarm(alarmId: alarm.id)
         }
@@ -124,13 +145,20 @@ class AlarmListViewController: UIViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(deleteAction)
         
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
     
-    private func fetchAndSaveAlarmsIfFirstLaunch() {
-        if AppStatusManager.shared.isFirstLaunch {
+    private func showAlertForExcessiveAlarms() {
+        let alertController = UIAlertController(title: "생성된 알람의 개수가 너무 많습니다!", message: "사용하지 않는 알람을 삭제해주세요", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "확인", style: .cancel)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
+    private func fetchAndSaveAlarmsIfFirstLogin() {
+        if AppStatusManager.shared.isFirstLogin {
             viewModel.getAndSaveAlarmList(type: "personal")
-            AppStatusManager.shared.markAsLaunched()
+            AppStatusManager.shared.markAsLogined()
         }
     }
     
@@ -161,7 +189,6 @@ class AlarmListViewController: UIViewController {
             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
         ], for: .selected)
         
-        // 오토레이아웃
         self.view.addSubview(underLineView)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         underLineView.translatesAutoresizingMaskIntoConstraints = false
@@ -187,20 +214,26 @@ class AlarmListViewController: UIViewController {
         if sender.selectedSegmentIndex == 0 {
             self.personalCollectionView.isHidden = false
             self.addAlarmButton.isHidden = false
+            self.groupLockerView.isHidden = true
         } else {
             self.personalCollectionView.isHidden = true
             self.addAlarmButton.isHidden = true
+            self.groupLockerView.isHidden = false
         }
     }
     
     @IBAction func createAlarmBtnTapped(_ sender: Any) {
-        guard let vc = storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
-        let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.isNavigationBarHidden = true
-        navigationController.navigationBar.backgroundColor = .clear
-        navigationController.interactivePopGestureRecognizer?.isEnabled = true
-        
-        present(navigationController, animated: true)
+        if realmManger.countActivatedAlarms() > 32 {
+            showAlertForExcessiveAlarms()
+        } else {
+            guard let vc = storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
+            let navigationController = UINavigationController(rootViewController: vc)
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.isNavigationBarHidden = true
+            navigationController.navigationBar.backgroundColor = .clear
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
+            
+            present(navigationController, animated: true)
+        }
     }
 }
