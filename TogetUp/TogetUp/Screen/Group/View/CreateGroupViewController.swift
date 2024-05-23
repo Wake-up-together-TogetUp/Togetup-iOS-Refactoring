@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CreateGroupViewController: BaseVC {
+class CreateGroupViewController: UIViewController {
     
     // MARK: - Properties
     var viewModel = CreateGroupViewModel()
@@ -21,7 +21,7 @@ class CreateGroupViewController: BaseVC {
     }
     
     // MARK: - UI Setup
-    override func setupUI() {
+    func setupUI() {
         navigationItem.title = "그룹 개설하기"
         navigationItem.leftBarButtonItem =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
         navigationItem.rightBarButtonItem =  UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(saveButtonTapped))

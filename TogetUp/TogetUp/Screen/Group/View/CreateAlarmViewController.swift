@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateAlarmViewController: BaseVC {
+class CreateAlarmViewController: UIViewController {
     private let createAlarmView: CreateAlarmView = CreateAlarmView()
     
     override func loadView() {

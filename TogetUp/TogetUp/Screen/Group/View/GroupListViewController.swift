@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+class GroupListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
@@ -56,7 +56,7 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
     }
     
     // MARK: - UI Setup
-    override func setupUI() {
+    func setupUI() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(-22)

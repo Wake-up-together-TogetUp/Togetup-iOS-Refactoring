@@ -11,7 +11,6 @@
 		952AD2852B82661500598680 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2842B82661500598680 /* SnapKit-Dynamic */; };
 		952AD2D32B87099000598680 /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */; };
 		95901F452BC90DD1003DAD74 /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95901F442BC90DD1003DAD74 /* inviteViewController.swift */; };
-		95AC03D62B7C7FE400173FB5 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AC03D52B7C7FE400173FB5 /* BaseVC.swift */; };
 		95B4F2DA2BA00EE500AB4952 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */; };
 		95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */; };
 		95B4F3212BB2E79B00AB4952 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */; };
@@ -134,7 +133,6 @@
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
-		95AC03D52B7C7FE400173FB5 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
@@ -257,14 +255,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		952AD2862B826F7A00598680 /* Class */ = {
-			isa = PBXGroup;
-			children = (
-				95AC03D52B7C7FE400173FB5 /* BaseVC.swift */,
-			);
-			path = Class;
-			sourceTree = "<group>";
-		};
 		95B4F31E2BB2E74E00AB4952 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,7 +489,6 @@
 		F96B327A2A8A022700BD3BF9 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				952AD2862B826F7A00598680 /* Class */,
 				F96B32A22A8E8D6200BD3BF9 /* Helpers */,
 				F96B32892A8A916C00BD3BF9 /* Extensions */,
 			);
@@ -822,7 +811,6 @@
 				95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */,
 				F99BE8012AA1BA4C0005E66F /* NetworkLogger.swift in Sources */,
 				F97CDC242B144C530057AA82 /* HomeViewModel.swift in Sources */,
-				95AC03D62B7C7FE400173FB5 /* BaseVC.swift in Sources */,
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
