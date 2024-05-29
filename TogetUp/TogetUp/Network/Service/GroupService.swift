@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Moya
 import RxSwift
+import Moya
 
 class GroupService {
     
@@ -18,10 +18,16 @@ class GroupService {
         self.provider = provider
     }
     
-    // 그룹 리스트 조회
-    func getGroupList() -> Single<Result<GetGroupListResponse, NetWorkingError>> {
-        let request = provider.rx.request(.getGroupList)
-        return networkManager.handleAPIRequest(request, dataType: GetGroupListResponse.self)
+    func requestGroupAPI<T: Decodable>(api: GroupAPI, responseType: T.Type) -> Single<Result<T, NetWorkingError>> {
+        switch api {
+        case .getGroupList:
+            let request = provider.rx.request(api)
+            return networkManager.handleAPIRequest(request, dataType: T.self)
+        case .createGroup:
+            // CreateGroupResponse를 사용하는 요청에 대한 처리 추가
+            let request = provider.rx.request(api)
+            return networkManager.handleAPIRequest(request, dataType: T.self)
+        }
     }
 }
 

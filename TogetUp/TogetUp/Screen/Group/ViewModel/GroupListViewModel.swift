@@ -21,7 +21,6 @@ class GroupViewModel: ViewModelType {
     }
 
     var disposeBag = DisposeBag()
-
     private let groupService: GroupService
 
     init(groupService: GroupService) {
@@ -33,7 +32,7 @@ class GroupViewModel: ViewModelType {
 
         let groupList = input.fetchGroupList
             .flatMapLatest { [unowned self] in
-                self.groupService.getGroupList()
+                self.groupService.requestGroupAPI(api: .getGroupList, responseType: GetGroupListResponse.self)
                     .asObservable()
                     .materialize()
             }
@@ -60,7 +59,6 @@ class GroupViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: [])
 
         let error = errorSubject.asDriver(onErrorJustReturn: "알 수 없는 에러가 발생했습니다.")
-
         return Output(groupList: groupListResult, error: error)
     }
 
