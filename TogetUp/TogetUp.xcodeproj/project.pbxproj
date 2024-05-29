@@ -22,6 +22,7 @@
 		95F198B92BFB0D2F002BD1B4 /* GroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198B82BFB0D2F002BD1B4 /* GroupService.swift */; };
 		95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */; };
 		95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */; };
+		95F198C02BFF1E15002BD1B4 /* CreateGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BF2BFF1E15002BD1B4 /* CreateGroupModel.swift */; };
 		F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915B38D2A8F99BA00E4696C /* SettingViewController.swift */; };
 		F915EA132BF05A92002B84BC /* DevService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915EA122BF05A92002B84BC /* DevService.swift */; };
 		F915EA162BF05E67002B84BC /* AppVersionCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915EA152BF05E67002B84BC /* AppVersionCheckManager.swift */; };
@@ -144,6 +145,7 @@
 		95F198B82BFB0D2F002BD1B4 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
 		95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAPI.swift; sourceTree = "<group>"; };
 		95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		95F198BF2BFF1E15002BD1B4 /* CreateGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupModel.swift; sourceTree = "<group>"; };
 		F915B38D2A8F99BA00E4696C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		F915EA122BF05A92002B84BC /* DevService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevService.swift; sourceTree = "<group>"; };
 		F915EA152BF05E67002B84BC /* AppVersionCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCheckManager.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				95F198B42BFB0A95002BD1B4 /* GroupModel.swift */,
+				95F198BF2BFF1E15002BD1B4 /* CreateGroupModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */,
 				F99BE8012AA1BA4C0005E66F /* NetworkLogger.swift in Sources */,
 				F97CDC242B144C530057AA82 /* HomeViewModel.swift in Sources */,
+				95F198C02BFF1E15002BD1B4 /* CreateGroupModel.swift in Sources */,
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
