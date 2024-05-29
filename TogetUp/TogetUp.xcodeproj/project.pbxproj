@@ -484,8 +484,8 @@
 		F96B32792A8A022100BD3BF9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				95F198BA2BFB17F3002BD1B4 /* APIs */,
 				F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */,
+				95F198BA2BFB17F3002BD1B4 /* APIs */,
 				F99BE8042AA1BBCD0005E66F /* Service */,
 				F99BE7FF2AA1BA3C0005E66F /* Base */,
 			);
