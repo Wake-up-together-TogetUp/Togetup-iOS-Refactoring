@@ -40,10 +40,9 @@ class CreateGroupViewController: UIViewController {
     
     // MARK: - ViewModel Binding
     private func bindViewModel() {
-        customView.groupNameTextField.text = viewModel.groupName
+        customView.addMissionButton.addTarget(self, action: #selector(addMissionButtonTapped), for: .touchUpInside)
         customView.groupIntroTextView.text = viewModel.groupIntro
         
-        customView.addAlarmButton.addTarget(self, action: #selector(addAlarmButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Button Actions

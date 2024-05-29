@@ -10,6 +10,30 @@ import SnapKit
 
 class CreateGroupView: UIView {
     // MARK: - Properties
+    let cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("취소", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        return button
+    }()
+    
+    let groupTitle: UILabel = {
+        let label = UILabel()
+        label.text = "그룹 생성"
+        label.font = UIFont(name: "AppleSDGothicNeo-ExtraBold", size: 18)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let nextButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("다음", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        return button
+    }()
+    
     let groupNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "그룹의 이름을 작성해주세요"
@@ -48,21 +72,21 @@ class CreateGroupView: UIView {
         return textView
     }()
     
-    let alarmSettingLabel: UILabel = {
+    let missionSettingLabel: UILabel = {
         let label = UILabel()
         label.text = "미션"
         label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
         return label
     }()
     
-    let alarmSubLabel: UILabel = {
+    let missionSubLabel: UILabel = {
        let label = UILabel()
         label.text = "그룹 참여자가 수행할 미션을 선택해주세요"
         label.textColor = .lightGray
         return label
     }()
     
-    let addAlarmButton: UIButton = {
+    let addMissionButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "secondary025")
         button.layer.borderWidth = 2
@@ -71,15 +95,23 @@ class CreateGroupView: UIView {
         return button
     }()
     
-    private let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "circle.fill")
-        imageView.tintColor = .white
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    let circleView: UIView = {
+        let circleView = UIView()
+        circleView.backgroundColor = UIColor.white
+        circleView.layer.cornerRadius = 30
+        circleView.layer.borderWidth = 2
+        circleView.layer.borderColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1).cgColor
+        return circleView
     }()
     
-    private let textLabel: UILabel = {
+    var missionImageLabel: UILabel = {
+        let img = UILabel()
+        img.text = "⏰"
+        img.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 36)
+        return img
+    }()
+    
+    private let missionTextLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16)
@@ -101,24 +133,43 @@ class CreateGroupView: UIView {
     
     // MARK: - UI Setup
     private func setupUI() {
+        addSubview(groupTitle)
+        addSubview(cancelButton)
+        addSubview(nextButton)
         addSubview(groupNameTextField)
         addSubview(groupNameLabel)
         addSubview(groupIntroTextView)
         addSubview(groupIntroLabel)
-        addSubview(alarmSubLabel)
-        addSubview(alarmSettingLabel)
-        addSubview(addAlarmButton)
-        addAlarmButton.addSubview(iconImageView)
-        addAlarmButton.addSubview(textLabel)
+        addSubview(missionSubLabel)
+        addSubview(missionSettingLabel)
+        addSubview(addMissionButton)
+        addMissionButton.addSubview(circleView)
+        addMissionButton.addSubview(missionTextLabel)
+        circleView.addSubview(missionImageLabel)
     
         groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
         groupNameTextField.translatesAutoresizingMaskIntoConstraints = false
         groupIntroLabel.translatesAutoresizingMaskIntoConstraints = false
         groupIntroTextView.translatesAutoresizingMaskIntoConstraints = false
-        alarmSubLabel.translatesAutoresizingMaskIntoConstraints = false
+        missionSubLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        groupTitle.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
+            make.centerX.equalToSuperview()
+        }
+        
+        cancelButton.snp.makeConstraints { make in
+            make.centerY.equalTo(groupTitle)
+            make.leading.equalTo(self.snp.leading).offset(10)
+        }
+        
+        nextButton.snp.makeConstraints { make in
+            make.centerY.equalTo(groupTitle)
+            make.trailing.equalTo(self.snp.trailing).offset(-10)
+        }
 
         groupNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(20)
+            make.top.equalTo(groupTitle.snp.bottom).offset(20)
             make.leading.equalTo(self.snp.leading).offset(37)
             make.width.equalTo(groupNameLabel.intrinsicContentSize.width + 15)
         }
@@ -142,32 +193,36 @@ class CreateGroupView: UIView {
             make.trailing.equalTo(self.snp.trailing).offset(-20)
         }
         
-        alarmSettingLabel.snp.makeConstraints { make in
+        missionSettingLabel.snp.makeConstraints { make in
             make.top.equalTo(groupIntroTextView.snp.bottom).offset(20)
             make.leading.equalTo(self.snp.leading).offset(20)
         }
         
-        alarmSubLabel.snp.makeConstraints { make in
-            make.top.equalTo(alarmSettingLabel.snp.bottom).offset(10)
+        missionSubLabel.snp.makeConstraints { make in
+            make.top.equalTo(missionSettingLabel.snp.bottom).offset(10)
             make.leading.equalTo(self.snp.leading).offset(20)
         }
         
-        addAlarmButton.snp.makeConstraints { make in
-            make.top.equalTo(alarmSubLabel.snp.bottom).offset(20)
+        addMissionButton.snp.makeConstraints { make in
+            make.top.equalTo(missionSubLabel.snp.bottom).offset(20)
             make.leading.equalTo(self.snp.leading).offset(20)
             make.trailing.equalTo(self.snp.trailing).offset(-20)
             make.height.equalTo(82)
         }
-
-        iconImageView.snp.makeConstraints { make in
+        
+        circleView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(8)
             make.width.height.equalTo(60)
         }
 
-        textLabel.snp.makeConstraints { make in
+        missionImageLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+
+        missionTextLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalTo(iconImageView.snp.trailing).offset(8)
+            make.leading.equalTo(circleView.snp.trailing).offset(8)
             make.trailing.equalToSuperview().offset(-8)
         }
     }
