@@ -110,7 +110,12 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
     // MARK: - Navigation
     func showCreateViewController() {
         let createVC = CreateGroupViewController()
-        navigationController?.pushViewController(createVC, animated: true)
+        let navigationController = UINavigationController(rootViewController: createVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.isNavigationBarHidden = true
+        navigationController.navigationBar.backgroundColor = .clear
+        navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        present(navigationController, animated: true, completion: nil)
     }
     
     // MARK: - ViewModel Bindings
