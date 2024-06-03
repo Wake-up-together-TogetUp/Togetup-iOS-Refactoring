@@ -111,7 +111,7 @@ class CreateGroupView: UIView {
         return img
     }()
     
-    private let missionTextLabel: UILabel = {
+    var missionTextLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16)
