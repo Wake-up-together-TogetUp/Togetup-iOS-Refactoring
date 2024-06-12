@@ -55,29 +55,17 @@ class CreateAlarmViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.createAlarmResponse
-            .subscribe(onNext: { [weak self] response in
-                print("@@@@@")
-                switch response {
+            .subscribe(onNext: { [weak self] result in
+                switch result {
                 case .success(let createGroupResponse):
                     print("그룹 생성 성공: \(createGroupResponse)")
                     // TODO: 완료 후 화면(캘린더)이동
                 case .failure(let error):
-                    let errorMessage = self?.errorMessage(for: error) ?? "알 수 없는 에러가 발생했습니다."
+                    let errorMessage = NetworkManager().errorMessage(for: error)
                     print("에러: \(errorMessage)")
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    private func errorMessage(for error: NetWorkingError) -> String {
-        switch error {
-        case .network, .noInternetConnection:
-            return "네트워크 연결이 원활하지 않습니다."
-        case .server(let statusCode):
-            return "서버 에러가 발생했습니다. 에러 코드: \(statusCode)"
-        default:
-            return "알 수 없는 에러가 발생했습니다."
-        }
     }
     
     @objc private func cancelButtonTapped() {

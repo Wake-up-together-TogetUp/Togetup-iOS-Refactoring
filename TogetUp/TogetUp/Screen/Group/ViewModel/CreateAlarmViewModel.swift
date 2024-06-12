@@ -61,7 +61,8 @@ class CreateAlarmViewModel: ViewModelType {
                     .asObservable()
                     .map { $0 }
                     .catch { error in
-                        .just(.failure(error as? NetWorkingError ?? .parsingError))
+                        let networkError = error as? NetWorkingError ?? .parsingError
+                        return .just(.failure(networkError))
                     }
             }
 
