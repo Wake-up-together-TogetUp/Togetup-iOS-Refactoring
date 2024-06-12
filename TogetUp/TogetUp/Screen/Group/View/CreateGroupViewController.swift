@@ -13,8 +13,8 @@ import RxCocoa
 class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    var viewModel = CreateGroupViewModel(groupService: GroupService())
-    var customView = CreateGroupView()
+    private let viewModel = CreateGroupViewModel()
+    var createGroupView = CreateGroupView()
     private var disposeBag = DisposeBag()
     
     private var missionKoreanName = "사람"
@@ -39,62 +39,41 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - UI Setup
     func setupUI() {
         view.backgroundColor = .white
-        customView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(customView)
+        createGroupView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(createGroupView)
         
-        customView.snp.makeConstraints { make in
+        createGroupView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.bottom.equalTo(view.snp.bottom)
         }
         
-        customView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
-        customView.nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-        customView.addMissionButton.addTarget(self, action: #selector(addMissionButtonTapped), for: .touchUpInside)
+        createGroupView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        createGroupView.addMissionButton.addTarget(self, action: #selector(addMissionButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - ViewModel Binding
     private func bindViewModel() {
-           let input = CreateGroupViewModel.Input(
-               didGroupNameTextFieldChange: customView.groupNameTextField.rx.text.orEmpty.asObservable(),
-               didExplanationTextViewChange: customView.groupIntroTextView.rx.text.orEmpty.asObservable(),
-               tapMissionButton: customView.addMissionButton.rx.tap.asSignal(),
-               tapCompleteButton: customView.nextButton.rx.tap.asSignal(),
-               tapCancleButton: customView.cancelButton.rx.tap.asSignal(),
-               icon: Observable.just(missionIcon),
-               missionId: Observable.just(missionId),
-               missionObjectId: Observable.just(missionObjectId)
-           )
-           
-           let output = viewModel.transform(input: input)
-           
-           output.groupName
-               .bind(to: customView.groupNameTextField.rx.text)
-               .disposed(by: disposeBag)
-           
-           output.groupIntro
-               .bind(to: customView.groupIntroTextView.rx.text)
-               .disposed(by: disposeBag)
-           
-           output.error
-               .drive(onNext: { errorMessage in
-                   print("Error: \(errorMessage)")
-               })
-               .disposed(by: disposeBag)
-           
-           output.didCompleteButtonTapped
-               .emit(onNext: { [weak self] in
-                   self?.navigationController?.popViewController(animated: true)
-               })
-               .disposed(by: disposeBag)
-           
-           output.didCancleButtonTapped
-               .emit(onNext: { [weak self] in
-                   self?.dismiss(animated: true, completion: nil)
-               })
-               .disposed(by: disposeBag)
-       }
+          let input = CreateGroupViewModel.Input(
+              groupName: createGroupView.groupNameTextField.rx.text.orEmpty.asObservable(),
+              groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
+              nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
+          )
+
+          let output = viewModel.transform(input: input)
+
+          output.isNextButtonEnabled
+              .bind(to: createGroupView.nextButton.rx.isEnabled)
+              .disposed(by: disposeBag)
+
+          createGroupView.nextButton.rx.tap
+              .subscribe(onNext: { [weak self] in
+                  let createAlarmVC = CreateAlarmViewController()
+                  self?.navigationController?.pushViewController(createAlarmVC, animated: true)
+              })
+              .disposed(by: disposeBag)
+      }
     
     // MARK: - Button Actions
     private func addMissionNotificationCenter() {
@@ -111,23 +90,11 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
-        self.customView.missionSettingLabel.text = kr
-        self.customView.missionImageLabel.text = icon
+        self.createGroupView.missionImageLabel.text = icon
         self.missionObjectId = missionObjectId
         self.missionId = missionId
         self.missionEndpoint = missionName
-        self.customView.missionTextLabel.text = kr
-        
-        viewModel.transform(input: CreateGroupViewModel.Input(
-             didGroupNameTextFieldChange: customView.groupNameTextField.rx.text.orEmpty.asObservable(),
-             didExplanationTextViewChange: customView.groupIntroTextView.rx.text.orEmpty.asObservable(),
-             tapMissionButton: customView.addMissionButton.rx.tap.asSignal(),
-             tapCompleteButton: customView.nextButton.rx.tap.asSignal(),
-             tapCancleButton: customView.cancelButton.rx.tap.asSignal(),
-             icon: Observable.just(icon),
-             missionId: Observable.just(missionId),
-             missionObjectId: Observable.just(missionObjectId)
-         ))
+        self.createGroupView.missionTextLabel.text = kr
     }
 
     
@@ -136,24 +103,12 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         guard let vc = storyboard.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
         
         vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
-            self?.customView.missionSettingLabel.text = missionKoreanName
-            self?.customView.missionTextLabel.text = missionKoreanName
-            self?.customView.missionImageLabel.text = missionIcon
+            self?.createGroupView.missionTextLabel.text = missionKoreanName
+            self?.createGroupView.missionImageLabel.text = missionIcon
             self?.missionId = missionId
             self?.missionObjectId = missionObjectId
             self?.missionEndpoint = ""
         }
-        
-        self.viewModel.transform(input: CreateGroupViewModel.Input(
-            didGroupNameTextFieldChange: self.customView.groupNameTextField.rx.text.orEmpty.asObservable() ?? Observable.just(""),
-            didExplanationTextViewChange: self.customView.groupIntroTextView.rx.text.orEmpty.asObservable() ?? Observable.just(""),
-            tapMissionButton: self.customView.addMissionButton.rx.tap.asSignal() ?? Signal.empty(),
-            tapCompleteButton: self.customView.nextButton.rx.tap.asSignal() ?? Signal.empty(),
-            tapCancleButton: self.customView.cancelButton.rx.tap.asSignal() ?? Signal.empty(),
-               icon: Observable.just(missionIcon),
-               missionId: Observable.just(missionId),
-               missionObjectId: Observable.just(missionObjectId)
-           ))
         
         vc.modalPresentationStyle = .fullScreen
         navigationController?.isNavigationBarHidden = false
@@ -164,9 +119,5 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc private func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
-    }
-    
-    @objc private func nextButtonTapped() {
-        
     }
 }
