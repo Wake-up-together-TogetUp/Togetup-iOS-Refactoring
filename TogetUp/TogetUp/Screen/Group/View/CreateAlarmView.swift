@@ -7,11 +7,12 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class CreateAlarmView: UIView {
     
     private let disposeBag = DisposeBag()
-    private let vibrationToggle = UISwitch()
+    var vibrationToggle = UISwitch()
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -63,7 +64,7 @@ class CreateAlarmView: UIView {
         return label
     }()
     
-    private let alarmNameTextField: UITextField = {
+    var alarmNameTextField: UITextField = {
         let alarmNameTextField = UITextField()
         alarmNameTextField.placeholder = "알람"
         alarmNameTextField.borderStyle = .roundedRect
@@ -72,7 +73,7 @@ class CreateAlarmView: UIView {
         return alarmNameTextField
     }()
     
-    private let openedButton: UIButton = {
+    let openedButton: UIButton = {
        let button = UIButton()
         button.setTitle("개설하기", for: .normal)
         button.backgroundColor = UIColor(named: "primary400")
@@ -81,6 +82,8 @@ class CreateAlarmView: UIView {
         button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
         return button
     }()
+    
+    var weekdayButtons: [UIButton] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -104,8 +107,8 @@ class CreateAlarmView: UIView {
         containerView.addSubview(vibrationToggle)
         containerView.addSubview(openedButton)
         
-        timePicker.translatesAutoresizingMaskIntoConstraints = false
         topLabel.translatesAutoresizingMaskIntoConstraints = false
+        timePicker.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         topLabel.snp.makeConstraints {
@@ -175,10 +178,14 @@ class CreateAlarmView: UIView {
             weekdayButtonsStackView.addArrangedSubview(button)
             button.widthAnchor.constraint(equalToConstant: 36).isActive = true
             button.heightAnchor.constraint(equalToConstant: 36).isActive = true
+            weekdayButtons.append(button)
         }
         weekdayButtonsStackView.spacing = 12
     }
     
     @objc private func weekdayButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        sender.backgroundColor = sender.isSelected ? UIColor(named: "primary400") : UIColor(named: "neutral050")
+        sender.setTitleColor(sender.isSelected ? .white : UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
     }
 }
