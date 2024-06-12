@@ -10,6 +10,7 @@
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
 		952AD2852B82661500598680 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2842B82661500598680 /* SnapKit-Dynamic */; };
 		952AD2D32B87099000598680 /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */; };
+		9576D9FA2C0D8BC700AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */; };
 		95901F452BC90DD1003DAD74 /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95901F442BC90DD1003DAD74 /* inviteViewController.swift */; };
 		95B4F2DA2BA00EE500AB4952 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */; };
 		95B4F31D2BB2E70500AB4952 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */; };
@@ -134,6 +135,7 @@
 
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
+		9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 		95B4F31F2BB2E75C00AB4952 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */,
 				95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */,
 				95F198B22BFB0A36002BD1B4 /* GroupListViewModel.swift */,
 			);
@@ -828,6 +831,7 @@
 				F9944F242ACD8FD800B39476 /* UIImageView + Extension.swift in Sources */,
 				F945D1552AA4DE7C0093F896 /* AlarmService.swift in Sources */,
 				F97CDC2A2B15DDA50057AA82 /* TimelineViewModel.swift in Sources */,
+				9576D9FA2C0D8BC700AB62AA /* CreateAlarmViewModel.swift in Sources */,
 				95901F452BC90DD1003DAD74 /* inviteViewController.swift in Sources */,
 				F9DA5D842AC146C1008E16A6 /* MissionPerformViewModel.swift in Sources */,
 				F98600F42AAEF3E900595646 /* MissionModel.swift in Sources */,
