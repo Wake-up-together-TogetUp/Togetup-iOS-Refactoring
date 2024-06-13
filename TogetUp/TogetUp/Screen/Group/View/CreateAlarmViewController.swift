@@ -14,6 +14,8 @@ class CreateAlarmViewController: UIViewController {
     private let disposeBag = DisposeBag()
     var groupName: String = ""
     var groupIntro: String = ""
+    var missionId: Int = 2
+    var missionObjectId: Int? = 1
     
     override func loadView() {
         super.loadView()
@@ -49,7 +51,9 @@ class CreateAlarmViewController: UIViewController {
             vibrationEnabled: createAlarmView.vibrationToggle.rx.isOn.asObservable(),
             createButtonTapped: createAlarmView.openedButton.rx.tap.asObservable(),
             groupName: Observable.just(groupName),
-            groupIntro: Observable.just(groupIntro)
+            groupIntro: Observable.just(groupIntro),
+            missionId: Observable.just(missionId),
+            missionObjectId: Observable.just(missionObjectId)
         )
         
         let output = viewModel.transform(input: input)

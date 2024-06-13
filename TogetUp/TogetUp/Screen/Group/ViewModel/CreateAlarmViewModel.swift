@@ -18,6 +18,8 @@ class CreateAlarmViewModel: ViewModelType {
         let createButtonTapped: Observable<Void>
         let groupName: Observable<String>
         let groupIntro: Observable<String>
+        let missionId: Observable<Int>
+        let missionObjectId: Observable<Int?>
     }
     
     struct Output {
@@ -41,12 +43,14 @@ class CreateAlarmViewModel: ViewModelType {
             input.weekdaySelection.startWith([false, false, false, false, false, false, false]),
             input.vibrationEnabled.startWith(false),
             input.groupName,
-            input.groupIntro
+            input.groupIntro,
+            input.missionId,
+            input.missionObjectId
         )
 
         let createAlarmResponse = input.createButtonTapped
             .withLatestFrom(combinedInputs)
-            .flatMapLatest { alarmName, timeSelected, weekdays,vibrationEnabled, groupName, groupIntro  -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
+            .flatMapLatest { alarmName, timeSelected, weekdays,vibrationEnabled, groupName, groupIntro,missionId, missionObjectId   -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                 let finalAlarmName = alarmName.isEmpty ? "알람" : alarmName
                 let formattedTime = self.formatDate(date: timeSelected)
                 let request = CreateGroupRequest(
@@ -63,8 +67,8 @@ class CreateAlarmViewModel: ViewModelType {
                         saturday: weekdays[5],
                         sunday: weekdays[6],
                         isVibrate: vibrationEnabled,
-                        missionId: 2,
-                        missionObjectId: 1
+                        missionId: missionId,
+                        missionObjectId: missionObjectId
                     )
                 )
                 return self.groupService.requestGroupAPI(api: .createGroup(request), responseType: CreateGroupResponse.self)

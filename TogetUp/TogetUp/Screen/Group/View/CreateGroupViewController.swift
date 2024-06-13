@@ -73,12 +73,13 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
                 let createAlarmVC = CreateAlarmViewController()
                 createAlarmVC.groupName = groupName
                 createAlarmVC.groupIntro = groupIntro
+                createAlarmVC.missionId = self?.missionId ?? 2
+                createAlarmVC.missionObjectId = self?.missionObjectId
                 self?.navigationController?.pushViewController(createAlarmVC, animated: true)
             })
             .disposed(by: disposeBag)
     }
 
-    
     // MARK: - Button Actions
     private func addMissionNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
