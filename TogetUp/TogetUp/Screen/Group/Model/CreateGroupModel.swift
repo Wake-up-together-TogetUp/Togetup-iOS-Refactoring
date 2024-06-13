@@ -14,14 +14,11 @@ struct CreateGroupResponse: Codable {
 struct CreateGroupRequest: Codable {
     let name: String
     let intro: String
-    let postAlarmReq: GroupAlarmRequest
+    let alarmCreateReq: GroupAlarmRequest
 }
 
 struct GroupAlarmRequest: Codable {
     let name: String
-    let icon: String
-    let snoozeInterval: Int
-    let snoozeCnt: Int
     let alarmTime: String
     let monday: Bool
     let tuesday: Bool
@@ -30,9 +27,7 @@ struct GroupAlarmRequest: Codable {
     let friday: Bool
     let saturday: Bool
     let sunday: Bool
-    let isSnoozeActivated: Bool
     let isVibrate: Bool
     let missionId: Int
     let missionObjectId: Int?
-    let roomId: Int?
 }

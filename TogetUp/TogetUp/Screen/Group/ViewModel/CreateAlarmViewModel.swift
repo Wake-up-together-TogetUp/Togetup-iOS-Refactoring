@@ -35,14 +35,11 @@ class CreateAlarmViewModel: ViewModelType {
             .withLatestFrom(input.weekdaySelection)
             .flatMapLatest { weekdays -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                 let request = CreateGroupRequest(
-                    name: "",
-                    intro: "",
-                    postAlarmReq: GroupAlarmRequest(
-                        name: "",
-                        icon: "alarm",
-                        snoozeInterval: 10,
-                        snoozeCnt: 3,
-                        alarmTime: "3",
+                    name: "테스트입니다.",
+                    intro: "테스트중임",
+                    alarmCreateReq: GroupAlarmRequest(
+                        name: "테스트입니다",
+                        alarmTime: "16:00",
                         monday: weekdays[0],
                         tuesday: weekdays[1],
                         wednesday: weekdays[2],
@@ -50,11 +47,9 @@ class CreateAlarmViewModel: ViewModelType {
                         friday: weekdays[4],
                         saturday: weekdays[5],
                         sunday: weekdays[6],
-                        isSnoozeActivated: true,
                         isVibrate: true,
-                        missionId: 1,
-                        missionObjectId: nil,
-                        roomId: nil
+                        missionId: 2,
+                        missionObjectId: 1
                     )
                 )
                 return self.groupService.requestGroupAPI(api: .createGroup(request), responseType: CreateGroupResponse.self)
