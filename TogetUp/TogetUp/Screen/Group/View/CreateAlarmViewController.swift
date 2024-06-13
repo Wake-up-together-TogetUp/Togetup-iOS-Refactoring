@@ -12,6 +12,8 @@ class CreateAlarmViewController: UIViewController {
     private var createAlarmView = CreateAlarmView()
     private let viewModel = CreateAlarmViewModel()
     private let disposeBag = DisposeBag()
+    var groupName: String = ""
+    var groupIntro: String = ""
     
     override func loadView() {
         super.loadView()
@@ -45,7 +47,9 @@ class CreateAlarmViewController: UIViewController {
             timeSelected: createAlarmView.timePicker.rx.date.asObservable(),
             weekdaySelection: weekdaySelection,
             vibrationEnabled: createAlarmView.vibrationToggle.rx.isOn.asObservable(),
-            createButtonTapped: createAlarmView.openedButton.rx.tap.asObservable()
+            createButtonTapped: createAlarmView.openedButton.rx.tap.asObservable(),
+            groupName: Observable.just(groupName),
+            groupIntro: Observable.just(groupIntro)
         )
         
         let output = viewModel.transform(input: input)

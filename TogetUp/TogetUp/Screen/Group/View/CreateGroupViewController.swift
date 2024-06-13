@@ -55,25 +55,29 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - ViewModel Binding
     private func bindViewModel() {
-          let input = CreateGroupViewModel.Input(
-              groupName: createGroupView.groupNameTextField.rx.text.orEmpty.asObservable(),
-              groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
-              nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
-          )
+        let input = CreateGroupViewModel.Input(
+            groupName: createGroupView.groupNameTextField.rx.text.orEmpty.asObservable(),
+            groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
+            nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
+        )
 
-          let output = viewModel.transform(input: input)
+        let output = viewModel.transform(input: input)
 
-          output.isNextButtonEnabled
-              .bind(to: createGroupView.nextButton.rx.isEnabled)
-              .disposed(by: disposeBag)
+        output.isNextButtonEnabled
+            .bind(to: createGroupView.nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
 
-          createGroupView.nextButton.rx.tap
-              .subscribe(onNext: { [weak self] in
-                  let createAlarmVC = CreateAlarmViewController()
-                  self?.navigationController?.pushViewController(createAlarmVC, animated: true)
-              })
-              .disposed(by: disposeBag)
-      }
+        createGroupView.nextButton.rx.tap
+            .withLatestFrom(Observable.combineLatest(output.groupName, output.groupIntro))
+            .subscribe(onNext: { [weak self] groupName, groupIntro in
+                let createAlarmVC = CreateAlarmViewController()
+                createAlarmVC.groupName = groupName
+                createAlarmVC.groupIntro = groupIntro
+                self?.navigationController?.pushViewController(createAlarmVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+
     
     // MARK: - Button Actions
     private func addMissionNotificationCenter() {
@@ -97,7 +101,6 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         self.createGroupView.missionTextLabel.text = kr
     }
 
-    
     @objc private func addMissionButtonTapped() {
         let storyboard = UIStoryboard(name: "Alarm", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }

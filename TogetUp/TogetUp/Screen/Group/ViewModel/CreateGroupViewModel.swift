@@ -17,6 +17,8 @@ class CreateGroupViewModel: ViewModelType {
     
     struct Output {
         let isNextButtonEnabled: Observable<Bool>
+        let groupName: Observable<String>
+        let groupIntro: Observable<String>
     }
     
     var disposeBag = DisposeBag()
@@ -26,6 +28,10 @@ class CreateGroupViewModel: ViewModelType {
             .map { !$0.isEmpty && !$1.isEmpty }
             .startWith(false)
         
-        return Output(isNextButtonEnabled: isNextButtonEnabled)
+        return Output(
+            isNextButtonEnabled: isNextButtonEnabled,
+            groupName: input.groupName,
+            groupIntro: input.groupIntro
+        )
     }
 }

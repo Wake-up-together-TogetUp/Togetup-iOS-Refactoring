@@ -16,6 +16,8 @@ class CreateAlarmViewModel: ViewModelType {
         let weekdaySelection: Observable<[Bool]>
         let vibrationEnabled: Observable<Bool>
         let createButtonTapped: Observable<Void>
+        let groupName: Observable<String>
+        let groupIntro: Observable<String>
     }
     
     struct Output {
@@ -27,19 +29,32 @@ class CreateAlarmViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        let isCreateButtonEnabled = Observable.combineLatest(input.alarmName, input.timeSelected, input.weekdaySelection)
-            .map { _ in true }
-            .startWith(true)
+        let isCreateButtonEnabled = Observable.combineLatest(input.alarmName, input.timeSelected, input.weekdaySelection, input.vibrationEnabled)
+            .map { alarmName, _, weekdays,_ in
+                !alarmName.isEmpty || weekdays.contains(true)
+            }
+            .startWith(false)
         
+        let combinedInputs = Observable.combineLatest(
+            input.alarmName.startWith(""),
+            input.timeSelected.startWith(Date()),
+            input.weekdaySelection.startWith([false, false, false, false, false, false, false]),
+            input.vibrationEnabled.startWith(false),
+            input.groupName,
+            input.groupIntro
+        )
+
         let createAlarmResponse = input.createButtonTapped
-            .withLatestFrom(input.weekdaySelection)
-            .flatMapLatest { weekdays -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
+            .withLatestFrom(combinedInputs)
+            .flatMapLatest { alarmName, timeSelected, weekdays,vibrationEnabled, groupName, groupIntro  -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
+                let finalAlarmName = alarmName.isEmpty ? "알람" : alarmName
+                let formattedTime = self.formatDate(date: timeSelected)
                 let request = CreateGroupRequest(
-                    name: "테스트입니다.",
-                    intro: "테스트중임",
+                    name: groupName,
+                    intro: groupIntro,
                     alarmCreateReq: GroupAlarmRequest(
-                        name: "테스트입니다",
-                        alarmTime: "16:00",
+                        name: finalAlarmName,
+                        alarmTime: formattedTime,
                         monday: weekdays[0],
                         tuesday: weekdays[1],
                         wednesday: weekdays[2],
@@ -47,7 +62,7 @@ class CreateAlarmViewModel: ViewModelType {
                         friday: weekdays[4],
                         saturday: weekdays[5],
                         sunday: weekdays[6],
-                        isVibrate: true,
+                        isVibrate: vibrationEnabled,
                         missionId: 2,
                         missionObjectId: 1
                     )
