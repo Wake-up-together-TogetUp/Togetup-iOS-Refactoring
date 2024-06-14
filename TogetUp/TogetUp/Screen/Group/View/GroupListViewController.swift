@@ -10,10 +10,13 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
-    
+class GroupListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
+    private let viewModel: GroupViewModel
+    private let fetchGroupList = PublishSubject<Void>()
+    private var groupResults = [GroupResult]()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "그룹"
@@ -49,14 +52,27 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
         return collectionView
     }()
     
+    // MARK: - Initializer
+    required init?(coder: NSCoder) {
+        self.viewModel = GroupViewModel(groupService: GroupService())
+        super.init(coder: coder)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchGroupList.onNext(())
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        setupBindings()
         setupButtonActions()
+        
     }
     
     // MARK: - UI Setup
-    override func setupUI() {
+    func setupUI() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(-22)
@@ -94,17 +110,50 @@ class GroupListViewController: BaseVC, UICollectionViewDataSource, UICollectionV
     // MARK: - Navigation
     func showCreateViewController() {
         let createVC = CreateGroupViewController()
-        navigationController?.pushViewController(createVC, animated: true)
+        let navigationController = UINavigationController(rootViewController: createVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.isNavigationBarHidden = true
+        navigationController.navigationBar.backgroundColor = .clear
+        navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    // MARK: - ViewModel Bindings
+    private func setupBindings() {
+        let input = GroupViewModel.Input(fetchGroupList: fetchGroupList)
+        let output = viewModel.transform(input: input)
+        
+        output.groupList
+            .drive(onNext: { [weak self] groupResults in
+                self?.groupResults = groupResults
+                self?.collectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        output.error
+            .drive(onNext: { [weak self] errorMessage in
+                self?.showError(message: errorMessage)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Error Handling
+    private func showError(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return groupResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupListCollectionViewCell.identifier, for: indexPath) as! GroupListCollectionViewCell
+        let groupResult = groupResults[indexPath.item]
+        cell.configure(with: groupResult)
         return cell
     }
     

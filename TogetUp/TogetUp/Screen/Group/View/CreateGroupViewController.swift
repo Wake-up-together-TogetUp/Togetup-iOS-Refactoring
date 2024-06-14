@@ -7,55 +7,121 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
-class CreateGroupViewController: BaseVC {
+class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    var viewModel = CreateGroupViewModel()
-    var customView = CreateGroupView()
+    private let viewModel = CreateGroupViewModel()
+    var createGroupView = CreateGroupView()
+    private var disposeBag = DisposeBag()
+    
+    private var missionKoreanName = "사람"
+    private var missionIcon = "👤"
+    private var missionId = 2
+    private var missionObjectId: Int? = 1
+    var missionEndpoint = "person"
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        setupUI()
+        addMissionNotificationCenter()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
     
     // MARK: - UI Setup
-    override func setupUI() {
-        navigationItem.title = "그룹 개설하기"
-        navigationItem.leftBarButtonItem =  UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        navigationItem.rightBarButtonItem =  UIBarButtonItem(title: "확인", style: .done, target: self, action: #selector(saveButtonTapped))
+    func setupUI() {
         view.backgroundColor = .white
+        createGroupView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(createGroupView)
         
-        customView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(customView)
-        
-        customView.snp.makeConstraints { make in
+        createGroupView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
             make.bottom.equalTo(view.snp.bottom)
         }
+        
+        createGroupView.cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        createGroupView.addMissionButton.addTarget(self, action: #selector(addMissionButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - ViewModel Binding
     private func bindViewModel() {
-        customView.groupNameTextField.text = viewModel.groupName
-        customView.groupIntroTextView.text = viewModel.groupIntro
-        
-        customView.addAlarmButton.addTarget(self, action: #selector(addAlarmButtonTapped), for: .touchUpInside)
+        let input = CreateGroupViewModel.Input(
+            groupName: createGroupView.groupNameTextField.rx.text.orEmpty.asObservable(),
+            groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
+            nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
+        )
+
+        let output = viewModel.transform(input: input)
+
+        output.isNextButtonEnabled
+            .bind(to: createGroupView.nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        createGroupView.nextButton.rx.tap
+            .withLatestFrom(Observable.combineLatest(output.groupName, output.groupIntro))
+            .subscribe(onNext: { [weak self] groupName, groupIntro in
+                let createAlarmVC = CreateAlarmViewController()
+                createAlarmVC.groupName = groupName
+                createAlarmVC.groupIntro = groupIntro
+                createAlarmVC.missionId = self?.missionId ?? 2
+                createAlarmVC.missionObjectId = self?.missionObjectId
+                self?.navigationController?.pushViewController(createAlarmVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: - Button Actions
+    private func addMissionNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
     }
     
-    // MARK: - Button Actions
-    @objc private func addAlarmButtonTapped() {
-       
+    @objc func missionSelected(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let icon = userInfo["icon"] as? String,
+              let kr = userInfo["kr"] as? String,
+              let missionObjectId = userInfo["missionObjectId"] as? Int,
+              let missionId = userInfo["missionId"] as? Int,
+              let missionName = userInfo["name"] as? String else {
+            return
+        }
+        
+        self.createGroupView.missionImageLabel.text = icon
+        self.missionObjectId = missionObjectId
+        self.missionId = missionId
+        self.missionEndpoint = missionName
+        self.createGroupView.missionTextLabel.text = kr
+    }
+
+    @objc private func addMissionButtonTapped() {
+        let storyboard = UIStoryboard(name: "Alarm", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
+        
+        vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
+            self?.createGroupView.missionTextLabel.text = missionKoreanName
+            self?.createGroupView.missionImageLabel.text = missionIcon
+            self?.missionId = missionId
+            self?.missionObjectId = missionObjectId
+            self?.missionEndpoint = ""
+        }
+        
+        vc.modalPresentationStyle = .fullScreen
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func cancelButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func saveButtonTapped() {
-        
+        dismiss(animated: true, completion: nil)
     }
 }

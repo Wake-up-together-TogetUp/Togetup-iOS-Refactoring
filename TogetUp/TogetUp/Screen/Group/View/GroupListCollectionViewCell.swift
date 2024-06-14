@@ -11,10 +11,11 @@ import SnapKit
 final class GroupListCollectionViewCell: UICollectionViewCell {
     //MARK: - Property
     static let identifier = "GroupListCollectionViewCell"
-    
-    var img: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "addAlarmBtn")
+        
+    var img: UILabel = {
+        let img = UILabel()
+        img.text = "⏰"
+        img.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 32)
         return img
     }()
     
@@ -74,7 +75,7 @@ final class GroupListCollectionViewCell: UICollectionViewCell {
          self.layer.cornerRadius = 10
          self.layer.masksToBounds = true
          self.layer.borderWidth = 1
-         self.layer.borderColor = UIColor.black.cgColor 
+         self.layer.borderColor = UIColor.black.cgColor
         
         contentView.addSubview(img)
         contentView.addSubview(allStackView)
@@ -91,5 +92,12 @@ final class GroupListCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(img.snp.trailing).offset(12)
             $0.trailing.equalToSuperview().offset(-12)
         }
+    }
+    
+    // MARK: - Configuration
+    func configure(with groupResult: GroupResult) {
+        img.text = groupResult.icon
+        titleLabel.text = groupResult.name
+        subTitleLabel.text = groupResult.kr
     }
 }

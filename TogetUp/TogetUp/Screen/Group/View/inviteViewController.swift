@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-class inviteViewController: BaseVC {
+class inviteViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
