@@ -31,10 +31,16 @@ class GroupCalendarViewController: UIViewController {
         return button
     }()
     
+    private let headerSeparatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
     private let calendarView: FSCalendar = {
         let calendar = FSCalendar()
         calendar.scope = .month
-        calendar.headerHeight = 35
+        calendar.headerHeight = 52
         calendar.appearance.headerDateFormat = "YYYY년 MM월"
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.headerTitleColor = .black
@@ -45,41 +51,35 @@ class GroupCalendarViewController: UIViewController {
     
     private let toggleCalendarButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("접기/펴기", for: .normal)
+        button.setImage(UIImage(named: "chevron-down"), for: .normal)
+        button.tintColor = UIColor(named: "neutral400")
         return button
     }()
     
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true
-        return scrollView
-    }()
-    
-    private let contentView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private let collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
-        layout.itemSize = CGSize(width: 100, height: 100)
+        
+        let numberOfColumns: CGFloat = 2
+        let itemWidth = (UIScreen.main.bounds.width - 16 * 2 - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
     // MARK: - UI Setup
     private func setupUI() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(calendarView)
-        contentView.addSubview(toggleCalendarButton)
-        contentView.addSubview(collectionView)
+        view.addSubview(calendarView)
+        view.addSubview(headerSeparatorView)
+        view.addSubview(toggleCalendarButton)
+        view.addSubview(collectionView)
         
         calendarView.delegate = self
         calendarView.dataSource = self
@@ -116,23 +116,20 @@ class GroupCalendarViewController: UIViewController {
             $0.centerY.equalTo(headerView)
             $0.trailing.equalTo(headerView).offset(-8)
         }
+        
+        headerSeparatorView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(2)
+        }
     }
     
     private func setupConstraints() {
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalToSuperview() // Content width matches scroll view width
-        }
-        
         setupCustomHeader()
         calendarView.snp.makeConstraints {
-            $0.top.equalTo(contentView.safeAreaLayoutGuide).offset(5)
+            $0.top.equalToSuperview().offset(0)
             $0.leading.trailing.equalToSuperview().inset(0)
-            $0.height.equalTo(300)
+            $0.height.equalTo(400)
         }
         
         toggleCalendarButton.snp.makeConstraints {
@@ -142,7 +139,8 @@ class GroupCalendarViewController: UIViewController {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(toggleCalendarButton.snp.bottom).offset(16)
-            $0.leading.trailing.bottom.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(0)
+            $0.bottom.equalToSuperview().offset(0)
         }
     }
     
@@ -175,8 +173,24 @@ extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource,
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         return 0
     }
+}
+
+// MARK: - UICollectionViewDataSource
+extension GroupCalendarViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
     
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
+        cell.configure(with: UIImage(named: "C_rabbit")!)
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension GroupCalendarViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
 }
 
