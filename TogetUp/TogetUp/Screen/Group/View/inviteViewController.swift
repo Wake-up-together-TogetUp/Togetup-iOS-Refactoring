@@ -25,7 +25,3 @@ class inviteViewController: UIViewController {
     }
     
 }
-
-#Preview {
-    inviteViewController()
-}

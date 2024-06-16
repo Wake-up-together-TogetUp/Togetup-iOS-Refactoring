@@ -69,7 +69,6 @@ final class GroupListCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI Setup
     private func setupUI() {
         self.backgroundColor = UIColor(named: "secondary025")
          self.layer.cornerRadius = 10

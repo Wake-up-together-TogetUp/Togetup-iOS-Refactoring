@@ -80,7 +80,6 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             .disposed(by: disposeBag)
     }
 
-    // MARK: - Button Actions
     private func addMissionNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
     }

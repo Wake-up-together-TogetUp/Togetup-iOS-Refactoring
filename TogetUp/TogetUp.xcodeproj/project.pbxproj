@@ -265,6 +265,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9576DA1F2C1F51AD00AB62AA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */,
+				952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		95B4F31E2BB2E74E00AB4952 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,15 +398,14 @@
 		F93140552A8FAFAF000FB717 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9576DA1F2C1F51AD00AB62AA /* Cell */,
 				F931405D2A8FB014000FB717 /* Group.storyboard */,
 				F93140592A8FAFE2000FB717 /* GroupListViewController.swift */,
-				952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */,
 				95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */,
 				95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */,
 				95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */,
 				95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */,
 				95901F442BC90DD1003DAD74 /* inviteViewController.swift */,
-				9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */,
 				9576DA1D2C1C27D300AB62AA /* GroupCalendarViewController.swift */,
 			);
 			path = View;

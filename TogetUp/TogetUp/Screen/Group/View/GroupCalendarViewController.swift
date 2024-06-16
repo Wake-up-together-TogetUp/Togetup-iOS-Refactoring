@@ -234,15 +234,13 @@ class GroupCalendarViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
-
+// MARK: - extension
 extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-    // MARK: - FSCalendarDelegate & DataSource
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         return 0
     }
 }
 
-// MARK: - UICollectionViewDataSource
 extension GroupCalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
@@ -255,7 +253,6 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegate
 extension GroupCalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
@@ -268,7 +265,6 @@ extension GroupCalendarViewController: UICollectionViewDelegate {
      }
 }
 
-// MARK: - Date Extension
 extension Date {
     var previousMonth: Date {
         return Calendar.current.date(byAdding: .month, value: -1, to: self)!
@@ -277,10 +273,4 @@ extension Date {
     var nextMonth: Date {
         return Calendar.current.date(byAdding: .month, value: 1, to: self)!
     }
-}
-
-
-#Preview {
-    let navigationController = UINavigationController(rootViewController: GroupCalendarViewController())
-    return navigationController
 }
