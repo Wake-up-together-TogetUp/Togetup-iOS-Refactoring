@@ -7,6 +7,9 @@
 
 import UIKit
 
+import UIKit
+import SnapKit
+
 class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCollectionViewCell"
@@ -15,7 +18,26 @@ class ImageCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 2
+        imageView.layer.cornerRadius = 12
         return imageView
+    }()
+    
+    private let roundedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private let textLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 14)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -29,12 +51,29 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        imageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        contentView.addSubview(roundedView)
+        roundedView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(10)
+            $0.bottom.equalToSuperview().offset(-10)
+            $0.height.equalTo(30)
+            $0.width.equalTo(81)
+        }
+        
+        roundedView.addSubview(textLabel)
+        textLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(4)
         }
     }
     
-    func configure(with image: UIImage) {
+    func configure(with image: UIImage, text: String) {
         imageView.image = image
+        textLabel.text = text
+        roundedView.snp.updateConstraints {
+            $0.width.equalTo(textLabel.intrinsicContentSize.width + 24)
+        }
     }
 }

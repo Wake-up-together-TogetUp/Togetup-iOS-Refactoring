@@ -63,12 +63,13 @@ class GroupCalendarViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         
         let numberOfColumns: CGFloat = 2
-        let itemWidth = (UIScreen.main.bounds.width - 16 * 2 - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
+        let itemWidth = (UIScreen.main.bounds.width - 20 * 2 - (numberOfColumns - 1) * layout.minimumInteritemSpacing) / numberOfColumns
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -139,7 +140,7 @@ class GroupCalendarViewController: UIViewController {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(toggleCalendarButton.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(0)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().offset(0)
         }
     }
@@ -183,7 +184,7 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
-        cell.configure(with: UIImage(named: "C_rabbit")!)
+        cell.configure(with: UIImage(named: "C_rabbit")!, text: "닉네임")
         return cell
     }
 }
