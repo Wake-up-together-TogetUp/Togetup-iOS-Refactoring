@@ -37,6 +37,21 @@ class GroupCalendarViewController: UIViewController {
         return view
     }()
     
+    private var rightCharacter: UIImageView = {
+        let img = UIImageView(image: UIImage(named: "itemR_chick"))
+        return img
+    }()
+    
+    private let leftCharacter: UIImageView = {
+        let img = UIImageView(image: UIImage(named: "itemL_chick"))
+        return img
+    }()
+    
+    private let centerCharacter: UIImageView = {
+        let img = UIImageView(image: UIImage(named: "C_chick"))
+        return img
+    }()
+    
     private let calendarView: FSCalendar = {
         let calendar = FSCalendar()
         calendar.scope = .week
@@ -91,6 +106,9 @@ class GroupCalendarViewController: UIViewController {
         view.addSubview(headerSeparatorView)
         view.addSubview(toggleCalendarButton)
         view.addSubview(collectionView)
+        view.addSubview(rightCharacter)
+        view.addSubview(leftCharacter)
+        view.addSubview(centerCharacter)
         
         calendarView.delegate = self
         calendarView.dataSource = self
@@ -157,6 +175,27 @@ class GroupCalendarViewController: UIViewController {
         
         backGroundImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        leftCharacter.snp.makeConstraints {
+            $0.width.equalTo(52)
+            $0.height.equalTo(104)
+            $0.left.equalTo(view.snp.left)
+            $0.centerY.equalTo(view.snp.centerY).offset(104)
+        }
+        
+        rightCharacter.snp.makeConstraints {
+            $0.width.equalTo(52)
+            $0.height.equalTo(104)
+            $0.right.equalTo(view.snp.right)
+            $0.centerY.equalTo(view.snp.centerY).offset(-104)
+        }
+        
+        centerCharacter.snp.makeConstraints {
+            $0.width.equalTo(153)
+            $0.height.equalTo(160)
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.bottom.equalTo(view.snp.bottom).inset(0)
         }
     }
     
