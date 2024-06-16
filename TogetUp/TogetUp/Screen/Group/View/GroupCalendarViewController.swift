@@ -39,21 +39,30 @@ class GroupCalendarViewController: UIViewController {
     
     private let calendarView: FSCalendar = {
         let calendar = FSCalendar()
-        calendar.scope = .month
+        calendar.scope = .week
         calendar.headerHeight = 52
-        calendar.appearance.headerDateFormat = "YYYY년 MM월"
+        calendar.appearance.headerDateFormat = "YYYY년 MM월 W주차"
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.headerTitleColor = .black
         calendar.appearance.headerTitleAlignment = .left
         calendar.appearance.headerTitleOffset = CGPoint(x: -UIScreen.main.bounds.width / 5, y: 0)
+        calendar.backgroundColor = .white
         return calendar
     }()
     
     private let toggleCalendarButton: UIButton = {
         let button = UIButton(type: .system)
+        button.backgroundColor = .white
         button.setImage(UIImage(named: "chevron-down"), for: .normal)
         button.tintColor = UIColor(named: "neutral400")
+        button.layer.cornerRadius = 20
         return button
+    }()
+    
+    private var backGroundImage: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "bg_chick")
+        return view
     }()
     
     private lazy var collectionView: UICollectionView = {
@@ -67,7 +76,7 @@ class GroupCalendarViewController: UIViewController {
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dataSource = self
@@ -77,6 +86,7 @@ class GroupCalendarViewController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
+        view.addSubview(backGroundImage)
         view.addSubview(calendarView)
         view.addSubview(headerSeparatorView)
         view.addSubview(toggleCalendarButton)
@@ -130,18 +140,23 @@ class GroupCalendarViewController: UIViewController {
         calendarView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(0)
             $0.leading.trailing.equalToSuperview().inset(0)
-            $0.height.equalTo(400)
+            $0.height.equalTo(300)
         }
         
         toggleCalendarButton.snp.makeConstraints {
-            $0.top.equalTo(calendarView.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(calendarView.snp.bottom).offset(-10)
+            $0.leading.trailing.equalToSuperview().offset(0)
+            $0.height.equalTo(50)
         }
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(toggleCalendarButton.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().offset(0)
+        }
+        
+        backGroundImage.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -153,7 +168,16 @@ class GroupCalendarViewController: UIViewController {
     }
     
     @objc private func toggleCalendarScope() {
-        calendarView.setScope(calendarView.scope == .month ? .week : .month, animated: true)
+      if self.calendarView.scope == .month {
+        self.calendarView.setScope(.week, animated: true)
+          self.calendarView.appearance.headerDateFormat = "YYYY년 MM월 W주차"
+            toggleCalendarButton.setImage(UIImage(named: "chevron-down"), for: .normal)
+        
+      } else {
+        self.calendarView.setScope(.month, animated: true)
+        self.calendarView.appearance.headerDateFormat = "YYYY년 MM월"
+          toggleCalendarButton.setImage(UIImage(named: "chevron-down"), for: .normal)
+      }
     }
     
     @objc private func previousMonthTapped() {
@@ -184,7 +208,7 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
-        cell.configure(with: UIImage(named: "C_rabbit")!, text: "닉네임")
+        cell.configure(with: UIImage(named: "missionDefault")!, text: "닉네임")
         return cell
     }
 }
@@ -193,6 +217,13 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
 extension GroupCalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
+    
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+      calendarView.snp.updateConstraints {
+        $0.height.equalTo(bounds.height)
+      }
+      self.view.layoutIfNeeded()
+     }
 }
 
 // MARK: - Date Extension
