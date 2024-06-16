@@ -58,7 +58,10 @@ class GroupCalendarViewController: UIViewController {
         calendar.headerHeight = 52
         calendar.appearance.headerDateFormat = "YYYY년 MM월 W주차"
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
+        calendar.appearance.weekdayTextColor = UIColor(named: "neutral300")
         calendar.appearance.headerTitleColor = .black
+        calendar.appearance.todayColor = UIColor(named: "neutral800")
+        calendar.appearance.selectionColor = UIColor(named: "primary100")
         calendar.appearance.headerTitleAlignment = .left
         calendar.appearance.headerTitleOffset = CGPoint(x: -UIScreen.main.bounds.width / 5, y: 0)
         calendar.backgroundColor = .white
