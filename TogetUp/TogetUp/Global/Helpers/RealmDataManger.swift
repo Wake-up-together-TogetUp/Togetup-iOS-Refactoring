@@ -75,6 +75,27 @@ class RealmAlarmDataManager {
         }
     }
     
+    func fetchPastNonRepeatingActivatedAlarms() -> [Int] {
+        let now = Date()
+        let filteredAlarms = realm.objects(Alarm.self).filter("isActivated == true AND (monday == false AND tuesday == false AND wednesday == false AND thursday == false AND friday == false AND saturday == false AND sunday == false) AND createdDate < %@", now)
+        
+        let alarmIds = filteredAlarms.map { $0.id }
+        return Array(alarmIds)
+    }
+    
+    func deactivateAlarms() {
+        let alarmIds = fetchPastNonRepeatingActivatedAlarms()
+        let alarmsToDeactivate = realm.objects(Alarm.self).filter("id IN %@", alarmIds)
+        
+        do {
+            try realm.write {
+                alarmsToDeactivate.forEach { $0.isActivated = false }
+            }
+        } catch {
+            print("Error deactivating alarms: \(error)")
+        }
+    }
+    
     func deactivateAlarmRequest(alarmId: Int) -> CreateOrEditAlarmRequest {
         guard let storedAlarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) else {
             fatalError("Alarm not found")
@@ -105,12 +126,21 @@ class RealmAlarmDataManager {
         )
     }
     
-    func toggleActivationStatus(for alarmId: Int) {
+    func isAlarmRepeat(alarmId: Int) -> Bool? {
+        if let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) {
+            return alarm.isRepeatAlarm()
+        }
+        return nil
+    }
+    
+    func toggleActivationStatus(for alarmId: Int) -> Bool? {
         if let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) {
             try! realm.write {
                 alarm.isActivated.toggle()
             }
+            return alarm.isActivated
         }
+        return nil
     }
     
     private func mapRequestToAlarm(_ request: CreateOrEditAlarmRequest, alarm: Alarm, missionEndpoint: String, missionKoreanName: String) {
@@ -131,6 +161,7 @@ class RealmAlarmDataManager {
         alarm.isActivated = request.isActivated
         alarm.missionName = missionKoreanName
         alarm.missionEndpoint = missionEndpoint
+        alarm.createdDate = Date()
     }
     
     private func getHour(from time: String) -> Int {

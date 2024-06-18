@@ -48,7 +48,7 @@ class AlarmListViewModel {
     private func scheduleActiveAlarms() {
         let alarms = realmInstance.objects(Alarm.self).filter("isActivated == true")
         for alarm in alarms {
-            AlarmScheduleManager.shared.scheduleAlarmById(with: alarm.id)
+            AlarmScheduleManager.shared.scheduleNotification(for: alarm.id)
         }
     }
     
@@ -106,16 +106,21 @@ class AlarmListViewModel {
         AlarmScheduleManager.shared.refreshAllScheduledNotifications()
     }
     
-    func deactivateAlarm(alarmId: Int) {
+    func toggleAlarm(alarmId: Int) {
         let alarmRequest = realmManager.deactivateAlarmRequest(alarmId: alarmId)
         
         networkManager.handleAPIRequest(provider.rx.request(.editAlarm(alarmId: alarmId, param: alarmRequest)), dataType: CreateEditDeleteAlarmResponse.self)
             .subscribe(onSuccess: { [weak self] result in
                 switch result {
                 case .success(_):
-                    self?.realmManager.toggleActivationStatus(for: alarmId)
+                    if self?.realmManager.toggleActivationStatus(for: alarmId) ?? false {
+                        AlarmScheduleManager.shared.scheduleNotification(for: alarmId)
+                    } else {
+                        if self?.realmManager.isAlarmRepeat(alarmId: alarmId) ?? false {
+                            AlarmScheduleManager.shared.removeNotification(for: alarmId) {}
+                        }
+                    }
                     self?.fetchAlarmsFromRealm()
-                    AlarmScheduleManager.shared.toggleAlarmActivation(for: alarmId)
                 case .failure(let error):
                     print("알람 수정 오류: \(error.localizedDescription)")
                 }
@@ -130,7 +135,7 @@ class AlarmListViewModel {
                 case .success:
                     self?.realmManager.deleteAlarm(alarmId: alarmId)
                     self?.fetchAlarmsFromRealm()
-                    AlarmScheduleManager.shared.removeNotification(for: alarmId)
+                    AlarmScheduleManager.shared.removeNotification(for: alarmId) {}
                 case .failure(let error):
                     self?.handleNetworkError(error)
                 }

@@ -31,20 +31,30 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
     private var currentAvatarId = 1
     private var progressPercent = 0.0
     private var lastSpokenAvatarId: Int?
+    private var realmManager = RealmAlarmDataManager()
     
     // MARK: - Life Cylcle
     override func viewDidLoad() {
         super.viewDidLoad()
+        deactivateAlarms()
         requestAuthorization()
         setFloatingpanel()
         setUpUserInitialData()
         bindAvatarCollectionView()
         customUI()
+        fetchAvatarSpeeches(avatarId: self.currentAvatarId)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setUpUserInitialData()
-        getAvatarSpeeches(avatarId: self.currentAvatarId)
+        deselectAllItems()
+        selectInitialAvatar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        fetchAvatarSpeeches(avatarId: self.currentAvatarId)
     }
     
     // MARK: - Custom Methods
@@ -73,6 +83,13 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
                 print(error.localizedDescription)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func deactivateAlarms() {
+        let alarmIds = realmManager.fetchPastNonRepeatingActivatedAlarms()
+        if !alarmIds.isEmpty {
+            viewModel.deactivateAlarms()
+        }
     }
     
     func showAlert(url: String) {
@@ -136,12 +153,20 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
         }
     }
     
-    private func getAvatarSpeeches(avatarId: Int) {
+    private func fetchAvatarSpeeches(avatarId: Int) {
         viewModel.getAvatarSpeech(avatarId: avatarId)
             .subscribe(onNext: { [weak self] speech in
-                self?.avatarSpeechLabel.text = speech
-            }, onError: { error in
-                print("Error: \(error.localizedDescription)")
+                if speech.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    if let theme = ThemeManager.shared.themes.first(where: { $0.avatarId == avatarId }) {
+                        self?.avatarSpeechLabel.text = theme.defaultSpeech
+                    }
+                } else {
+                    self?.avatarSpeechLabel.text = speech
+                }
+            }, onError: { [weak self] error in
+                if let theme = ThemeManager.shared.themes.first(where: { $0.avatarId == avatarId }) {
+                    self?.avatarSpeechLabel.text = theme.defaultSpeech
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -225,6 +250,18 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
             fpc.show()
         }
         avatarView.isHidden = !isAvatarViewVisible
+        deselectAllItems()
+    }
+    
+    private func deselectAllItems() {
+        if let selectedIndexPaths = avatarChooseCollectionView.indexPathsForSelectedItems {
+            for indexPath in selectedIndexPaths {
+                avatarChooseCollectionView.deselectItem(at: indexPath, animated: false)
+                if let cell = avatarChooseCollectionView.cellForItem(at: indexPath) as? AvatarCollectionViewCell {
+                    cell.setAttributes(with: viewModel.avatars[indexPath.row], isSelected: false)
+                }
+            }
+        }
     }
     
     // MARK: - @
@@ -260,7 +297,9 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
                     if var currentUserData = UserDataManager.shared.currentUserData {
                         currentUserData.avatarId = (self?.selectedIndex?.row ?? 0) + 1
                         UserDataManager.shared.updateHomeData(data: currentUserData)
+                        self?.currentAvatarId = currentUserData.avatarId
                     }
+                    
                     self?.tabBarController?.tabBar.isHidden = false
                     self?.hangerButton.isHidden = false
                     self?.fpc.show()
