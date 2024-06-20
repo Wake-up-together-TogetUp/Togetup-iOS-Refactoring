@@ -25,7 +25,6 @@
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95F198B02BF760D3002BD1B4 /* RealmSwift */; };
-		95F198B92BFB0D2F002BD1B4 /* GroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198B82BFB0D2F002BD1B4 /* GroupService.swift */; };
 		95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */; };
 		95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */; };
 		F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F915B38D2A8F99BA00E4696C /* SettingViewController.swift */; };
@@ -152,7 +151,6 @@
 		95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		95F198B22BFB0A36002BD1B4 /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		95F198B42BFB0A95002BD1B4 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
-		95F198B82BFB0D2F002BD1B4 /* GroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupService.swift; sourceTree = "<group>"; };
 		95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAPI.swift; sourceTree = "<group>"; };
 		95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		95F198BF2BFF1E15002BD1B4 /* CreateGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupModel.swift; sourceTree = "<group>"; };
@@ -650,7 +648,6 @@
 				F98600F12AAEC1A400595646 /* MissionService.swift */,
 				F97CDC212B133CBE0057AA82 /* HomeService.swift */,
 				F915EA122BF05A92002B84BC /* DevService.swift */,
-				95F198B82BFB0D2F002BD1B4 /* GroupService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -903,7 +900,6 @@
 				F915EA162BF05E67002B84BC /* AppVersionCheckManager.swift in Sources */,
 				F98600F82AB038FF00595646 /* AlarmListViewModel.swift in Sources */,
 				95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */,
-				95F198B92BFB0D2F002BD1B4 /* GroupService.swift in Sources */,
 				F9EAA56E2B1B0CA80087734E /* UserDataManager.swift in Sources */,
 				9576DAC32C20A58D00AB62AA /* CreateAlarmView.swift in Sources */,
 				F915EA182BF1D0A6002B84BC /* VersionCheckResponseModel.swift in Sources */,

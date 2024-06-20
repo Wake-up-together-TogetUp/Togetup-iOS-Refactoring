@@ -8,6 +8,7 @@
 import RxSwift
 import RxCocoa
 import Foundation
+import Moya
 
 class CreateAlarmViewModel: ViewModelType {
     struct Input {
@@ -27,8 +28,9 @@ class CreateAlarmViewModel: ViewModelType {
         let createAlarmResponse: Observable<Result<CreateGroupResponse, NetWorkingError>>
     }
     
-    private let groupService = GroupService()
     var disposeBag = DisposeBag()
+    private let provider = MoyaProvider<GroupAPI>()
+    private let networkManager = NetworkManager()
     
     func transform(input: Input) -> Output {
         let isCreateButtonEnabled = Observable.combineLatest(input.alarmName, input.timeSelected, input.weekdaySelection, input.vibrationEnabled)
@@ -47,7 +49,6 @@ class CreateAlarmViewModel: ViewModelType {
             input.missionId,
             input.missionObjectId
         )
-
         let createAlarmResponse = input.createButtonTapped
             .withLatestFrom(combinedInputs)
             .flatMapLatest { alarmName, timeSelected, weekdays,vibrationEnabled, groupName, groupIntro,missionId, missionObjectId   -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
@@ -71,7 +72,7 @@ class CreateAlarmViewModel: ViewModelType {
                         missionObjectId: missionObjectId
                     )
                 )
-                return self.groupService.requestGroupAPI(api: .createGroup(request), responseType: CreateGroupResponse.self)
+                return self.networkManager.handleAPIRequest(self.provider.rx.request(.createGroup(request)), dataType: CreateGroupResponse.self)
                     .asObservable()
                     .map { $0 }
                     .catch { error in

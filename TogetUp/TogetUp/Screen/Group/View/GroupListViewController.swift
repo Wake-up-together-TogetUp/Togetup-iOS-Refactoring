@@ -54,7 +54,7 @@ class GroupListViewController: UIViewController {
     }()
     
     required init?(coder: NSCoder) {
-        self.viewModel = GroupViewModel(groupService: GroupService())
+        self.viewModel = GroupViewModel()
         super.init(coder: coder)
     }
     
