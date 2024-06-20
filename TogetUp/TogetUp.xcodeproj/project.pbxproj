@@ -203,7 +203,7 @@
 		F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionViewCell.swift; sourceTree = "<group>"; };
 		F97CDC292B15DDA50057AA82 /* TimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		F982EB242BE34AC100392314 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		F98600ED2AAE289200595646 /* ObjectMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectMissionCollectionViewCell.swift; path = "/Users/yaewon/Desktop/Togetup-iOS-Refatoring/TogetUp/TogetUp/Screen/Alarm/View/Cell/ObjectMissionCollectionViewCell.swift"; sourceTree = "<absolute>"; };
+		F98600ED2AAE289200595646 /* ObjectMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectMissionCollectionViewCell.swift; path = TogetUp/Screen/Alarm/View/Cell/ObjectMissionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F98600EF2AAEC04A00595646 /* MissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionViewModel.swift; sourceTree = "<group>"; };
 		F98600F12AAEC1A400595646 /* MissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionService.swift; sourceTree = "<group>"; };
 		F98600F32AAEF3E900595646 /* MissionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionModel.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 		F9BCC93B2BFF014500B6A7F9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		F9BCC93C2BFF014500B6A7F9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Home.strings; sourceTree = "<group>"; };
 		F9BCC93D2BFF014500B6A7F9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Alarm.strings; sourceTree = "<group>"; };
-		F9BF13852AE3FEDF006A262A /* GroupAlarmListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupAlarmListCollectionViewCell.swift; path = "/Users/yaewon/Desktop/Togetup-iOS-Refatoring/TogetUp/TogetUp/Screen/Alarm/View/Cell/GroupAlarmListCollectionViewCell.swift"; sourceTree = "<absolute>"; };
+		F9BF13852AE3FEDF006A262A /* GroupAlarmListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmListCollectionViewCell.swift; sourceTree = "<group>"; };
 		F9C6022F2B72044D008A43A0 /* CustomFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F9C8ADC72A9CDF7500F541FD /* MissionListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionListDetailViewController.swift; sourceTree = "<group>"; };
 		F9C8ADC92A9CE56700F541FD /* MissionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionListViewController.swift; sourceTree = "<group>"; };
