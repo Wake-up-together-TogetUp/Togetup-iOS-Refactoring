@@ -105,11 +105,11 @@ class GroupCalendarViewController: UIViewController {
     // MARK: - UI Setup
     private func setupUI() {
         view.addSubview(backGroundImage)
-        view.addSubview(calendarView)
         view.addSubview(headerSeparatorView)
-        view.addSubview(toggleCalendarButton)
         view.addSubview(collectionView)
         view.addSubview(rightCharacter)
+        view.addSubview(calendarView)
+        view.addSubview(toggleCalendarButton)
         view.addSubview(leftCharacter)
         view.addSubview(centerCharacter)
         
@@ -198,7 +198,7 @@ class GroupCalendarViewController: UIViewController {
             $0.width.equalTo(153)
             $0.height.equalTo(160)
             $0.centerX.equalTo(view.snp.centerX)
-            $0.bottom.equalTo(view.snp.bottom).inset(0)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(0)
         }
     }
     

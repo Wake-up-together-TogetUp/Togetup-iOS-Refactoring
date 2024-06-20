@@ -10,13 +10,14 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class GroupListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class GroupListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel: GroupViewModel
     private let fetchGroupList = PublishSubject<Void>()
     private var groupResults = [GroupResult]()
     
+    // MARK: - Component
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "그룹"
@@ -52,17 +53,16 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         return collectionView
     }()
     
-    // MARK: - Initializer
     required init?(coder: NSCoder) {
         self.viewModel = GroupViewModel(groupService: GroupService())
         super.init(coder: coder)
     }
     
+    // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         fetchGroupList.onNext(())
     }
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -71,7 +71,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         
     }
     
-    // MARK: - UI Setup
     func setupUI() {
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -98,7 +97,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         }
     }
     
-    // MARK: - Button Actions
     func setupButtonActions() {
         createButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -107,7 +105,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Navigation
     func showCreateViewController() {
         let createVC = CreateGroupViewController()
         let navigationController = UINavigationController(rootViewController: createVC)
@@ -118,7 +115,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         present(navigationController, animated: true, completion: nil)
     }
     
-    // MARK: - ViewModel Bindings
     private func setupBindings() {
         let input = GroupViewModel.Input(fetchGroupList: fetchGroupList)
         let output = viewModel.transform(input: input)
@@ -137,29 +133,41 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Error Handling
     private func showError(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
-    // MARK: - UICollectionViewDataSource
-    
+}
+
+// MARK: - Extention
+extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupListCollectionViewCell.identifier, for: indexPath) as! GroupListCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupListCollectionViewCell.identifier, for: indexPath) as? GroupListCollectionViewCell
+        else {
+            return UICollectionViewCell()
+        }
         let groupResult = groupResults[indexPath.item]
         cell.configure(with: groupResult)
         return cell
     }
-    
+}
+
+extension GroupListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 40
         let height: CGFloat = 68
         return CGSize(width: width, height: height)
+    }
+}
+extension GroupListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedRoomCode = groupResults[indexPath.item].roomId
+        let roomDetailVC = GroupCalendarViewController()
+        navigationController?.pushViewController(roomDetailVC, animated: true)
     }
 }
