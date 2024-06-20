@@ -11,7 +11,6 @@
 		9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */; };
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
 		9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */; };
-		9576DAC12C20A58D00AB62AA /* CreateGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAF2C20A58D00AB62AA /* CreateGroupModel.swift */; };
 		9576DAC22C20A58D00AB62AA /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB02C20A58D00AB62AA /* GroupModel.swift */; };
 		9576DAC32C20A58D00AB62AA /* CreateAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB22C20A58D00AB62AA /* CreateAlarmView.swift */; };
 		9576DAC42C20A58D00AB62AA /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB32C20A58D00AB62AA /* GroupListViewController.swift */; };
@@ -134,7 +133,6 @@
 		9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
-		9576DAAF2C20A58D00AB62AA /* CreateGroupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupModel.swift; sourceTree = "<group>"; };
 		9576DAB02C20A58D00AB62AA /* GroupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		9576DAB22C20A58D00AB62AA /* CreateAlarmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		9576DAB32C20A58D00AB62AA /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 		9576DAAE2C20A58D00AB62AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9576DAAF2C20A58D00AB62AA /* CreateGroupModel.swift */,
 				9576DAB02C20A58D00AB62AA /* GroupModel.swift */,
 			);
 			path = Model;
@@ -842,7 +839,6 @@
 				F99BE8012AA1BA4C0005E66F /* NetworkLogger.swift in Sources */,
 				F97CDC242B144C530057AA82 /* HomeViewModel.swift in Sources */,
 				9576DAC42C20A58D00AB62AA /* GroupListViewController.swift in Sources */,
-				9576DAC12C20A58D00AB62AA /* CreateGroupModel.swift in Sources */,
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
