@@ -24,6 +24,7 @@
 		9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABD2C20A58D00AB62AA /* inviteViewController.swift */; };
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
+		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
 		95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95F198B02BF760D3002BD1B4 /* RealmSwift */; };
 		95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */; };
 		95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */; };
@@ -144,6 +145,7 @@
 		9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
 		9576DABD2C20A58D00AB62AA /* inviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				9576DAB02C20A58D00AB62AA /* GroupModel.swift */,
+				95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -894,6 +897,7 @@
 				F97CDC262B1458E10057AA82 /* AvatarModel.swift in Sources */,
 				9576DAC22C20A58D00AB62AA /* GroupModel.swift in Sources */,
 				F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */,
+				95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */,
 				F96B32662A8A002800BD3BF9 /* SceneDelegate.swift in Sources */,
 				9576DACA2C20A58D00AB62AA /* CreateGroupViewController.swift in Sources */,
 				F915B38E2A8F99BA00E4696C /* SettingViewController.swift in Sources */,
