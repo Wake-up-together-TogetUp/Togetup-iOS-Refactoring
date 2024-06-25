@@ -60,7 +60,13 @@ class GroupListViewController: UIViewController {
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         fetchGroupList.onNext(())
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
@@ -68,32 +74,31 @@ class GroupListViewController: UIViewController {
         setupUI()
         setupBindings()
         setupButtonActions()
-        
     }
     
     func setupUI() {
         view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(-22)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         view.addSubview(createButton)
-        createButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        createButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         view.addSubview(inviteButton)
-        inviteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalTo(createButton.snp.leading).offset(-10)
+        inviteButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalTo(createButton.snp.leading).offset(-10)
         }
         
         view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
@@ -167,7 +172,7 @@ extension GroupListViewController: UICollectionViewDelegateFlowLayout {
 extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedRoomCode = groupResults[indexPath.item].roomId
-        let roomDetailVC = GroupCalendarViewController()
+        let roomDetailVC = GroupCalendarViewController(roomId: selectedRoomCode)
         navigationController?.pushViewController(roomDetailVC, animated: true)
     }
 }

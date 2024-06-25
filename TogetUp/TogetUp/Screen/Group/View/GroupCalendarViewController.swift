@@ -8,8 +8,22 @@
 import UIKit
 import SnapKit
 import FSCalendar
+import RxSwift
 
 class GroupCalendarViewController: UIViewController {
+    
+    private let viewModel: GroupCalendarViewModel
+    private let disposeBag = DisposeBag()
+    private let dateSelectedSubject = PublishSubject<Date>()
+    
+    init(roomId: Int) {
+        self.viewModel = GroupCalendarViewModel(roomId: roomId)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +36,14 @@ class GroupCalendarViewController: UIViewController {
     private let previousMonthButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "calendarLeft"), for: .normal)
+        button.addTarget(self, action: #selector(previousMonthTapped), for: .touchUpInside)
         return button
     }()
     
     private let nextMonthButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "calendarRight"), for: .normal)
+        button.addTarget(self, action: #selector(nextMonthTapped), for: .touchUpInside)
         return button
     }()
     
@@ -38,17 +54,17 @@ class GroupCalendarViewController: UIViewController {
     }()
     
     private var rightCharacter: UIImageView = {
-        let img = UIImageView(image: UIImage(named: "itemR_chick"))
+        let img = UIImageView(image: UIImage(named: "itemR_SENIOR_CHICK"))
         return img
     }()
     
     private let leftCharacter: UIImageView = {
-        let img = UIImageView(image: UIImage(named: "itemL_chick"))
+        let img = UIImageView(image: UIImage(named: "itemL_SENIOR_CHICK"))
         return img
     }()
     
     private let centerCharacter: UIImageView = {
-        let img = UIImageView(image: UIImage(named: "C_chick"))
+        let img = UIImageView(image: UIImage(named: "C_SENIOR_CHICK"))
         return img
     }()
     
@@ -79,7 +95,7 @@ class GroupCalendarViewController: UIViewController {
     
     private var backGroundImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "bg_chick")
+        view.image = UIImage(named: "bg_SENIOR_CHICK")
         return view
     }()
     
@@ -102,7 +118,6 @@ class GroupCalendarViewController: UIViewController {
         return collectionView
     }()
     
-    // MARK: - UI Setup
     private func setupUI() {
         view.addSubview(backGroundImage)
         view.addSubview(headerSeparatorView)
@@ -112,6 +127,8 @@ class GroupCalendarViewController: UIViewController {
         view.addSubview(toggleCalendarButton)
         view.addSubview(leftCharacter)
         view.addSubview(centerCharacter)
+        view.addSubview(previousMonthButton)
+        view.addSubview(nextMonthButton)
         
         calendarView.delegate = self
         calendarView.dataSource = self
@@ -130,14 +147,14 @@ class GroupCalendarViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.isTranslucent = false
         navigationItem.title = "그룹 캘린더"
+        navigationController?.navigationBar.topItem?.title = ""
+        navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingButtonTapped))
     }
     
     private func setupCustomHeader() {
         let headerView = calendarView.calendarHeaderView
         headerView.backgroundColor = UIColor(named: "secondary050")
-        headerView.addSubview(previousMonthButton)
-        headerView.addSubview(nextMonthButton)
         
         previousMonthButton.snp.makeConstraints {
             $0.centerY.equalTo(headerView)
@@ -202,11 +219,37 @@ class GroupCalendarViewController: UIViewController {
         }
     }
     
-    // MARK: - Bindings
     private func setupBindings() {
+         let input = GroupCalendarViewModel.Input(
+             viewWillAppear: rx.sentMessage(#selector(UIViewController.viewWillAppear(_:))).map { _ in },
+             dateSelected: dateSelectedSubject.asObservable()
+         )
+         
+         let output = viewModel.transform(input: input)
+         
+         output.selectedDateImages
+             .drive(onNext: { [weak self] userLogs in
+                 self?.collectionView.reloadData()
+             })
+             .disposed(by: disposeBag)
+        
+        output.groupName
+            .drive(onNext: { [weak self] groupName in
+                self?.navigationItem.title = groupName
+            })
+            .disposed(by: disposeBag)
+        
+        output.theme
+            .drive(onNext: { [weak self] theme in
+                self?.backGroundImage.image = UIImage(named: "bg_\(theme)")
+                self?.leftCharacter.image = UIImage(named: "itemL_\(theme)")
+                self?.rightCharacter.image = UIImage(named: "itemR_\(theme)")
+                self?.centerCharacter.image = UIImage(named: "C_\(theme)")
+            })
+            .disposed(by: disposeBag)
+        
+        
         toggleCalendarButton.addTarget(self, action: #selector(toggleCalendarScope), for: .touchUpInside)
-        previousMonthButton.addTarget(self, action: #selector(previousMonthTapped), for: .touchUpInside)
-        nextMonthButton.addTarget(self, action: #selector(nextMonthTapped), for: .touchUpInside)
     }
     
     @objc private func toggleCalendarScope() {
@@ -223,11 +266,13 @@ class GroupCalendarViewController: UIViewController {
     }
     
     @objc private func previousMonthTapped() {
-        calendarView.setCurrentPage(calendarView.currentPage.previousMonth, animated: true)
+        var previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
+        calendarView.setCurrentPage(previousMonth!, animated: true)
     }
     
     @objc private func nextMonthTapped() {
-        calendarView.setCurrentPage(calendarView.currentPage.nextMonth, animated: true)
+        var nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
+        calendarView.setCurrentPage(nextMonth!, animated: true)
     }
     
     @objc private func settingButtonTapped() {
@@ -235,7 +280,13 @@ class GroupCalendarViewController: UIViewController {
     }
 }
 // MARK: - extension
-extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
+extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        dateSelectedSubject.onNext(date)
+    }
+}
+
+extension GroupCalendarViewController: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         return 0
     }
@@ -243,12 +294,18 @@ extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource,
 
 extension GroupCalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return viewModel.selectedDateImagesRelay.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as! ImageCollectionViewCell
-        cell.configure(with: UIImage(named: "missionDefault")!, text: "닉네임")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell 
+        else { return UICollectionViewCell() }
+        let userLog = viewModel.selectedDateImagesRelay.value[indexPath.item]
+        if userLog.userCompleteType == "SUCCESS" {
+            cell.configure(with: UIImage(named: "missionDefault")!, text: userLog.userName)
+        } else {
+            cell.configure(with: UIImage(named: "missionDefault")!, text: userLog.userName)
+        }
         return cell
     }
 }
@@ -263,14 +320,4 @@ extension GroupCalendarViewController: UICollectionViewDelegate {
       }
       self.view.layoutIfNeeded()
      }
-}
-
-extension Date {
-    var previousMonth: Date {
-        return Calendar.current.date(byAdding: .month, value: -1, to: self)!
-    }
-    
-    var nextMonth: Date {
-        return Calendar.current.date(byAdding: .month, value: 1, to: self)!
-    }
 }

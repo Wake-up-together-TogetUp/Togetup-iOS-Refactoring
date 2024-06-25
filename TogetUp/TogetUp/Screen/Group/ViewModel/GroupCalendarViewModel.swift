@@ -18,16 +18,23 @@ class GroupCalendarViewModel: ViewModelType {
     }
 
     struct Output {
-        let currentMonth: Driver<String>
         let selectedDateImages: Driver<[UserLog]>
+        let groupName: Driver<String>
+        let theme: Driver<String>
     }
     
     var disposeBag = DisposeBag()
     private let provider = MoyaProvider<GroupAPI>()
     private let networkManager = NetworkManager()
-    private let currentMonthRelay = BehaviorRelay<String>(value: "")
     private let calendarScopeRelay = BehaviorRelay<FSCalendarScope>(value: .month)
     var selectedDateImagesRelay = BehaviorRelay<[UserLog]>(value: [])
+    private let groupNameRelay = BehaviorRelay<String>(value: "")
+    private let themeRelay = BehaviorRelay<String>(value: "")
+    private let roomId: Int
+    
+    init(roomId: Int) {
+        self.roomId = roomId
+    }
     
     func transform(input: Input) -> Output {
         
@@ -44,20 +51,24 @@ class GroupCalendarViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         return Output(
-            currentMonth: currentMonthRelay.asDriver(),
-            selectedDateImages: selectedDateImagesRelay.asDriver()
+            selectedDateImages: selectedDateImagesRelay.asDriver(),
+            groupName: groupNameRelay.asDriver(),
+            theme: themeRelay.asDriver()
         )
     }
     
     private func fetchData(for date: Date) {
-        let roomId = 1
         let localDate = formatDate(date)
         networkManager.handleAPIRequest(provider.rx.request(.getMissionLog(roomId: roomId, localDate: localDate)), dataType: GroupCalendarResponse.self)
             .subscribe(onSuccess: { [weak self] result in
                 switch result {
                 case .success(let response):
                     let userLogs = response.result.userLogList
+                    let roomName = response.result.name
+                    let theme = response.result.theme
                     self?.selectedDateImagesRelay.accept(userLogs)
+                    self?.groupNameRelay.accept(roomName)
+                    self?.themeRelay.accept(theme)
                 case .failure(let error):
                     let errorMessage = self?.networkManager.errorMessage(for: error)
                 }
