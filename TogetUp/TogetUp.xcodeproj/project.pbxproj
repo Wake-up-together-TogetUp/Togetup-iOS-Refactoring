@@ -12,7 +12,6 @@
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
 		9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */; };
 		9576DAC22C20A58D00AB62AA /* GroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB02C20A58D00AB62AA /* GroupModel.swift */; };
-		9576DAC32C20A58D00AB62AA /* CreateAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB22C20A58D00AB62AA /* CreateAlarmView.swift */; };
 		9576DAC42C20A58D00AB62AA /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB32C20A58D00AB62AA /* GroupListViewController.swift */; };
 		9576DAC52C20A58D00AB62AA /* CreateAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAB42C20A58D00AB62AA /* CreateAlarmViewController.swift */; };
 		9576DAC62C20A58D00AB62AA /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9576DAB52C20A58D00AB62AA /* Group.storyboard */; };
@@ -135,7 +134,6 @@
 		9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576DAB02C20A58D00AB62AA /* GroupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
-		9576DAB22C20A58D00AB62AA /* CreateAlarmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		9576DAB32C20A58D00AB62AA /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		9576DAB42C20A58D00AB62AA /* CreateAlarmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewController.swift; sourceTree = "<group>"; };
 		9576DAB62C20A58D00AB62AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Group.storyboard; sourceTree = "<group>"; };
@@ -318,7 +316,6 @@
 			children = (
 				9576DAB72C20A58D00AB62AA /* Cell */,
 				9576DAB52C20A58D00AB62AA /* Group.storyboard */,
-				9576DAB22C20A58D00AB62AA /* CreateAlarmView.swift */,
 				9576DAB32C20A58D00AB62AA /* GroupListViewController.swift */,
 				9576DAB42C20A58D00AB62AA /* CreateAlarmViewController.swift */,
 				9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */,
@@ -909,7 +906,6 @@
 				F98600F82AB038FF00595646 /* AlarmListViewModel.swift in Sources */,
 				95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */,
 				F9EAA56E2B1B0CA80087734E /* UserDataManager.swift in Sources */,
-				9576DAC32C20A58D00AB62AA /* CreateAlarmView.swift in Sources */,
 				F915EA182BF1D0A6002B84BC /* VersionCheckResponseModel.swift in Sources */,
 				F9C8ADCA2A9CE56700F541FD /* MissionListViewController.swift in Sources */,
 				F98601002AB2EDAD00595646 /* SplashViewController.swift in Sources */,
