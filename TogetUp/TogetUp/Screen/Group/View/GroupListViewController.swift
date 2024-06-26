@@ -10,13 +10,14 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class GroupListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class GroupListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel: GroupViewModel
     private let fetchGroupList = PublishSubject<Void>()
     private var groupResults = [GroupResult]()
     
+    // MARK: - Component
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "그룹"
@@ -52,53 +53,55 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         return collectionView
     }()
     
-    // MARK: - Initializer
     required init?(coder: NSCoder) {
-        self.viewModel = GroupViewModel(groupService: GroupService())
+        self.viewModel = GroupViewModel()
         super.init(coder: coder)
     }
     
+    // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         fetchGroupList.onNext(())
     }
     
-    // MARK: - Lifecycle
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupBindings()
         setupButtonActions()
-        
     }
     
-    // MARK: - UI Setup
     func setupUI() {
         view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(-22)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         view.addSubview(createButton)
-        createButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        createButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         view.addSubview(inviteButton)
-        inviteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalTo(createButton.snp.leading).offset(-10)
+        inviteButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalTo(createButton.snp.leading).offset(-10)
         }
         
         view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
-    // MARK: - Button Actions
     func setupButtonActions() {
         createButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -107,7 +110,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Navigation
     func showCreateViewController() {
         let createVC = CreateGroupViewController()
         let navigationController = UINavigationController(rootViewController: createVC)
@@ -118,7 +120,6 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
         present(navigationController, animated: true, completion: nil)
     }
     
-    // MARK: - ViewModel Bindings
     private func setupBindings() {
         let input = GroupViewModel.Input(fetchGroupList: fetchGroupList)
         let output = viewModel.transform(input: input)
@@ -137,29 +138,41 @@ class GroupListViewController: UIViewController, UICollectionViewDataSource, UIC
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Error Handling
     private func showError(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
-    // MARK: - UICollectionViewDataSource
-    
+}
+
+// MARK: - Extention
+extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupListCollectionViewCell.identifier, for: indexPath) as! GroupListCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupListCollectionViewCell.identifier, for: indexPath) as? GroupListCollectionViewCell
+        else {
+            return UICollectionViewCell()
+        }
         let groupResult = groupResults[indexPath.item]
         cell.configure(with: groupResult)
         return cell
     }
-    
+}
+
+extension GroupListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 40
         let height: CGFloat = 68
         return CGSize(width: width, height: height)
+    }
+}
+extension GroupListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedRoomCode = groupResults[indexPath.item].roomId
+        let roomDetailVC = GroupCalendarViewController(roomId: selectedRoomCode)
+        navigationController?.pushViewController(roomDetailVC, animated: true)
     }
 }

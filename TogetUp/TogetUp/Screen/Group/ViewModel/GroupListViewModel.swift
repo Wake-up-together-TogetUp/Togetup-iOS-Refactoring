@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Moya
 
 class GroupViewModel: ViewModelType {
 
@@ -21,18 +22,15 @@ class GroupViewModel: ViewModelType {
     }
 
     var disposeBag = DisposeBag()
-    private let groupService: GroupService
-
-    init(groupService: GroupService) {
-        self.groupService = groupService
-    }
+    private let provider = MoyaProvider<GroupAPI>()
+    private let networkManager = NetworkManager()
 
     func transform(input: Input) -> Output {
         let errorSubject = PublishSubject<String>()
-
+        let request = provider.rx.request(.getGroupList)
         let groupList = input.fetchGroupList
             .flatMapLatest { [unowned self] in
-                self.groupService.requestGroupAPI(api: .getGroupList, responseType: GetGroupListResponse.self)
+                self.networkManager.handleAPIRequest(request, dataType: GetGroupListResponse.self)
                     .asObservable()
                     .materialize()
             }
@@ -60,9 +58,5 @@ class GroupViewModel: ViewModelType {
 
         let error = errorSubject.asDriver(onErrorJustReturn: "알 수 없는 에러가 발생했습니다.")
         return Output(groupList: groupListResult, error: error)
-    }
-
-    private var networkManager: NetworkManager {
-        return NetworkManager()
     }
 }
