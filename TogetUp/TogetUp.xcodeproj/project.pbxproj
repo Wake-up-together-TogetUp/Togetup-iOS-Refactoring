@@ -20,7 +20,7 @@
 		9576DAC92C20A58D00AB62AA /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */; };
 		9576DACA2C20A58D00AB62AA /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */; };
 		9576DACB2C20A58D00AB62AA /* GroupCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */; };
-		9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABD2C20A58D00AB62AA /* inviteViewController.swift */; };
+		9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */; };
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
@@ -142,7 +142,7 @@
 		9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
-		9576DABD2C20A58D00AB62AA /* inviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteScreenViewController.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 				9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */,
 				9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */,
 				9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */,
-				9576DABD2C20A58D00AB62AA /* inviteViewController.swift */,
+				9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -889,7 +889,7 @@
 				F91BEF132AF503D3003395A0 /* FloatingPannelViewController.swift in Sources */,
 				F91D01962AC2C74F003841D8 /* AlarmScheduleManager.swift in Sources */,
 				F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */,
-				9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */,
+				9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */,
 				9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */,
 				F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */,
 				F98600F02AAEC04A00595646 /* MissionViewModel.swift in Sources */,
