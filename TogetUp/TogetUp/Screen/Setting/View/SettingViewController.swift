@@ -23,14 +23,14 @@ class SettingViewController: UIViewController {
     private let viewModel = SettingViewModel()
     private let disposeBag = DisposeBag()
     private let realmManger = RealmAlarmDataManager()
+    private let personalnfoURL = "https://togetup.notion.site/TogetUp-47ab1dff223e403db68fbf90b8715b17"
+    private let termsAndConditionsURL = "https://togetup.notion.site/33a5e6556541426b998423370b63397b"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         customUI()
     }
-    
-
-    
+       
     private func customUI() {
         let userInfo = KeyChainManager.shared.getUserInformation()
         userNameLabel.text = userInfo.name
@@ -65,11 +65,9 @@ class SettingViewController: UIViewController {
     }
     
     private func navigate(to url: String) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let vc = storyboard.instantiateViewController(withIdentifier: "WebkitViewController") as? WebkitViewController {
-            vc.urlString = url
-            self.present(vc, animated: true)
-        }
+        let vc = WebkitViewController()
+        vc.urlString = url
+        self.present(vc, animated: true)        
     }
     
     @IBAction func logout(_ sender: Any) {
@@ -127,12 +125,12 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func personalnfoButton(_ sender: UIButton) {
-        navigate(to: "https://togetup.notion.site/TogetUp-47ab1dff223e403db68fbf90b8715b17")
+        navigate(to: personalnfoURL)
     }
     
     
     @IBAction func termsAndConditionsButton(_ sender: UIButton) {
-        navigate(to: "https://togetup.notion.site/33a5e6556541426b998423370b63397b")
+        navigate(to: termsAndConditionsURL)
     }
 }
 
