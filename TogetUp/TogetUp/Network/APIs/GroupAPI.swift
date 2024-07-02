@@ -12,6 +12,7 @@ enum GroupAPI {
     case getGroupList
     case createGroup(CreateGroupRequest)
     case getMissionLog(roomId: Int, localDate: String)
+    case getGroupDetailWithCode(invitationCode: Int)
 }
 
 extension GroupAPI: TargetType {
@@ -27,12 +28,14 @@ extension GroupAPI: TargetType {
             return URLConstant.createGroup
         case .getMissionLog:
             return URLConstant.getMissionLog
+        case .getGroupDetailWithCode:
+            return URLConstant.getGroupDetailWithCode
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getGroupList,.getMissionLog:
+        case .getGroupList,.getMissionLog,.getGroupDetailWithCode:
             return .get
         case .createGroup:
             return .post
@@ -47,12 +50,14 @@ extension GroupAPI: TargetType {
             return .requestJSONEncodable(param)
         case .getMissionLog(let roomId, let localDate):
             return .requestParameters(parameters: ["roomId": roomId, "localDate": localDate], encoding: URLEncoding.queryString)
+        case .getGroupDetailWithCode(let invitationCode):
+                   return .requestParameters(parameters: ["invitationCode": invitationCode], encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .getGroupList, .createGroup, .getMissionLog:
+        case .getGroupList, .createGroup, .getMissionLog, .getGroupDetailWithCode:
             let token = KeyChainManager.shared.getToken()
             return [
                 "Authorization": "Bearer \(token ?? "")",

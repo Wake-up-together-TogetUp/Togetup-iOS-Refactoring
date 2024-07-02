@@ -46,3 +46,21 @@ struct GroupResult: Codable {
     let mission: String
     let kr: String
 }
+
+struct GroupResponse: Codable {
+    let httpStatusCode: Int
+    let httpReasonPhrase: String
+    let message: String
+    let result: GroupInfo
+}
+
+struct GroupInfo: Codable {
+    let id: Int
+    let icon: String
+    let name: String
+    let intro: String
+    let createdAt: String
+    let headCount: Int
+    let missionObjectId: Int
+    let missionKr: String
+}
