@@ -9,7 +9,6 @@ import UIKit
 
 extension UIFont {
     public enum FontType: String {
-        case extraBold = "ExtraBold"
         case bold = "Bold"
         case semiBold = "SemiBold"
         case regular = "Regular"
@@ -20,10 +19,10 @@ extension UIFont {
     }
     
     // Title
-    class var titleBLarge: UIFont { return AppleSDGothicNeo(.extraBold, size: 30) }
-    class var titleMLarge: UIFont { return AppleSDGothicNeo(.extraBold, size: 26) }
-    class var titleLarge: UIFont { return AppleSDGothicNeo(.extraBold, size: 20) }
-    class var titleMedium: UIFont { return AppleSDGothicNeo(.extraBold, size: 18) }
+    class var titleBLarge: UIFont { return AppleSDGothicNeo(.bold, size: 30) }
+    class var titleMLarge: UIFont { return AppleSDGothicNeo(.bold, size: 26) }
+    class var titleLarge: UIFont { return AppleSDGothicNeo(.bold, size: 20) }
+    class var titleMedium: UIFont { return AppleSDGothicNeo(.bold, size: 18) }
     class var titleSmall: UIFont { return AppleSDGothicNeo(.bold, size: 14) }
     
     // Label
