@@ -15,6 +15,10 @@ class InviteScreenViewController: UIViewController {
         $0.image = UIImage(named: "bg_inviteScreen")
     }
     
+    private let cancleButton = UIButton().then {
+        $0.setImage(UIImage(named: "x"), for: .normal)
+    }
+    
     private let circleView = UIView().then {
         $0.backgroundColor = UIColor(named: "secondary050")
         $0.layer.cornerRadius = 43
@@ -46,8 +50,6 @@ class InviteScreenViewController: UIViewController {
         $0.textAlignment = .center
         $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
         $0.textColor = UIColor(red: 0.376, green: 0.365, blue: 0.384, alpha: 1)
-
-
     }
     
     private var memberCountLabel = UILabel().then {
@@ -98,11 +100,13 @@ class InviteScreenViewController: UIViewController {
         view.backgroundColor = .white
         setupUI()
         setupConstraints()
+        cancleButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Setup UI
     private func setupUI() {
         view.addSubview(backGround)
+        view.addSubview(cancleButton)
         view.addSubview(circleView)
         circleView.addSubview(missionImageLabel)
         view.addSubview(groupNameLabel)
@@ -119,9 +123,16 @@ class InviteScreenViewController: UIViewController {
         backGround.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        cancleButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(64)
+            $0.width.height.equalTo(24)
+        }
+        
         circleView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+            $0.top.equalTo(cancleButton.snp.bottom).offset(32)
             $0.width.height.equalTo(86)
         }
         
@@ -143,6 +154,7 @@ class InviteScreenViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(introLabel.snp.bottom).offset(16)
         }
+        
         memberCountLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(missionTitleLabel.snp.top).offset(-8)
@@ -168,5 +180,9 @@ class InviteScreenViewController: UIViewController {
             $0.bottom.equalToSuperview().offset(-58)
             $0.height.equalTo(56)
         }
+    }
+    
+    @objc private func cancelButtonTapped() {
+        self.dismiss(animated: true)
     }
 }

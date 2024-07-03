@@ -108,6 +108,18 @@ class GroupListViewController: UIViewController {
                 self?.showCreateViewController()
             })
             .disposed(by: disposeBag)
+        
+        inviteButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.showInviteViewController()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func showInviteViewController() {
+        let inviteVC = InviteScreenViewController()
+        inviteVC.modalPresentationStyle = .fullScreen
+        present(inviteVC, animated: true, completion: nil)
     }
     
     func showCreateViewController() {
