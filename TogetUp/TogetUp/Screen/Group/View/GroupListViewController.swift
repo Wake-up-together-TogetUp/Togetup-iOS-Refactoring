@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 import RxSwift
 import RxCocoa
-import SnapKit
 
 class GroupListViewController: UIViewController {
     // MARK: - Properties
@@ -18,29 +19,23 @@ class GroupListViewController: UIViewController {
     private var groupResults = [GroupResult]()
     
     // MARK: - Component
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "그룹"
-        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 26)
-        return label
-    }()
+    private let titleLabel = UILabel().then {
+        $0.text = "그룹"
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 26)
+    }
     
-    let inviteButton: UIButton = {
-        let button = UIButton()
+    private let inviteButton = UIButton().then {
         let image = UIImage(named: "user-plus-01")
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        return button
-    }()
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .black
+    }
     
-    let createButton: UIButton = {
-        let button = UIButton()
+    private let createButton = UIButton().then {
         let image = UIImage(named: "message-plus-square")
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        return button
-    }()
-    
+        $0.setImage(image, for: .normal)
+        $0.tintColor = .black
+    }
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -76,33 +71,34 @@ class GroupListViewController: UIViewController {
         setupButtonActions()
     }
     
-    func setupUI() {
+    private func setupUI() {
         view.addSubview(titleLabel)
+        view.addSubview(createButton)
+        view.addSubview(inviteButton)
+        view.addSubview(collectionView)
+
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.leading.equalToSuperview().offset(20)
         }
         
-        view.addSubview(createButton)
         createButton.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
-        view.addSubview(inviteButton)
         inviteButton.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel)
             $0.trailing.equalTo(createButton.snp.leading).offset(-10)
         }
-        
-        view.addSubview(collectionView)
+
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
-    func setupButtonActions() {
+    private func setupButtonActions() {
         createButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.showCreateViewController()
@@ -111,18 +107,12 @@ class GroupListViewController: UIViewController {
         
         inviteButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.showInviteViewController()
+                self?.showAlert()
             })
             .disposed(by: disposeBag)
     }
     
-    func showInviteViewController() {
-        let inviteVC = InviteScreenViewController()
-        inviteVC.modalPresentationStyle = .fullScreen
-        present(inviteVC, animated: true, completion: nil)
-    }
-    
-    func showCreateViewController() {
+    private func showCreateViewController() {
         let createVC = CreateGroupViewController()
         let navigationController = UINavigationController(rootViewController: createVC)
         navigationController.modalPresentationStyle = .fullScreen
@@ -155,9 +145,110 @@ class GroupListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    @objc private func dismissAlert(_ sender: UIButton) {
+        guard let backgroundView = sender.superview?.superview else { return }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            backgroundView.alpha = 0
+        }) { _ in
+            backgroundView.removeFromSuperview()
+        }
+    }
+    
+    private func showAlert() {
+        let backgroundView = UIView().then {
+            $0.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            $0.alpha = 0
+        }
+        
+        let alertView = UIView().then {
+            $0.backgroundColor = UIColor(named: "secondary025")
+            $0.layer.cornerRadius = 12
+            $0.layer.borderWidth = 2
+            $0.layer.masksToBounds = true
+        }
+        
+        let alertTitleLabel = UILabel().then {
+            $0.text = "초대코드로 참여하기"
+            $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+            $0.textAlignment = .center
+        }
+        
+        let textField = UITextField().then {
+            $0.borderStyle = .roundedRect
+            $0.placeholder = "초대코드를 입력해주세요"
+            $0.layer.cornerRadius = 12
+            $0.layer.borderWidth = 2
+        }
+        
+        let dismissButton = UIButton(type: .system).then {
+            $0.setTitle("가입 취소하기", for: .normal)
+            $0.layer.borderWidth = 2
+            $0.layer.cornerRadius = 12
+            $0.tintColor = .black
+            $0.backgroundColor = UIColor(named: "secondary025")
+            $0.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
+        }
+        
+        let okButton = UIButton(type: .system).then {
+            $0.setTitle("계속 진행하기", for: .normal)
+            $0.layer.borderWidth = 2
+            $0.layer.cornerRadius = 12
+            $0.tintColor = .white
+            $0.backgroundColor = UIColor(named: "primary400")
+            $0.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
+        }
+        
+        view.addSubview(backgroundView)
+        backgroundView.addSubview(alertView)
+        alertView.addSubview(alertTitleLabel)
+        alertView.addSubview(okButton)
+        alertView.addSubview(textField)
+        alertView.addSubview(dismissButton)
+        
+        backgroundView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        alertView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalTo(296)
+            $0.height.equalTo(184)
+        }
+        
+        alertTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(alertView).offset(24)
+            $0.left.right.equalTo(alertView).inset(20)
+        }
+        
+        textField.snp.makeConstraints {
+            $0.top.equalTo(alertTitleLabel.snp.bottom).offset(16)
+            $0.height.equalTo(48)
+            $0.left.right.equalTo(alertView).inset(20)
+        }
+        
+        dismissButton.snp.makeConstraints {
+            $0.bottom.equalTo(alertView).offset(-20)
+            $0.left.equalTo(alertView).offset(20)
+            $0.height.equalTo(40)
+            $0.width.equalTo(124)
+        }
+        
+        okButton.snp.makeConstraints {
+            $0.bottom.equalTo(alertView).offset(-20)
+            $0.right.equalTo(alertView).offset(-20)
+            $0.height.equalTo(40)
+            $0.width.equalTo(124)
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            backgroundView.alpha = 1
+        }
+    }
 }
 
-// MARK: - Extention
+// MARK: - Extension
 extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupResults.count
@@ -181,6 +272,7 @@ extension GroupListViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
+
 extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedRoomCode = groupResults[indexPath.item].roomId
