@@ -12,7 +12,7 @@ enum GroupAPI {
     case getGroupList
     case createGroup(CreateGroupRequest)
     case getMissionLog(roomId: Int, localDate: String)
-    case getGroupDetailWithCode(invitationCode: Int)
+    case getGroupDetailWithCode(invitationCode: String)
 }
 
 extension GroupAPI: TargetType {
