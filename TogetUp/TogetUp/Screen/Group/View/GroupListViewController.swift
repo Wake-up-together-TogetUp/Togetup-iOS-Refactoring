@@ -17,6 +17,7 @@ class GroupListViewController: UIViewController {
     private let viewModel: GroupViewModel
     private let fetchGroupList = PublishSubject<Void>()
     private var groupResults = [GroupResult]()
+    private let isCodeInvalid = BehaviorRelay<Bool>(value: false)
     
     // MARK: - Component
     private let titleLabel = UILabel().then {
@@ -111,6 +112,7 @@ class GroupListViewController: UIViewController {
         setupUI()
         setupBindings()
         setupButtonActions()
+        setupTextFieldBinding()
     }
     
     private func setupUI() {
@@ -182,6 +184,15 @@ class GroupListViewController: UIViewController {
         }
         
         backgroundView.alpha = 0
+    }
+    
+    private func setupTextFieldBinding() {
+        Observable.combineLatest(textField.rx.text.orEmpty, isCodeInvalid)
+            .subscribe(onNext: { [weak self] (text, isInvalid) in
+                let borderColor = (isInvalid && !text.isEmpty) ? UIColor.red.cgColor : UIColor.black.cgColor
+                self?.textField.layer.borderColor = borderColor
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
@@ -262,9 +273,13 @@ class GroupListViewController: UIViewController {
     }
     
     private func dismissAlert() {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView.alpha = 0
-        }
+        }, completion: { _ in
+            self.textField.text = ""
+            self.textField.layer.borderColor = UIColor.black.cgColor
+            self.textField.resignFirstResponder()
+        })
     }
     
     private func showErrorAlert(message: String) {
