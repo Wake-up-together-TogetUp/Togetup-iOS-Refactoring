@@ -228,7 +228,14 @@ class GroupListViewController: UIViewController {
     }
     
     private func redirectToNextPage() {
-        print("통과")
+        guard let invitationCode = textField.text else { return }
+        let inviteVC = InviteScreenViewController(invitationCode : invitationCode)
+        let navigationController = UINavigationController(rootViewController: inviteVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.isNavigationBarHidden = true
+        navigationController.navigationBar.backgroundColor = .clear
+        navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        present(navigationController, animated: true, completion: nil)
         dismissAlert()
     }
     
