@@ -94,7 +94,7 @@ class CreateAlarmViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUI()
-        bindViewModel()
+        setupBindings()
     }
     
     private func setupUI() {
@@ -195,7 +195,7 @@ class CreateAlarmViewController: UIViewController {
         sender.setTitleColor(sender.isSelected ? .white : UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
     }
     
-    private func bindViewModel() {
+    private func setupBindings() {
         let weekdaySelection = Observable.merge(
             weekdayButtons.map { button in
                 button.rx.tap.map { _ in
