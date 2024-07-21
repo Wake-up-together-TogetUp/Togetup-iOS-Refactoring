@@ -5,11 +5,25 @@
 //  Created by nayeon  on 4/12/24.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 import SnapKit
 import Then
 
 class InviteScreenViewController: UIViewController {
+    
+    private let viewModel: InviteViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(invitationCode: String) {
+        self.viewModel = InviteViewModel(invitationCode: invitationCode)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let backGround = UIImageView().then {
         $0.image = UIImage(named: "bg_inviteScreen")
@@ -100,10 +114,9 @@ class InviteScreenViewController: UIViewController {
         view.backgroundColor = .white
         setupUI()
         setupConstraints()
-        cancleButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        setupBindings()
     }
     
-    // MARK: - Setup UI
     private func setupUI() {
         view.addSubview(backGround)
         view.addSubview(cancleButton)
@@ -182,7 +195,33 @@ class InviteScreenViewController: UIViewController {
         }
     }
     
-    @objc private func cancelButtonTapped() {
-        self.dismiss(animated: true)
+    private func setupBindings() {
+        let input = InviteViewModel.Input(viewWillAppear: rx.viewWillAppear,
+                                          tapBackButton: cancleButton.rx.tap.asSignal(),
+                                          tapAcceptButton: actionButton.rx.tap.asSignal()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.groupInfo.drive(onNext: { [weak self] info in
+            self?.groupNameLabel.text = info.name
+            self?.introLabel.text = info.intro
+            self?.openingDateLabel.text = info.createdAt
+            self?.memberCountLabel.text = "\(info.headCount)/10명"
+            self?.missionContentLabel.text = info.missionKr
+            self?.missionImageLabel.text = info.icon
+        }).disposed(by: disposeBag)
+        
+        output.didBackButtonTapped
+            .emit(onNext: { [weak self] in
+                self?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.didAcceptButtonTapped
+            .emit(onNext: { [weak self] in
+                
+            })
+            .disposed(by: disposeBag)
     }
 }
