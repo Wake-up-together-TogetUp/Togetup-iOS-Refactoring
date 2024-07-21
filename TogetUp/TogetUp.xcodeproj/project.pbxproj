@@ -25,6 +25,7 @@
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
 		95B1C2912C245FF200A04364 /* GroupCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */; };
+		95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2972C2F314900A04364 /* InviteViewModel.swift */; };
 		95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95F198B02BF760D3002BD1B4 /* RealmSwift */; };
 		95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */; };
 		95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */; };
@@ -146,6 +147,7 @@
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
+		95B1C2972C2F314900A04364 /* InviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewModel.swift; sourceTree = "<group>"; };
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */,
 				9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */,
 				95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */,
+				95B1C2972C2F314900A04364 /* InviteViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				F915EA182BF1D0A6002B84BC /* VersionCheckResponseModel.swift in Sources */,
 				F9C8ADCA2A9CE56700F541FD /* MissionListViewController.swift in Sources */,
 				F98601002AB2EDAD00595646 /* SplashViewController.swift in Sources */,
+				95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */,
 				9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */,
 				F97CDC1E2B13344A0057AA82 /* TimelineCollectionViewCell.swift in Sources */,
 			);
