@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
+		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
 		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
 		9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */; };
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
@@ -129,6 +130,7 @@
 
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
+		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
 		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
 		9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				F96B32792A8A022100BD3BF9 /* Network */,
 				F96B32782A8A021900BD3BF9 /* Resource */,
 				F96B32772A8A020F00BD3BF9 /* Screen */,
+				9562FCB22C3C0118009ED55F /* apple-app-site-association */,
 			);
 			path = TogetUp;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				F915EA1A2BF21EDD002B84BC /* IconAssets.xcassets in Resources */,
 				F99D0E972BB8418600437025 /* 1_onboarding.json in Resources */,
 				F991D0D52BC55F9600893E67 /* 2_onboarding.json in Resources */,
+				9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */,
 				F991D0D32BC5107B00893E67 /* 3_onboarding.json in Resources */,
 				F93140672A8FBD30000FB717 /* Home.storyboard in Resources */,
 				F96B326B2A8A002800BD3BF9 /* Main.storyboard in Resources */,
@@ -1108,11 +1112,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TogetUp/TogetUp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9HP6SS4WYV;
+				DEVELOPMENT_TEAM = 9HP6SS4WYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TogetUp/Resource/Supports/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "TogetUp에서 미션을 수행하기 위해 카메라 접근 권한이 필요합니다.";
@@ -1137,7 +1139,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yaewon.TogetUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "TogetUp Debug";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1155,11 +1156,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TogetUp/TogetUp.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9HP6SS4WYV;
+				DEVELOPMENT_TEAM = 9HP6SS4WYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TogetUp/Resource/Supports/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "TogetUp에서 미션을 수행하기 위해 카메라 접근 권한이 필요합니다.";
@@ -1180,7 +1180,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yaewon.TogetUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "TogetUp Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
