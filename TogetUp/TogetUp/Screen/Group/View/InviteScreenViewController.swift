@@ -109,6 +109,12 @@ class InviteScreenViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -220,7 +226,8 @@ class InviteScreenViewController: UIViewController {
         
         output.didAcceptButtonTapped
             .emit(onNext: { [weak self] in
-                
+                let joinAlarmVC = GroupJoinAlarmViewController()
+                self?.navigationController?.pushViewController(joinAlarmVC, animated: true)
             })
             .disposed(by: disposeBag)
     }
