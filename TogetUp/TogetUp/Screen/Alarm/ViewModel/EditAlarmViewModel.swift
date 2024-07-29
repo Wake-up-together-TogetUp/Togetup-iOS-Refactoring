@@ -35,6 +35,7 @@ class EditAlarmViewModel {
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in
                 switch result {
                 case .success(let response):
+                    print(response)
                     let alarmId = response.result
                     self?.realmManager.updateAlarm(with: param, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
                     AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)

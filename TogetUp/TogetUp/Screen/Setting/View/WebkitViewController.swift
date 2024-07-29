@@ -7,14 +7,25 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 class WebkitViewController: UIViewController {
-    @IBOutlet weak var webView: WKWebView!
+    private let webView = WKWebView()
     var urlString: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setConstraints()
         loadWebPage()
+    }
+    
+    private func setConstraints() {
+        self.view.addSubview(webView)
+        
+        webView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func loadWebPage() {

@@ -1,5 +1,4 @@
 {
-  "originHash" : "a9daacf8c15a87220783fddeebb93763c33ddfd005a29ab8a7a087fc33cce9c0",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -13,10 +12,19 @@
     {
       "identity" : "floatingpanel",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scenee/FloatingPanel",
+      "location" : "https://github.com/scenee/FloatingPanel.git",
       "state" : {
-        "revision" : "8f2be39bf49b4d5e22bbf7bdde69d5b76d0ecd2a",
-        "version" : "2.8.2"
+        "revision" : "22d46c526084724a718b8c39ab77f12452712cc7",
+        "version" : "2.8.3"
+      }
+    },
+    {
+      "identity" : "fscalendar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WenchaoD/FSCalendar",
+      "state" : {
+        "revision" : "0fbdec5172fccb90f707472eeaea4ffe095278f6",
+        "version" : "2.8.4"
       }
     },
     {
@@ -96,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core.git",
       "state" : {
-        "revision" : "9cf7ef4ad8e2f4c7a519c9a395ca3d253bb87aa8",
-        "version" : "14.6.2"
+        "revision" : "f3d7ae5f9f31d90b327a64536bb7801cc69fd85b",
+        "version" : "14.9.0"
       }
     },
     {
@@ -106,7 +114,7 @@
       "location" : "https://github.com/realm/realm-swift",
       "state" : {
         "branch" : "master",
-        "revision" : "21ac01d5ae30dcc156e0e43e47c4afe39cc0367f"
+        "revision" : "c3492edb42105fce22eccd8a582304abab34d2a1"
       }
     },
     {
@@ -130,7 +138,7 @@
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
       "state" : {
         "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
         "version" : "5.7.1"
@@ -146,5 +154,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

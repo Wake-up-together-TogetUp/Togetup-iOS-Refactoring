@@ -51,6 +51,11 @@ class MissionPerformViewController: UIViewController {
         updateAlarmCompletedTime(alarmId: self.alarmId)
         completeMission()
     }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        startCountdown()
+//    }
     
     // MARK: - Custom Method
     private func updateAlarmCompletedTime(alarmId: Int) {
