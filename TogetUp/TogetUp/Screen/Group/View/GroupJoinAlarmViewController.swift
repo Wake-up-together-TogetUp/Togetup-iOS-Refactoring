@@ -12,6 +12,9 @@ import UIKit
 
 class GroupJoinAlarmViewController: UIViewController {
     // MARK: - Properties
+    private let viewModel = GroupJoinAlarmViewModel()
+    private let disposeBag = DisposeBag()
+    
     private let vibrationToggle = UISwitch()
     
     lazy var timePicker: UIDatePicker = {
@@ -260,7 +263,51 @@ class GroupJoinAlarmViewController: UIViewController {
     }
     
     private func setupBindings() {
+        let viewModel = GroupJoinAlarmViewModel()
+        
+        let weekdaySelection = Observable.merge(
+            weekdayButtons.map { button in
+                button.rx.tap.map { _ in
+                    self.weekdayButtons.map { $0.isSelected }
+                }
+            }
+        ).startWith(weekdayButtons.map { $0.isSelected })
 
+        let input = GroupJoinAlarmViewModel.Input(
+            alarmName: alarmNameTextField.rx.text.orEmpty.asObservable(),
+            timeSelected: timePicker.rx.date.asObservable(),
+            weekdaySelection: weekdaySelection,
+            vibrationEnabled: vibrationToggle.rx.isOn.asObservable(),
+            joinButtonTapped: openedButton.rx.tap.asObservable(),
+            roomId: 25,
+            missionId: 2,
+            missionObjectId: 50
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isJoinButtonEnabled
+            .bind(to: openedButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.joinGroupResponse
+            .subscribe(onNext: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.showAlert(message: "그룹에 성공적으로 참여했습니다.")
+                    self?.dismiss(animated: true)
+                case .failure(let error):
+                    self?.showAlert(message: "그룹 참여에 실패했습니다: \(error.localizedDescription)")
+                    self?.dismiss(animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
     
     @objc private func cancelButtonTapped() {
