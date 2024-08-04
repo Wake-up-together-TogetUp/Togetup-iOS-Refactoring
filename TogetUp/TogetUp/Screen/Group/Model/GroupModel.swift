@@ -29,7 +29,7 @@ struct GroupAlarmRequest: Codable {
     let sunday: Bool
     let isVibrate: Bool
     let missionId: Int
-    let missionObjectId: Int?
+    let missionObjectId: Int
 }
 
 struct GetGroupListResponse: Codable {
