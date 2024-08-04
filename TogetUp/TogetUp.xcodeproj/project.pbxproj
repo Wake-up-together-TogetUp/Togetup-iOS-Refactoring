@@ -11,6 +11,7 @@
 		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
 		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
 		9562FCC92C4D14E1009ED55F /* GroupJoinAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */; };
+		9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */; };
 		9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */; };
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
 		9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */; };
@@ -134,6 +135,7 @@
 		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
 		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
 		9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewController.swift; sourceTree = "<group>"; };
+		9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9576DA1D2C1C27D300AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */,
 				95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */,
 				95B1C2972C2F314900A04364 /* InviteViewModel.swift */,
+				9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -878,6 +881,7 @@
 				F97CDC192B0B79370057AA82 /* PushAlarmModel.swift in Sources */,
 				F99BE7FE2AA0E2440005E66F /* URLConstant.swift in Sources */,
 				F93140642A8FBB43000FB717 /* HomeViewController.swift in Sources */,
+				9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */,
 				F9523E4D2B5C1F7B00B16CCB /* RealmDataManger.swift in Sources */,
 				F9C8ADC82A9CDF7500F541FD /* MissionListDetailViewController.swift in Sources */,
 				F9C602302B72044D008A43A0 /* CustomFloatingPanelLayout.swift in Sources */,
