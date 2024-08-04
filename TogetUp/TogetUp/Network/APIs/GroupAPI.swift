@@ -13,6 +13,7 @@ enum GroupAPI {
     case createGroup(CreateGroupRequest)
     case getMissionLog(roomId: Int, localDate: String)
     case getGroupDetailWithCode(invitationCode: String)
+    case joinGroup(roomId: Int, request: GroupAlarmRequest)
 }
 
 extension GroupAPI: TargetType {
@@ -30,6 +31,8 @@ extension GroupAPI: TargetType {
             return URLConstant.getMissionLog
         case .getGroupDetailWithCode:
             return URLConstant.getGroupDetailWithCode
+        case .joinGroup(let roomId, _):
+            return URLConstant.joinGroup + "\(roomId)"
         }
     }
     
@@ -37,7 +40,7 @@ extension GroupAPI: TargetType {
         switch self {
         case .getGroupList,.getMissionLog,.getGroupDetailWithCode:
             return .get
-        case .createGroup:
+        case .createGroup,.joinGroup:
             return .post
         }
     }
@@ -52,13 +55,16 @@ extension GroupAPI: TargetType {
             return .requestParameters(parameters: ["roomId": roomId, "localDate": localDate], encoding: URLEncoding.queryString)
         case .getGroupDetailWithCode(let invitationCode):
                    return .requestParameters(parameters: ["invitationCode": invitationCode], encoding: URLEncoding.queryString)
+        case .joinGroup(_, let request):
+            return .requestJSONEncodable(request)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .getGroupList, .createGroup, .getMissionLog, .getGroupDetailWithCode:
+        case .getGroupList, .createGroup, .getMissionLog, .getGroupDetailWithCode, .joinGroup:
             let token = KeyChainManager.shared.getToken()
+            print("\(token)")
             return [
                 "Authorization": "Bearer \(token ?? "")",
                 "Content-Type": "application/json"
