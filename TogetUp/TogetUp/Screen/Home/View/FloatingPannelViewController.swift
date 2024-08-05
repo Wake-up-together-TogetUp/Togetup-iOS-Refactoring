@@ -162,7 +162,7 @@ class FloatingPannelViewController: UIViewController {
     private func configureNextAlarmViewUIWithData(nextAlarm: AlarmModel) {
         self.currentAlarmView.backgroundColor = UIColor(named: "secondary050")
         self.iconLabel.text = nextAlarm.icon
-        let timeText = self.convert24HourTo12HourFormat(nextAlarm.alarmTime)
+        let timeText = nextAlarm.alarmTime.toFormattedDateString(from: "HH:mm:ss", to: "a h:mm")
         self.timeLabel.text = timeText
         self.alarmInfoLabel.text = nextAlarm.name
         self.makeNewAlarmButton.isHidden = true
@@ -199,23 +199,6 @@ class FloatingPannelViewController: UIViewController {
         ]
         
         return dayOfWeekMapping[dayOfWeek] ?? ""
-    }
-    
-    private func convert24HourTo12HourFormat(_ time: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "HH:mm:ss"
-        
-        if let date = inputFormatter.date(from: time) {
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "a h:mm"
-            outputFormatter.amSymbol = "am"
-            outputFormatter.pmSymbol = "pm"
-            outputFormatter.locale = Locale(identifier: "en_US")
-            
-            return outputFormatter.string(from: date)
-        } else {
-            return time
-        }
     }
     
     @IBAction func makeNewAlarmButtonTapped(_ sender: Any) {
