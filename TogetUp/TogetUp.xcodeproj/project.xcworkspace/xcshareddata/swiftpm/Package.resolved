@@ -1,4 +1,5 @@
 {
+  "originHash" : "37acdc9df480ed4a46280dc883b37a518bacb9128c2a4a330f76b80371579c99",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -12,10 +13,10 @@
     {
       "identity" : "floatingpanel",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scenee/FloatingPanel.git",
+      "location" : "https://github.com/scenee/FloatingPanel",
       "state" : {
-        "revision" : "22d46c526084724a718b8c39ab77f12452712cc7",
-        "version" : "2.8.3"
+        "revision" : "29185a47bd9f062c060e097641b863ef07f60ba7",
+        "version" : "2.8.4"
       }
     },
     {
@@ -138,7 +139,7 @@
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "location" : "https://github.com/SnapKit/SnapKit",
       "state" : {
         "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
         "version" : "5.7.1"
@@ -154,5 +155,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

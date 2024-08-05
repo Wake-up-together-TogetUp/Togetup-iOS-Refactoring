@@ -95,6 +95,7 @@
 		F99D0E972BB8418600437025 /* 1_onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = F99D0E942BB8418600437025 /* 1_onboarding.json */; };
 		F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99D0E982BB84B8100437025 /* ContentViewController.swift */; };
 		F9A7CC332B8DA36600C73401 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A7CC322B8DA36600C73401 /* ThemeManager.swift */; };
+		F9BF4AA72C60F6BF00F775A8 /* String  + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BF4AA62C60F6BF00F775A8 /* String  + Extension.swift */; };
 		F9C226C62BF65CAC00B14D11 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F9C226C52BF65CAC00B14D11 /* Then */; };
 		F9C602302B72044D008A43A0 /* CustomFloatingPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C6022F2B72044D008A43A0 /* CustomFloatingPanelLayout.swift */; };
 		F9C8ADC82A9CDF7500F541FD /* MissionListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C8ADC72A9CDF7500F541FD /* MissionListDetailViewController.swift */; };
@@ -226,6 +227,7 @@
 		F9BCC93C2BFF014500B6A7F9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Home.strings; sourceTree = "<group>"; };
 		F9BCC93D2BFF014500B6A7F9 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Alarm.strings; sourceTree = "<group>"; };
 		F9BF13852AE3FEDF006A262A /* GroupAlarmListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmListCollectionViewCell.swift; sourceTree = "<group>"; };
+		F9BF4AA62C60F6BF00F775A8 /* String  + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String  + Extension.swift"; sourceTree = "<group>"; };
 		F9C6022F2B72044D008A43A0 /* CustomFloatingPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFloatingPanelLayout.swift; sourceTree = "<group>"; };
 		F9C8ADC72A9CDF7500F541FD /* MissionListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionListDetailViewController.swift; sourceTree = "<group>"; };
 		F9C8ADC92A9CE56700F541FD /* MissionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionListViewController.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				F9944F232ACD8FD800B39476 /* UIImageView + Extension.swift */,
 				F9D679D02AC1786F006B1643 /* UIImagePickerController + Extension.swift */,
 				F9F52C382C319C6D006BCC10 /* UIFont + Extension.swift */,
+				F9BF4AA62C60F6BF00F775A8 /* String  + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				F91BEF132AF503D3003395A0 /* FloatingPannelViewController.swift in Sources */,
 				F91D01962AC2C74F003841D8 /* AlarmScheduleManager.swift in Sources */,
 				F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */,
+				F9BF4AA72C60F6BF00F775A8 /* String  + Extension.swift in Sources */,
 				9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */,
 				9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */,
 				F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */,
