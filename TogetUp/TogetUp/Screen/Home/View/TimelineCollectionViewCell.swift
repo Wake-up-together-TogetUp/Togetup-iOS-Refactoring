@@ -34,6 +34,8 @@ class TimelineCollectionViewCell: UICollectionViewCell {
         alarmInfoLabel.text = "\(model.name) | \(model.missionObject ?? "직접 촬영 미션")"
         
         adjustIconLabelAlphaBasedOnTime(model.alarmTime)
+        let barColor: String = model.alarmType == "PERSONAL" ? "primary200" : "secondary400"
+        colorView.backgroundColor = UIColor(named: barColor)
     }
     
     private func adjustIconLabelAlphaBasedOnTime(_ alarmTime: String) {

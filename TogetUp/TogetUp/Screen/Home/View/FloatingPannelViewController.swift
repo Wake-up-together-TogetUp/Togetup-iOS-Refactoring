@@ -93,7 +93,8 @@ class FloatingPannelViewController: UIViewController {
                 cell.setAttributes(with: alarm)
                 
                 if let nextAlarmId = self?.viewModel.nextAlarmId, alarm.id == nextAlarmId {
-                    cell.backgroundColor = UIColor(named: "primary050")
+                    let color = alarm.alarmType == "PERSONAL" ? "primary050" : "secondary100"
+                    cell.backgroundColor = UIColor(named: color)
                 } else {
                     cell.backgroundColor = .clear
                 }
