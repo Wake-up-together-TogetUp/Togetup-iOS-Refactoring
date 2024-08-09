@@ -14,7 +14,11 @@ class GroupJoinAlarmViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = GroupJoinAlarmViewModel()
     private let disposeBag = DisposeBag()
-    
+    var roomId: Int = 0
+    var icon: String = ""
+    var missionKr: String = ""
+    var missionId: Int = 2
+    var missionObjectId: Int? = 1
     private let vibrationToggle = UISwitch()
     
     lazy var timePicker: UIDatePicker = {
@@ -136,6 +140,9 @@ class GroupJoinAlarmViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron-left"), style: .plain, target: self, action: #selector(cancelButtonTapped))
         navigationItem.title = "알람 설정"
+        
+        missionImageLabel.text = icon
+        missionTextLabel.text = missionKr
         
         view.addSubview(timePicker)
         view.addSubview(containerView)
@@ -279,9 +286,9 @@ class GroupJoinAlarmViewController: UIViewController {
             weekdaySelection: weekdaySelection,
             vibrationEnabled: vibrationToggle.rx.isOn.asObservable(),
             joinButtonTapped: openedButton.rx.tap.asObservable(),
-            roomId: 25,
-            missionId: 2,
-            missionObjectId: 50
+            roomId: roomId,
+            missionId: missionId,
+            missionObjectId: missionObjectId ?? 1
         )
         
         let output = viewModel.transform(input: input)
@@ -294,11 +301,22 @@ class GroupJoinAlarmViewController: UIViewController {
             .subscribe(onNext: { [weak self] result in
                 switch result {
                 case .success:
-                    self?.showAlert(message: "그룹에 성공적으로 참여했습니다.")
-                    self?.dismiss(animated: true)
+                    if let navigationController = self?.navigationController {
+                        navigationController.popViewController(animated: true)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            navigationController.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 case .failure(let error):
-                    self?.showAlert(message: "그룹 참여에 실패했습니다: \(error.localizedDescription)")
-                    self?.dismiss(animated: true)
+                    print("\(error.localizedDescription)")
+                    if let navigationController = self?.navigationController {
+                        navigationController.popViewController(animated: true)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            navigationController.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 }
             })
             .disposed(by: disposeBag)

@@ -15,6 +15,7 @@ class InviteScreenViewController: UIViewController {
     
     private let viewModel: InviteViewModel
     private let disposeBag = DisposeBag()
+    var latestGroupInfo: GroupInfo?
     
     init(invitationCode: String) {
         self.viewModel = InviteViewModel(invitationCode: invitationCode)
@@ -216,6 +217,7 @@ class InviteScreenViewController: UIViewController {
             self?.memberCountLabel.text = "\(info.headCount)/10명"
             self?.missionContentLabel.text = info.missionKr
             self?.missionImageLabel.text = info.icon
+            self?.latestGroupInfo = info
         }).disposed(by: disposeBag)
         
         output.didBackButtonTapped
@@ -226,8 +228,15 @@ class InviteScreenViewController: UIViewController {
         
         output.didAcceptButtonTapped
             .emit(onNext: { [weak self] in
+                guard let self = self, let info = self.latestGroupInfo else { return }
+                
                 let joinAlarmVC = GroupJoinAlarmViewController()
-                self?.navigationController?.pushViewController(joinAlarmVC, animated: true)
+                joinAlarmVC.roomId = info.id
+                joinAlarmVC.icon = info.icon
+                joinAlarmVC.missionId = info.missionObjectId < 64 ? 2 : 3
+                joinAlarmVC.missionKr = info.missionKr
+                joinAlarmVC.missionObjectId = info.missionObjectId
+                self.navigationController?.pushViewController(joinAlarmVC, animated: true)
             })
             .disposed(by: disposeBag)
     }

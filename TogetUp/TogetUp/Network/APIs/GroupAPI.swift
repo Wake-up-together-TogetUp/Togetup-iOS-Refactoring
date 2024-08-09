@@ -64,7 +64,6 @@ extension GroupAPI: TargetType {
         switch self {
         case .getGroupList, .createGroup, .getMissionLog, .getGroupDetailWithCode, .joinGroup:
             let token = KeyChainManager.shared.getToken()
-            print("\(token)")
             return [
                 "Authorization": "Bearer \(token ?? "")",
                 "Content-Type": "application/json"

@@ -64,7 +64,6 @@ class GroupJoinAlarmViewModel: ViewModelType {
                     missionId: input.missionId,
                     missionObjectId: input.missionObjectId
                 )
-                print("\(request)")
                 return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: GroupAlarmRequest.self)
                     .asObservable()
                     .map { $0 }
