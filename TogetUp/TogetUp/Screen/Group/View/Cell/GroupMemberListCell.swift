@@ -64,7 +64,3 @@ class GroupMemberListCell: UITableViewCell {
         }
     }
 }
-
-#Preview {
-    GroupMemberListCell()
-}
