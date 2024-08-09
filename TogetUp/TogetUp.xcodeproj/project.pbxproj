@@ -12,6 +12,7 @@
 		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
 		9562FCC92C4D14E1009ED55F /* GroupJoinAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */; };
 		9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */; };
+		9562FCCF2C622C01009ED55F /* GroupMemberListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */; };
 		9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */; };
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
 		9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */; };
@@ -136,6 +137,7 @@
 		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
 		9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewController.swift; sourceTree = "<group>"; };
 		9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewModel.swift; sourceTree = "<group>"; };
+		9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberListCell.swift; sourceTree = "<group>"; };
 		9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9576DA1D2C1C27D300AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 			children = (
 				9576DAB82C20A58D00AB62AA /* ImageCollectionViewCell.swift */,
 				9576DAB92C20A58D00AB62AA /* GroupListCollectionViewCell.swift */,
+				9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -868,6 +871,7 @@
 				F97CDC2A2B15DDA50057AA82 /* TimelineViewModel.swift in Sources */,
 				9562FCC92C4D14E1009ED55F /* GroupJoinAlarmViewController.swift in Sources */,
 				9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */,
+				9562FCCF2C622C01009ED55F /* GroupMemberListCell.swift in Sources */,
 				F9DA5D842AC146C1008E16A6 /* MissionPerformViewModel.swift in Sources */,
 				F98600F42AAEF3E900595646 /* MissionModel.swift in Sources */,
 				F945D14F2AA4AA1E0093F896 /* WithdrawlModel.swift in Sources */,
