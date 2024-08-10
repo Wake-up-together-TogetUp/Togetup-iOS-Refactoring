@@ -130,8 +130,23 @@ class GroupSettingsViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        title = "그룹 설정"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear
+        
+        appearance.titleTextAttributes = [
+            .font: UIFont(name: "AppleSDGothicNeo-Bold", size: 18),
+            .foregroundColor: UIColor.black
+        ]
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.title = "그룹 설정"
+        navigationController?.navigationBar.topItem?.title = ""
+        navigationController?.navigationBar.tintColor = .black
     }
 
     private func setupViews() {
