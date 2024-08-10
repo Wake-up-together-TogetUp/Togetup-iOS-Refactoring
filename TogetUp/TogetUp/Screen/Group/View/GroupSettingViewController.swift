@@ -92,6 +92,26 @@ class GroupSettingsViewController: UIViewController {
         $0.isScrollEnabled = false
     }
     
+    private let bottomView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
+    private let topSeparatorLine = UIView().then {
+        $0.backgroundColor = .black
+    }
+
+    private let exitButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.forward"), for: .normal)
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+    }
+
+    private let alarmButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "bell.slash"), for: .normal)
+        $0.tintColor = .black
+        $0.addTarget(self, action: #selector(alarmButtonTapped), for: .touchUpInside)
+    }
+    
     private var members: [Member] = [
         Member(name: "Alice", profileImageName: "profile1"),
         Member(name: "Bob", profileImageName: "profile2"),
@@ -117,6 +137,8 @@ class GroupSettingsViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(scrollView)
+        view.addSubview(bottomView)
+        
         scrollView.addSubview(contentView)
         
         contentView.addSubview(containerView)
@@ -132,17 +154,43 @@ class GroupSettingsViewController: UIViewController {
         containerView.addSubview(inviteCodeButton)
         
         contentView.addSubview(tableView)
+        
+        bottomView.addSubview(topSeparatorLine)
+        bottomView.addSubview(exitButton)
+        bottomView.addSubview(alarmButton)
     }
 
     private func setupConstraints() {
         scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(bottomView.snp.top) // 스크롤뷰는 하단 뷰 위쪽까지
         }
         
         contentView.snp.makeConstraints {
             $0.edges.equalTo(scrollView)
             $0.width.equalTo(scrollView)
             $0.bottom.equalTo(tableView.snp.bottom).offset(20)
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(75) // 하단 뷰 높이 설정
+            $0.bottom.equalToSuperview()
+        }
+        
+        topSeparatorLine.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.leading.trailing.top.equalToSuperview()
+        }
+        
+        exitButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+        }
+    
+        alarmButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         containerView.snp.makeConstraints {
@@ -169,7 +217,7 @@ class GroupSettingsViewController: UIViewController {
         }
         
         createdDateLabel.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(16)
+            $0.bottom.equalTo(inviteCodeButton.snp.top).offset(-16)
             $0.leading.equalTo(descriptionLabel.snp.leading)
             $0.trailing.equalTo(descriptionLabel.snp.trailing)
         }
@@ -228,6 +276,14 @@ class GroupSettingsViewController: UIViewController {
 
     @objc private func inviteCodeButtonTapped() {
         print("탭탭")
+    }
+    
+    @objc private func exitButtonTapped() {
+        print("나가기 버튼 클릭됨")
+    }
+
+    @objc private func alarmButtonTapped() {
+        print("알람 설정 버튼 클릭됨")
     }
 }
 
