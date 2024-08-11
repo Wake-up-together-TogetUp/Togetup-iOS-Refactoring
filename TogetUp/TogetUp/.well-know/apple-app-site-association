@@ -1,0 +1,15 @@
+
+{
+        "applinks": {
+            "details": [
+            {
+                "appIDs": ["9HP6SS4WYV"."com.yaewon.TogetUp"],
+                         "components": [
+                         {
+                             "/": "*"
+                    }
+                ]
+            }
+        ]
+    }
+}
