@@ -15,6 +15,7 @@ class GroupCalendarViewController: UIViewController {
     private let viewModel: GroupCalendarViewModel
     private let disposeBag = DisposeBag()
     private let dateSelectedSubject = PublishSubject<Date>()
+    var selectedRoomId: Int = 0
     
     init(roomId: Int) {
         self.viewModel = GroupCalendarViewModel(roomId: roomId)
@@ -286,7 +287,7 @@ class GroupCalendarViewController: UIViewController {
     }
     
     @objc private func settingButtonTapped() {
-        let settinglVC = GroupSettingsViewController()
+        let settinglVC = GroupSettingsViewController(roomId:selectedRoomId)
         navigationController?.pushViewController(settinglVC, animated: true)
     }
 }

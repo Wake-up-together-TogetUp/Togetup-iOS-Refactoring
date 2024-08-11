@@ -5,12 +5,24 @@
 //  Created by nayeon  on 8/6/24.
 //
 
-import UIKit
+import RxSwift
 import SnapKit
 import Then
+import UIKit
 
 class GroupSettingsViewController: UIViewController {
-
+    private let viewModel: GroupSettingsViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(roomId: Int) {
+        self.viewModel = GroupSettingsViewModel(roomId: roomId)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private let scrollView = UIScrollView().then {
         $0.backgroundColor = .white
     }
@@ -58,7 +70,6 @@ class GroupSettingsViewController: UIViewController {
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 2
         $0.layer.masksToBounds = true
-        $0.addTarget(self, action: #selector(inviteCodeButtonTapped), for: .touchUpInside)
     }
     
     private let missionButton = UIButton().then {
@@ -101,15 +112,51 @@ class GroupSettingsViewController: UIViewController {
     }
 
     private let exitButton = UIButton(type: .system).then {
-        $0.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.forward"), for: .normal)
+        let boldConfiguration = UIImage.SymbolConfiguration(weight: .bold)
+        let boldImage = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: boldConfiguration)
+        $0.setImage(boldImage, for: .normal)
         $0.tintColor = .black
         $0.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
     }
+    
+    private let alertView = UIView().then {
+        $0.backgroundColor = UIColor(named: "secondary025")
+        $0.layer.borderColor = UIColor.black.cgColor
+        $0.layer.cornerRadius = 12
+        $0.layer.borderWidth = 2
+        $0.layer.masksToBounds = true
+    }
 
-    private let alarmButton = UIButton(type: .system).then {
-        $0.setImage(UIImage(systemName: "bell.slash"), for: .normal)
+    private let alertTitleLabel = UILabel().then {
+        $0.text = "초대코드"
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
+        $0.textAlignment = .center
+        $0.textColor = .black
+    }
+
+    private let inviteCodeLabel = UILabel().then {
+        $0.text = ""  // 초대코드
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+        $0.textAlignment = .center
+        $0.textColor = UIColor(named: "neutral800")
+    }
+
+    private let dismissButton = UIButton(type: .system).then {
+        $0.setTitle("닫기", for: .normal)
+        $0.layer.borderWidth = 2
+        $0.layer.cornerRadius = 12
         $0.tintColor = .black
-        $0.addTarget(self, action: #selector(alarmButtonTapped), for: .touchUpInside)
+        $0.backgroundColor = UIColor(named: "secondary025")
+        $0.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
+    }
+
+    private let copyButton = UIButton(type: .system).then {
+        $0.setTitle("코드 복사하기", for: .normal)
+        $0.layer.borderWidth = 2
+        $0.layer.cornerRadius = 12
+        $0.tintColor = .white
+        $0.backgroundColor = UIColor(named: "primary400")
+        $0.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
     }
     
     private var members: [Member] = [
@@ -127,6 +174,7 @@ class GroupSettingsViewController: UIViewController {
         setupViews()
         setupConstraints()
         setupTableView()
+        setupBindings()
     }
 
     private func setupNavigationBar() {
@@ -172,13 +220,12 @@ class GroupSettingsViewController: UIViewController {
         
         bottomView.addSubview(topSeparatorLine)
         bottomView.addSubview(exitButton)
-        bottomView.addSubview(alarmButton)
     }
 
     private func setupConstraints() {
         scrollView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(bottomView.snp.top) // 스크롤뷰는 하단 뷰 위쪽까지
+            $0.bottom.equalTo(bottomView.snp.top)
         }
         
         contentView.snp.makeConstraints {
@@ -189,7 +236,7 @@ class GroupSettingsViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(75) // 하단 뷰 높이 설정
+            $0.height.equalTo(75)
             $0.bottom.equalToSuperview()
         }
         
@@ -199,12 +246,7 @@ class GroupSettingsViewController: UIViewController {
         }
         
         exitButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
-        }
-    
-        alarmButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-20)
         }
         
@@ -288,17 +330,89 @@ class GroupSettingsViewController: UIViewController {
             $0.height.equalTo(tableView.contentSize.height)
         }
     }
+    
+    private func setupBindings() {
+        let input = GroupSettingsViewModel.Input(viewDidLoad: Observable.just(()),
+                                                 inviteCodeButtonTapped: inviteCodeButton.rx.tap.asObservable(),
+                                                 exitButtonTapped: exitButton.rx.tap.asObservable())
+        let output = viewModel.transform(input: input)
+        
+        output.groupInfo
+            .drive(onNext: { groupInfo in
+                self.iconImageView.text = groupInfo.missionData.icon
+                self.titleLabel.text = groupInfo.roomData.name
+                self.descriptionLabel.text = groupInfo.roomData.intro
+                self.createdDateLabel.text = groupInfo.roomData.createdAt
 
-    @objc private func inviteCodeButtonTapped() {
-        print("탭탭")
+            })
+            .disposed(by: disposeBag)
+
+        output.didInviteCodeButtonTapped
+            .drive(onNext: { [weak self] inviteCode in
+                self?.showCustomInviteCodeAlert(inviteCode: inviteCode)
+            })
+            .disposed(by: disposeBag)
+        
+        output.didExitButtonTapped
+            .emit(onNext: { isSuccess in
+                print("Exit button 성공: \(isSuccess)")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func showCustomInviteCodeAlert(inviteCode: String) {
+        inviteCodeLabel.text = inviteCode
+
+        view.addSubview(alertView)
+        alertView.addSubview(alertTitleLabel)
+        alertView.addSubview(inviteCodeLabel)
+        alertView.addSubview(dismissButton)
+        alertView.addSubview(copyButton)
+
+        alertView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalTo(270)
+            $0.height.equalTo(155)
+        }
+
+        alertTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(alertView.snp.top).offset(24)
+            $0.centerX.equalToSuperview()
+        }
+
+        inviteCodeLabel.snp.makeConstraints {
+            $0.top.equalTo(alertTitleLabel.snp.bottom).offset(5)
+            $0.centerX.equalToSuperview()
+        }
+
+        dismissButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(24)
+            $0.width.equalTo(115)
+            $0.height.equalTo(40)
+        }
+
+        copyButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(24)
+            $0.width.equalTo(115)
+            $0.height.equalTo(40)
+        }
+    }
+    
+    @objc private func dismissAlert() {
+        alertView.removeFromSuperview()
+    }
+
+    @objc private func copyInviteCode() {
+        UIPasteboard.general.string = inviteCodeLabel.text
+        let alert = UIAlertController(title: nil, message: "초대코드가 복사되었습니다.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc private func exitButtonTapped() {
         print("나가기 버튼 클릭됨")
-    }
-
-    @objc private func alarmButtonTapped() {
-        print("알람 설정 버튼 클릭됨")
     }
 }
 
@@ -363,8 +477,4 @@ extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegat
 struct Member {
     let name: String
     let profileImageName: String
-}
-
-#Preview {
-    GroupSettingsViewController()
 }

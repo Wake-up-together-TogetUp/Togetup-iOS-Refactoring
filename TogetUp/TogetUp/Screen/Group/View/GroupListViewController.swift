@@ -325,6 +325,7 @@ extension GroupListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedRoomCode = groupResults[indexPath.item].roomId
         let roomDetailVC = GroupCalendarViewController(roomId: selectedRoomCode)
+        roomDetailVC.selectedRoomId = selectedRoomCode
         navigationController?.pushViewController(roomDetailVC, animated: true)
     }
 }
