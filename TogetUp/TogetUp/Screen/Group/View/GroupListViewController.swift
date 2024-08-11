@@ -5,11 +5,11 @@
 //  Created by nayeon on 2023/08/18.
 //
 
-import UIKit
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
+import UIKit
 
 class GroupListViewController: UIViewController {
     // MARK: - Properties
@@ -296,7 +296,7 @@ class GroupListViewController: UIViewController {
     }
 }
 
-// MARK: - Extension
+
 extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupResults.count

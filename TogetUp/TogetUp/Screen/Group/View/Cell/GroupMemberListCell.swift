@@ -14,7 +14,7 @@ class GroupMemberListCell: UITableViewCell {
     static let identifier = "GroupMemberListCell"
     
     private let profileImageView = UIImageView().then {
-        $0.backgroundColor = UIColor(named: "neutral300")
+        $0.backgroundColor = .white
         $0.contentMode = .scaleAspectFill
     }
     
@@ -24,12 +24,12 @@ class GroupMemberListCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    private let LevelLabel = UILabel().then {
+    private let levelLabel = UILabel().then {
         $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 11)
         $0.text = "hello"
-        $0.textColor = UIColor(named: "neutra400")
+        $0.textColor = UIColor(named: "neutral400")
     }
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -39,13 +39,13 @@ class GroupMemberListCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupViews() {
         contentView.addSubview(profileImageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(LevelLabel)
+        contentView.addSubview(levelLabel)
     }
-
+    
     private func setupConstraints() {
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -58,9 +58,15 @@ class GroupMemberListCell: UITableViewCell {
             $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
         }
         
-        LevelLabel.snp.makeConstraints {
+        levelLabel.snp.makeConstraints {
             $0.top.equalTo(profileImageView.snp.top)
             $0.leading.equalTo(nameLabel.snp.leading)
         }
+    }
+    
+    func configure(with data: UserProfileData) {
+        nameLabel.text = data.userName
+        profileImageView.image = UIImage(named: "P_\(data.theme)")
+        levelLabel.text = "Lv.\(data.level)"
     }
 }

@@ -13,6 +13,7 @@ import UIKit
 class GroupSettingsViewController: UIViewController {
     private let viewModel: GroupSettingsViewModel
     private let disposeBag = DisposeBag()
+    private var userProfileData: [UserProfileData] = []
     
     init(roomId: Int) {
         self.viewModel = GroupSettingsViewModel(roomId: roomId)
@@ -93,7 +94,7 @@ class GroupSettingsViewController: UIViewController {
     
     private var missionTextLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 16)
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)
         $0.text = "미션 내용"
     }
 
@@ -158,15 +159,6 @@ class GroupSettingsViewController: UIViewController {
         $0.backgroundColor = UIColor(named: "primary400")
         $0.addTarget(self, action: #selector(copyInviteCode), for: .touchUpInside)
     }
-    
-    private var members: [Member] = [
-        Member(name: "Alice", profileImageName: "profile1"),
-        Member(name: "Bob", profileImageName: "profile2"),
-        Member(name: "Bob", profileImageName: "profile2"),
-        Member(name: "Bob", profileImageName: "profile2"),
-        Member(name: "Charlie", profileImageName: "profile3")
-        
-    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -310,7 +302,7 @@ class GroupSettingsViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.equalTo(missionButton.snp.bottom).offset(24)
             $0.leading.trailing.equalTo(contentView).inset(20)
-            $0.height.equalTo(tableView.contentSize.height)
+            $0.height.equalTo(tableView.contentSize.height + 45)
         }
     }
 
@@ -318,17 +310,12 @@ class GroupSettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "GroupMemberListCell")
+        tableView.register(GroupMemberListCell.self, forCellReuseIdentifier: GroupMemberListCell.identifier)
         
         tableView.layer.cornerRadius = 12
         tableView.layer.borderWidth = 2
         tableView.layer.borderColor = UIColor.black.cgColor
         tableView.layer.masksToBounds = true
-        
-        tableView.reloadData()
-        tableView.snp.updateConstraints {
-            $0.height.equalTo(tableView.contentSize.height)
-        }
     }
     
     private func setupBindings() {
@@ -338,11 +325,20 @@ class GroupSettingsViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.groupInfo
-            .drive(onNext: { groupInfo in
+            .drive(onNext: { [weak self] groupInfo in
+                guard let self = self else { return }
+                
+                self.userProfileData = groupInfo.userProfileData
+                self.tableView.reloadData()
+                self.tableView.snp.updateConstraints {
+                    $0.height.equalTo(self.tableView.contentSize.height + 45)
+                }
                 self.iconImageView.text = groupInfo.missionData.icon
                 self.titleLabel.text = groupInfo.roomData.name
                 self.descriptionLabel.text = groupInfo.roomData.intro
                 self.createdDateLabel.text = groupInfo.roomData.createdAt
+                self.missionImageLabel.text = groupInfo.missionData.icon
+                self.missionTextLabel.text = groupInfo.missionData.missionKr
 
             })
             .disposed(by: disposeBag)
@@ -416,8 +412,7 @@ class GroupSettingsViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDataSource & UITableViewDelegate
-
+// MARK: - Extension
 extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -425,16 +420,16 @@ extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        return userProfileData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupMemberListCell", for: indexPath)
-        
-        let member = members[indexPath.row]
-        cell.textLabel?.text = member.name
-        cell.imageView?.image = UIImage(named: member.profileImageName)
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberListCell.identifier, for: indexPath) as? GroupMemberListCell
+        else {
+            return UITableViewCell()
+        }
+        let userProfile = userProfileData[indexPath.row]
+        cell.configure(with: userProfile)
         return cell
     }
     
@@ -472,9 +467,4 @@ extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
     }
-}
-
-struct Member {
-    let name: String
-    let profileImageName: String
 }
