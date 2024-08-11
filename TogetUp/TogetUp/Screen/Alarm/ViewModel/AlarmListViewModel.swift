@@ -113,13 +113,7 @@ class AlarmListViewModel {
             .subscribe(onSuccess: { [weak self] result in
                 switch result {
                 case .success(_):
-                    if self?.realmManager.toggleActivationStatus(for: alarmId) ?? false {
-                        AlarmScheduleManager.shared.scheduleNotification(for: alarmId)
-                    } else {
-                        if self?.realmManager.isAlarmRepeat(alarmId: alarmId) ?? false {
-                            AlarmScheduleManager.shared.removeNotification(for: alarmId) {}
-                        }
-                    }
+                    self?.realmManager.toggleActivationStatusAndNotification(for: alarmId)
                     self?.fetchAlarmsFromRealm()
                 case .failure(let error):
                     print("알람 수정 오류: \(error.localizedDescription)")
