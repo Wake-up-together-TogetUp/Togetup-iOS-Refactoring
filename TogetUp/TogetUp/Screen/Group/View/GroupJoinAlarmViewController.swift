@@ -309,7 +309,14 @@ class GroupJoinAlarmViewController: UIViewController {
                         }
                     }
                 case .failure(let error):
-                    print("\(error.localizedDescription)")
+                    switch error {
+                    case .parsingError:
+                        print("Parsing error occurred")
+                    case .network(let underlyingError):
+                        print("Network error: \(underlyingError.localizedDescription)")
+                    default:
+                        print("Unknown error: \(error.localizedDescription)")
+                    }
                     if let navigationController = self?.navigationController {
                         navigationController.popViewController(animated: true)
                         

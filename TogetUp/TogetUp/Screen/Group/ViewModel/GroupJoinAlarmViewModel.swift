@@ -66,10 +66,13 @@ class GroupJoinAlarmViewModel: ViewModelType {
                 )
                 return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: GroupAlarmRequest.self)
                     .asObservable()
+                    .do(onNext: { response in
+                        print("Response data: \(response)")
+                    })
                     .map { $0 }
                     .catch { error in
-                        let networkError = error as? NetWorkingError ?? .parsingError
-                        return .just(.failure(networkError))
+                        print("Error: \(error.localizedDescription)")
+                        return .just(.failure(error as? NetWorkingError ?? .parsingError))
                     }
             }
         
