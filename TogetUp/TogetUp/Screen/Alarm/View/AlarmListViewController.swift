@@ -12,10 +12,26 @@ import RealmSwift
 
 class AlarmListViewController: UIViewController {
     // MARK: - UI Components
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var personalCollectionView: UICollectionView!
     @IBOutlet weak var addAlarmButton: UIButton!
     @IBOutlet weak var noExistingAlarmLabel: UILabel!
     @IBOutlet weak var setAlarmLabel: UILabel!
+    
+    private lazy var groupCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: self.view.frame.width - 40, height: 124)
+        layout.minimumLineSpacing = 16
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(GroupAlarmCell.self, forCellWithReuseIdentifier: GroupAlarmCell.identifier)
+        return collectionView
+    }()
     
     // MARK: - Properties
     private let viewModel = AlarmListViewModel()
@@ -26,17 +42,22 @@ class AlarmListViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupGroupCollectionView()
         bindLabels()
         fetchAndSaveAlarmsIfFirstLogin()
         setUpNavigationBar()
         setCollectionViewFlowLayout()
+        setGroupCollectionViewFlowLayout()
         personalCollectionViewItemSelected()
+        setupSegmentedControl()
+        updateViewForSelectedSegment()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
+        setGroupCollectionView()
         AlarmScheduleManager.shared.printAllScheduledNotifications()
     }
     
@@ -53,6 +74,17 @@ class AlarmListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func setupGroupCollectionView() {
+        view.addSubview(groupCollectionView)
+        
+        NSLayoutConstraint.activate([
+            groupCollectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
+            groupCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            groupCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            groupCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        ])
+    }
+    
     private func setCollectionView() {
         self.personalCollectionView.delegate = nil
         self.personalCollectionView.dataSource = nil
@@ -66,6 +98,9 @@ class AlarmListViewController: UIViewController {
             }
         }
         .disposed(by: disposeBag)
+    }
+    
+    private func setGroupCollectionView() {
     }
     
     private func personalCollectionViewItemSelected() {
@@ -132,6 +167,13 @@ class AlarmListViewController: UIViewController {
         personalCollectionView.collectionViewLayout = layout
     }
     
+    private func setGroupCollectionViewFlowLayout() {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: self.view.frame.width - 40, height: 124)
+        layout.minimumLineSpacing = 16
+        groupCollectionView.collectionViewLayout = layout
+    }
+    
     private func setUpNavigationBar() {
         let titleLabel = UILabel()
         titleLabel.textColor = UIColor.black
@@ -140,7 +182,39 @@ class AlarmListViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
     }
     
-    // MARK: - @
+    private func setupSegmentedControl() {
+        segmentedControl.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+         segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+         segmentedControl.setTitleTextAttributes([
+             NSAttributedString.Key.foregroundColor: UIColor(named: "neutral400")!,
+             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+         ], for: .normal)
+         segmentedControl.setTitleTextAttributes([
+             NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+         ], for: .selected)
+    }
+    
+    private func updateViewForSelectedSegment() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            personalCollectionView.isHidden = false
+            groupCollectionView.isHidden = true
+        } else {
+            personalCollectionView.isHidden = true
+            groupCollectionView.isHidden = false
+        }
+    }
+    
+    @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
+        let segmentIndex = CGFloat(sender.selectedSegmentIndex)
+        let segmentWidth = sender.frame.width / CGFloat(sender.numberOfSegments)
+        let leadingDistance = segmentWidth * segmentIndex
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
+        updateViewForSelectedSegment()
+    }
+    
     @IBAction func createAlarmBtnTapped(_ sender: Any) {
         if realmManger.countActivatedAlarms() > 64 {
             showAlertForExcessiveAlarms()
@@ -154,5 +228,19 @@ class AlarmListViewController: UIViewController {
             
             present(navigationController, animated: true)
         }
+    }
+}
+
+extension AlarmListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupAlarmCell.identifier, for: indexPath) as? GroupAlarmCell
+        else {
+            return UICollectionViewCell()
+        }
+        return cell
     }
 }
