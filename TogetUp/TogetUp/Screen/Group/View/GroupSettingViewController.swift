@@ -117,7 +117,6 @@ class GroupSettingsViewController: UIViewController {
         let boldImage = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: boldConfiguration)
         $0.setImage(boldImage, for: .normal)
         $0.tintColor = .black
-        $0.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
     }
     
     private let alertView = UIView().then {
@@ -162,6 +161,8 @@ class GroupSettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
+        
         setupNavigationBar()
         setupViews()
         setupConstraints()
@@ -350,8 +351,12 @@ class GroupSettingsViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.didExitButtonTapped
-            .emit(onNext: { isSuccess in
-                print("Exit button 성공: \(isSuccess)")
+            .emit(onNext: { [weak self] isSuccess in
+                guard isSuccess else {
+                    print("Exit button 실패")
+                    return
+                }
+                self?.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -405,10 +410,6 @@ class GroupSettingsViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: "초대코드가 복사되었습니다.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
-    }
-    
-    @objc private func exitButtonTapped() {
-        print("나가기 버튼 클릭됨")
     }
 }
 
