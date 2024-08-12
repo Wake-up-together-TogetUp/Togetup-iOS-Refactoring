@@ -28,7 +28,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Fuk-XL-JLf">
-                                <rect key="frame" x="0.0" y="135" width="393" height="57"/>
+                                <rect key="frame" x="0.0" y="131" width="393" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Dlz-OZ-BAh"/>
                                 </constraints>
@@ -41,7 +41,7 @@
                                 </connections>
                             </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="a2T-0K-ZQl">
-                                <rect key="frame" x="20" y="211" width="353" height="558"/>
+                                <rect key="frame" x="20" y="207" width="353" height="562"/>
                                 <color key="backgroundColor" name="primary025"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mPX-UH-WGr">
                                     <size key="itemSize" width="344" height="124"/>
@@ -186,7 +186,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="9c3-r1-n8m" secondAttribute="trailing" constant="20" id="1QY-6j-a03"/>
                             <constraint firstItem="bAe-d5-LuO" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="4D3-xd-6ps"/>
                             <constraint firstItem="7oe-4B-CTF" firstAttribute="top" secondItem="bAe-d5-LuO" secondAttribute="bottom" constant="8" id="BAb-ga-jU0"/>
-                            <constraint firstItem="Fuk-XL-JLf" firstAttribute="top" secondItem="2K7-A0-IUO" secondAttribute="bottom" constant="16" id="Kkd-yy-B3o"/>
+                            <constraint firstItem="Fuk-XL-JLf" firstAttribute="top" secondItem="2K7-A0-IUO" secondAttribute="bottom" constant="12" id="Kkd-yy-B3o"/>
                             <constraint firstItem="bAe-d5-LuO" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="Q3A-GG-eAZ"/>
                             <constraint firstItem="Fuk-XL-JLf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="SSI-Wz-o9u"/>
                             <constraint firstItem="9c3-r1-n8m" firstAttribute="centerY" secondItem="2K7-A0-IUO" secondAttribute="centerY" id="VUK-yW-iGl"/>

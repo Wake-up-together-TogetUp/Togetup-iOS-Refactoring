@@ -33,6 +33,10 @@ class AlarmListViewController: UIViewController {
         return collectionView
     }()
     
+    private var bottomLineView = UIView().then {
+        $0.backgroundColor = UIColor(named: "primary300")
+    }
+    
     // MARK: - Properties
     private let viewModel = AlarmListViewModel()
     private let disposeBag = DisposeBag()
@@ -50,6 +54,7 @@ class AlarmListViewController: UIViewController {
         setGroupCollectionViewFlowLayout()
         personalCollectionViewItemSelected()
         setupSegmentedControl()
+        setupBottomLineView()
         updateViewForSelectedSegment()
     }
     
@@ -78,7 +83,7 @@ class AlarmListViewController: UIViewController {
         view.addSubview(groupCollectionView)
         
         NSLayoutConstraint.activate([
-            groupCollectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
+            groupCollectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20),
             groupCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             groupCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             groupCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
@@ -195,6 +200,32 @@ class AlarmListViewController: UIViewController {
          ], for: .selected)
     }
     
+    private func setupBottomLineView() {
+        view.addSubview(bottomLineView)
+        updateBottomLinePosition(animated: false)
+    }
+    
+    private func updateBottomLinePosition(animated: Bool) {
+        let selectedIndex = CGFloat(segmentedControl.selectedSegmentIndex)
+        let segmentWidth = segmentedControl.frame.width / CGFloat(segmentedControl.numberOfSegments)
+        let leadingDistance = segmentWidth * selectedIndex
+        
+        let updatePosition = {
+            self.bottomLineView.frame = CGRect(
+                x: leadingDistance,
+                y: self.segmentedControl.frame.maxY + 8,
+                width: segmentWidth,
+                height: 2
+            )
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: updatePosition)
+        } else {
+            updatePosition()
+        }
+    }
+    
     private func updateViewForSelectedSegment() {
         if segmentedControl.selectedSegmentIndex == 0 {
             personalCollectionView.isHidden = false
@@ -213,6 +244,7 @@ class AlarmListViewController: UIViewController {
             self?.view.layoutIfNeeded()
         })
         updateViewForSelectedSegment()
+        updateBottomLinePosition(animated: true)
     }
     
     @IBAction func createAlarmBtnTapped(_ sender: Any) {
