@@ -27,9 +27,7 @@ class AlarmListViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(GroupAlarmCell.self, forCellWithReuseIdentifier: GroupAlarmCell.identifier)
+        collectionView.register(GroupAlarmCollectionViewCell.self, forCellWithReuseIdentifier: GroupAlarmCollectionViewCell.identifier)
         return collectionView
     }()
     
@@ -49,6 +47,7 @@ class AlarmListViewController: UIViewController {
         setupGroupCollectionView()
         bindLabels()
         fetchAndSaveAlarmsIfFirstLogin()
+        fetchAndSaveGroupAlarmsIfFirstLogin()
         setUpNavigationBar()
         setCollectionViewFlowLayout()
         setGroupCollectionViewFlowLayout()
@@ -106,6 +105,20 @@ class AlarmListViewController: UIViewController {
     }
     
     private func setGroupCollectionView() {
+        self.groupCollectionView.delegate = nil
+        self.groupCollectionView.dataSource = nil
+        viewModel.getGroupAlarmList()
+            .bind(to: groupCollectionView.rx.items(cellIdentifier: GroupAlarmCollectionViewCell.identifier, cellType: GroupAlarmCollectionViewCell.self)) { index, alarm, cell in
+                cell.configure(with: alarm)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchAndSaveGroupAlarmsIfFirstLogin() {
+        if AppStatusManager.shared.isFirstLogin {
+            viewModel.getAndSaveAlarmList(type: "group")
+            AppStatusManager.shared.markAsLogined()
+        }
     }
     
     private func personalCollectionViewItemSelected() {
@@ -260,19 +273,5 @@ class AlarmListViewController: UIViewController {
             
             present(navigationController, animated: true)
         }
-    }
-}
-
-extension AlarmListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupAlarmCell.identifier, for: indexPath) as? GroupAlarmCell
-        else {
-            return UICollectionViewCell()
-        }
-        return cell
     }
 }

@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-final class GroupAlarmCell: UICollectionViewCell {
+final class GroupAlarmCollectionViewCell: UICollectionViewCell {
     // MARK: - Property
-    static let identifier = "GroupAlarmCell"
+    static let identifier = "GroupAlarmCollectionViewCell"
     
     private let backgroudView = UIView().then {
         $0.backgroundColor = UIColor(named: "secondary050")
@@ -25,11 +25,6 @@ final class GroupAlarmCell: UICollectionViewCell {
     private let timeLabel = UILabel().then {
         $0.text = "am 12:00"
         $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 26)
-    }
-    
-    private let missionLabel = UILabel().then {
-        $0.text = "MISSION"
-        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 8)
     }
     
     private let subTitleLabel = UILabel().then {
@@ -117,5 +112,50 @@ final class GroupAlarmCell: UICollectionViewCell {
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-10)
         }
+    }
+    
+    func configure(with alarm: GetAlarmResult) {
+        timeLabel.text = formatAlarmTime(alarm.alarmTime)
+        subTitleLabel.text = formatSubtitleText(from: alarm)
+        groupNameLabel.text = alarm.roomRes?.name ?? "그룹 없음"
+        img.text = alarm.icon
+    }
+
+    private func formatAlarmTime(_ time: String) -> String? {
+        let timeComponents = time.split(separator: ":").map { Int($0) }
+        guard timeComponents.count >= 2,
+              let hour = timeComponents[0],
+              let minute = timeComponents[1] else { return nil }
+        
+        let isPM = hour >= 12
+        let hourIn12 = hour % 12 == 0 ? 12 : hour % 12
+        let period = isPM ? "pm" : "am"
+        return "\(period) \(hourIn12):\(String(format: "%02d", minute))"
+    }
+
+    private func formatSubtitleText(from alarm: GetAlarmResult) -> String {
+        let days = [
+            (alarm.monday, "월"),
+            (alarm.tuesday, "화"),
+            (alarm.wednesday, "수"),
+            (alarm.thursday, "목"),
+            (alarm.friday, "금"),
+            (alarm.saturday, "토"),
+            (alarm.sunday, "일")
+        ]
+        
+        let activeDays = days.filter { $0.0 }.map { $0.1 }
+        
+        let dayString: String
+        if activeDays.count > 1 {
+            dayString = activeDays.joined(separator: ", ") + "요일마다"
+        } else if let onlyDay = activeDays.first {
+            dayString = onlyDay + "요일마다"
+        } else {
+            dayString = "알람 없음"
+        }
+        
+        let missionObject = alarm.getMissionObjectRes?.kr ?? ""
+        return "\(dayString) | \(missionObject) 사진"
     }
 }
