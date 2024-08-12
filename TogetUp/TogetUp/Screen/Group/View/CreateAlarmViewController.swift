@@ -19,6 +19,9 @@ class CreateAlarmViewController: UIViewController {
     var groupIntro: String = ""
     var missionId: Int = 2
     var missionObjectId: Int? = 1
+    var missionEndpoint: String = ""
+    var missionKoreanName: String = ""
+    var icon: String = ""
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -213,7 +216,10 @@ class CreateAlarmViewController: UIViewController {
             groupName: Observable.just(groupName),
             groupIntro: Observable.just(groupIntro),
             missionId: Observable.just(missionId),
-            missionObjectId: Observable.just(missionObjectId)
+            missionObjectId: Observable.just(missionObjectId),
+            missionEndpoint: Observable.just(missionEndpoint),
+            missionKoreanName: Observable.just(missionKoreanName),
+            icon: Observable.just(icon)
         )
         
         let output = viewModel.transform(input: input)
