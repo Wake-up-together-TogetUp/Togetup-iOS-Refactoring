@@ -64,8 +64,15 @@ final class GroupSettingsViewModel: ViewModelType {
             .asDriver(onErrorDriveWith: .empty())
         
         let didExitButtonTapped = input.exitButtonTapped
-             .map { true }
-             .asSignal(onErrorJustReturn: false)
+            .flatMapLatest { [weak self] _ -> Observable<Bool> in
+                guard let self = self else { return .just(false) }
+                return self.provider.rx.request(.deleteMember(roomId: self.roomId))
+                    .filterSuccessfulStatusCodes()
+                    .map { _ in true }
+                    .asObservable()
+                    .catchAndReturn(false)
+            }
+            .asSignal(onErrorJustReturn: false)
         
         let output = Output(
             groupInfo: groupInfo,
