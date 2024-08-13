@@ -219,7 +219,10 @@ class GroupListViewController: UIViewController {
         Observable.combineLatest(textField.rx.text.orEmpty, isCodeInvalid)
             .subscribe(onNext: { [weak self] (text, isInvalid) in
                 let borderColor = (isInvalid && !text.isEmpty) ? UIColor.red.cgColor : UIColor.black.cgColor
+                let backgroundColor = (isInvalid && !text.isEmpty) ? UIColor(named: "neutral025") : UIColor.white
+                
                 self?.textField.layer.borderColor = borderColor
+                self?.textField.backgroundColor = backgroundColor
             })
             .disposed(by: disposeBag)
     }
@@ -271,7 +274,8 @@ class GroupListViewController: UIViewController {
     }
     
     private func showInvalidCodeAlert() {
-        textField.layer.borderColor = UIColor.red.cgColor
+        textField.layer.borderColor = UIColor(named: "error500")?.cgColor
+        textField.backgroundColor = UIColor(named: "error050")
     }
     
     private func setupButtonActions() {
