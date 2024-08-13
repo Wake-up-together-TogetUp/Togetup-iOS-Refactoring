@@ -53,6 +53,7 @@ class AlarmListViewController: UIViewController {
         setCollectionViewFlowLayout()
         setGroupCollectionViewFlowLayout()
         personalCollectionViewItemSelected()
+        groupCollectionViewItemSelected()
         setupSegmentedControl()
         setupBottomLineView()
         updateViewForSelectedSegment()
@@ -139,7 +140,7 @@ class AlarmListViewController: UIViewController {
                 
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
                 
-                vc.alarmId = selectedAlarmId
+                vc.alarmId = self.selectedAlarmId
                 vc.navigatedFromScreen = "AlarmList"
                 
                 let navi = UINavigationController(rootViewController: vc)
@@ -152,6 +153,36 @@ class AlarmListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func groupCollectionViewItemSelected() {
+        groupCollectionView.rx.itemSelected
+            .withLatestFrom(viewModel.getGroupAlarmList()) { (indexPath, groupAlarms) in
+                (indexPath, groupAlarms)
+            }
+            .subscribe(onNext: { [weak self] indexPath, groupAlarms in
+                guard let self = self else { return }
+                
+                guard indexPath.row < groupAlarms.count else { return }
+                
+                let selectedAlarm = groupAlarms[indexPath.row]
+                self.selectedAlarmId = selectedAlarm.id
+                
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
+                
+                vc.alarmId = self.selectedAlarmId
+                vc.navigatedFromScreen = "AlarmList"
+                
+                let navi = UINavigationController(rootViewController: vc)
+                navi.modalPresentationStyle = .fullScreen
+                navi.isNavigationBarHidden = true
+                navi.navigationBar.backgroundColor = .clear
+                navi.interactivePopGestureRecognizer?.isEnabled = true
+                
+                self.present(navi, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+
     
     private func editIsActivatedToggle(for alarm: Alarm) {
         viewModel.toggleAlarm(alarmId: alarm.id)

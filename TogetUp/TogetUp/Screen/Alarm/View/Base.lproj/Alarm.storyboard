@@ -656,6 +656,7 @@
                         <outlet property="emptyView" destination="exW-68-5bm" id="xiW-tc-GFY"/>
                         <outlet property="friday" destination="cRX-yB-13g" id="mWd-25-8qN"/>
                         <outlet property="isVibrate" destination="mX6-Tv-Mgq" id="a2f-5Q-xRD"/>
+                        <outlet property="missionEditButton" destination="D9C-KR-faE" id="7Xh-IF-Xgp"/>
                         <outlet property="missionIconLabel" destination="3xo-pT-KEj" id="4eb-1C-0fK"/>
                         <outlet property="missionTitleLabel" destination="Igz-4O-PIC" id="cD0-4J-yCs"/>
                         <outlet property="missionView" destination="B7Q-B6-MHL" id="lEJ-4l-VHS"/>
