@@ -298,7 +298,11 @@ class GroupJoinAlarmViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.isJoinButtonEnabled
-            .bind(to: openedButton.rx.isEnabled)
+            .bind { [weak self] isEnabled in
+                self?.openedButton.isEnabled = isEnabled
+                self?.openedButton.backgroundColor = isEnabled ? UIColor(named: "primary400") : UIColor(named: "neutral200")
+                self?.openedButton.setTitleColor(isEnabled ? .white : UIColor(named: "neutral400"), for: .normal)
+            }
             .disposed(by: disposeBag)
 
         output.joinGroupResponse
