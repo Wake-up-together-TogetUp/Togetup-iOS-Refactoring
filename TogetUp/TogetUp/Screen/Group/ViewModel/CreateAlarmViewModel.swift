@@ -69,7 +69,7 @@ class CreateAlarmViewModel: ViewModelType {
                         sunday: weekdays[6],
                         isVibrate: vibrationEnabled,
                         missionId: missionId,
-                        missionObjectId: missionObjectId
+                        missionObjectId: missionObjectId ?? 1
                     )
                 )
                 return self.networkManager.handleAPIRequest(self.provider.rx.request(.createGroup(request)), dataType: CreateGroupResponse.self)

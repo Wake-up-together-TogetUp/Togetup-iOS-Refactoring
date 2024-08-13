@@ -1,24 +1,25 @@
 //
-//  CreateAlarmViewController.swift
+//  GroupJoinAlarmViewController.swift
 //  TogetUp
 //
-//  Created by nayeon  on 3/26/24.
+//  Created by nayeon  on 7/21/24.
 //
 
-import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import UIKit
 
-class CreateAlarmViewController: UIViewController {
+class GroupJoinAlarmViewController: UIViewController {
     // MARK: - Properties
+    private let viewModel = GroupJoinAlarmViewModel()
     private let disposeBag = DisposeBag()
-    private let viewModel = CreateAlarmViewModel()
-    private let vibrationToggle = UISwitch()
-    var groupName: String = ""
-    var groupIntro: String = ""
+    var roomId: Int = 0
+    var icon: String = ""
+    var missionKr: String = ""
     var missionId: Int = 2
     var missionObjectId: Int? = 1
+    private let vibrationToggle = UISwitch()
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -28,15 +29,6 @@ class CreateAlarmViewController: UIViewController {
             picker.preferredDatePickerStyle = .wheels
         }
         return picker
-    }()
-    
-    private let topLabel: UIButton = {
-        let button = UIButton()
-        button.setTitle("미션을 언제 진행하고 싶으신가요?", for: .normal)
-        button.setTitleColor(UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
-        button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor(named: "neutral050")
-        return button
     }()
     
     private let containerView: UIView = {
@@ -55,7 +47,7 @@ class CreateAlarmViewController: UIViewController {
         return stackView
     }()
     
-    private let alarmNameLabel: UILabel = {
+    private let alarmLabel: UILabel = {
         let label = UILabel()
         label.text = "알람명"
         label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 16)
@@ -69,7 +61,7 @@ class CreateAlarmViewController: UIViewController {
         return label
     }()
     
-    var alarmNameTextField: UITextField = {
+    private var alarmNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "알람"
         textField.borderStyle = .none
@@ -77,9 +69,56 @@ class CreateAlarmViewController: UIViewController {
         return textField
     }()
     
-    let openedButton: UIButton = {
+    private let missionSettingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "미션"
+        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+        return label
+    }()
+    
+    private let missionSubLabel: UILabel = {
+       let label = UILabel()
+        label.text = "방장만 수정할 수 있어요"
+        label.textColor = .lightGray
+        return label
+    }()
+    
+    private let addMissionButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "secondary025")
+        button.layer.borderWidth = 2
+        button.layer.cornerRadius = 10
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        return button
+    }()
+    
+    private let circleView: UIView = {
+        let circleView = UIView()
+        circleView.backgroundColor = UIColor.white
+        circleView.layer.cornerRadius = 30
+        circleView.layer.borderWidth = 2
+        circleView.layer.borderColor = UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1).cgColor
+        return circleView
+    }()
+    
+    private var missionImageLabel: UILabel = {
+        let img = UILabel()
+        img.text = "⏰"
+        img.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 36)
+        return img
+    }()
+    
+    private var missionTextLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.text = "미션 내용"
+        return label
+    }()
+    
+    private let openedButton: UIButton = {
        let button = UIButton()
-        button.setTitle("개설하기", for: .normal)
+        button.setTitle("참여하기", for: .normal)
         button.backgroundColor = UIColor(named: "primary400")
         button.layer.cornerRadius = 12
         button.layer.borderWidth = 2
@@ -99,36 +138,38 @@ class CreateAlarmViewController: UIViewController {
     
     private func setupUI() {
         navigationController?.isNavigationBarHidden = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron-left"), style: .plain, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.title = "알람 설정"
         
-        view.addSubview(topLabel)
+        missionImageLabel.text = icon
+        missionTextLabel.text = missionKr
+        
         view.addSubview(timePicker)
         view.addSubview(containerView)
         containerView.addSubview(weekdayButtonsStackView)
-        containerView.addSubview(alarmNameLabel)
+        containerView.addSubview(alarmLabel)
         containerView.addSubview(vibrationLabel)
         containerView.addSubview(alarmNameTextField)
         containerView.addSubview(vibrationToggle)
         containerView.addSubview(openedButton)
+        view.addSubview(missionSubLabel)
+        view.addSubview(missionSettingLabel)
+        view.addSubview(addMissionButton)
+        addMissionButton.addSubview(circleView)
+        addMissionButton.addSubview(missionTextLabel)
+        circleView.addSubview(missionImageLabel)
         
         setupConstraints()
         setupWeekdayButtons()
     }
     
     private func setupConstraints() {
-        topLabel.translatesAutoresizingMaskIntoConstraints = false
         timePicker.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        topLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-        }
-        
+
         timePicker.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(topLabel.snp.bottom).offset(15)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(0)
         }
         
         containerView.snp.makeConstraints {
@@ -142,25 +183,58 @@ class CreateAlarmViewController: UIViewController {
             $0.top.equalToSuperview().offset(20)
         }
         
-        alarmNameLabel.snp.makeConstraints {
+        alarmLabel.snp.makeConstraints {
             $0.top.equalTo(weekdayButtonsStackView.snp.bottom).offset(32)
             $0.leading.equalToSuperview().offset(20)
         }
         
         alarmNameTextField.snp.makeConstraints {
-            $0.centerY.equalTo(alarmNameLabel.snp.centerY)
-            $0.leading.equalTo(alarmNameLabel.snp.trailing).offset(10)
+            $0.centerY.equalTo(alarmLabel.snp.centerY)
+            $0.leading.equalTo(alarmLabel.snp.trailing).offset(10)
             $0.trailing.equalTo(containerView.snp.trailing).offset(-20)
         }
         
         vibrationLabel.snp.makeConstraints {
-            $0.top.equalTo(alarmNameLabel.snp.bottom).offset(24)
+            $0.top.equalTo(alarmLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         vibrationToggle.snp.makeConstraints {
             $0.centerY.equalTo(vibrationLabel.snp.centerY)
             $0.trailing.equalTo(containerView.snp.trailing).offset(-20)
+        }
+        
+        missionSettingLabel.snp.makeConstraints {
+            $0.top.equalTo(vibrationLabel.snp.bottom).offset(40)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        missionSubLabel.snp.makeConstraints {
+            $0.top.equalTo(missionSettingLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        addMissionButton.snp.makeConstraints {
+            $0.top.equalTo(missionSubLabel.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(82)
+        }
+        
+        circleView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(8)
+            $0.width.height.equalTo(60)
+        }
+
+        missionImageLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+
+        missionTextLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(circleView.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview().offset(-8)
         }
         
         openedButton.snp.makeConstraints {
@@ -196,44 +270,69 @@ class CreateAlarmViewController: UIViewController {
     }
     
     private func setupBindings() {
+        let viewModel = GroupJoinAlarmViewModel()
+        
         let weekdaySelection = Observable.merge(
             weekdayButtons.map { button in
                 button.rx.tap.map { _ in
-                    return self.weekdayButtons.map { $0.isSelected }
+                    self.weekdayButtons.map { $0.isSelected }
                 }
             }
         ).startWith(weekdayButtons.map { $0.isSelected })
-        
-        let input = CreateAlarmViewModel.Input(
+
+        let input = GroupJoinAlarmViewModel.Input(
             alarmName: alarmNameTextField.rx.text.orEmpty.asObservable(),
             timeSelected: timePicker.rx.date.asObservable(),
             weekdaySelection: weekdaySelection,
             vibrationEnabled: vibrationToggle.rx.isOn.asObservable(),
-            createButtonTapped: openedButton.rx.tap.asObservable(),
-            groupName: Observable.just(groupName),
-            groupIntro: Observable.just(groupIntro),
-            missionId: Observable.just(missionId),
-            missionObjectId: Observable.just(missionObjectId)
+            joinButtonTapped: openedButton.rx.tap.asObservable(),
+            roomId: roomId,
+            missionId: missionId,
+            missionObjectId: missionObjectId ?? 1
         )
         
         let output = viewModel.transform(input: input)
         
-        output.isCreateButtonEnabled
+        output.isJoinButtonEnabled
             .bind(to: openedButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        output.createAlarmResponse
+        output.joinGroupResponse
             .subscribe(onNext: { [weak self] result in
                 switch result {
-                case .success(let createGroupResponse):
-                    print("그룹 생성 성공: \(createGroupResponse)")
-                    self?.dismiss(animated: true)
+                case .success:
+                    if let navigationController = self?.navigationController {
+                        navigationController.popViewController(animated: true)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            navigationController.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 case .failure(let error):
-                    let errorMessage = NetworkManager().errorMessage(for: error)
-                    print("에러: \(errorMessage)")
+                    switch error {
+                    case .parsingError:
+                        print("Parsing error occurred")
+                    case .network(let underlyingError):
+                        print("Network error: \(underlyingError.localizedDescription)")
+                    default:
+                        print("Unknown error: \(error.localizedDescription)")
+                    }
+                    if let navigationController = self?.navigationController {
+                        navigationController.popViewController(animated: true)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            navigationController.dismiss(animated: true, completion: nil)
+                        }
+                    }
                 }
             })
             .disposed(by: disposeBag)
+    }
+
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
     
     @objc private func cancelButtonTapped() {

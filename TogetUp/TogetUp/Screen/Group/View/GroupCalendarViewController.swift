@@ -15,6 +15,7 @@ class GroupCalendarViewController: UIViewController {
     private let viewModel: GroupCalendarViewModel
     private let disposeBag = DisposeBag()
     private let dateSelectedSubject = PublishSubject<Date>()
+    var selectedRoomId: Int = 0
     
     init(roomId: Int) {
         self.viewModel = GroupCalendarViewModel(roomId: roomId)
@@ -25,11 +26,16 @@ class GroupCalendarViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+        setupNavigationBar()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupBindings()
-        setupNavigationBar()
     }
     
     // MARK: - Properties
@@ -141,12 +147,18 @@ class GroupCalendarViewController: UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(named: "secondary050")
-
+        appearance.shadowColor = .clear
+        
+        appearance.titleTextAttributes = [
+            .font: UIFont(name: "AppleSDGothicNeo-Bold", size: 18),
+            .foregroundColor: UIColor.black
+        ]
+        
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "그룹 캘린더"
+        navigationItem.title = ""
         navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingButtonTapped))
@@ -276,7 +288,8 @@ class GroupCalendarViewController: UIViewController {
     }
     
     @objc private func settingButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        let settinglVC = GroupSettingsViewController(roomId:selectedRoomId)
+        navigationController?.pushViewController(settinglVC, animated: true)
     }
 }
 // MARK: - extension

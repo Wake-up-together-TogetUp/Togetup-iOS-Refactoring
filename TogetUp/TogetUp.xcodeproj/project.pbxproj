@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
+		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
+		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
+		9562FCC92C4D14E1009ED55F /* GroupJoinAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */; };
+		9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */; };
+		9562FCCD2C615CF3009ED55F /* GroupSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCC2C615CF3009ED55F /* GroupSettingViewController.swift */; };
+		9562FCCF2C622C01009ED55F /* GroupMemberListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */; };
+		9562FCD12C673CCD009ED55F /* GroupSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCD02C673CCD009ED55F /* GroupSettingsViewModel.swift */; };
 		9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAB2C20A58D00AB62AA /* GroupListViewModel.swift */; };
 		9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */; };
 		9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */; };
@@ -20,11 +27,12 @@
 		9576DAC92C20A58D00AB62AA /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */; };
 		9576DACA2C20A58D00AB62AA /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */; };
 		9576DACB2C20A58D00AB62AA /* GroupCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */; };
-		9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABD2C20A58D00AB62AA /* inviteViewController.swift */; };
+		9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */; };
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
 		95B1C2912C245FF200A04364 /* GroupCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */; };
+		95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2972C2F314900A04364 /* InviteViewModel.swift */; };
 		95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 95F198B02BF760D3002BD1B4 /* RealmSwift */; };
 		95F198BC2BFB1854002BD1B4 /* GroupAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */; };
 		95F198BE2BFB374D002BD1B4 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */; };
@@ -129,6 +137,13 @@
 
 /* Begin PBXFileReference section */
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
+		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
+		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
+		9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewController.swift; sourceTree = "<group>"; };
+		9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupJoinAlarmViewModel.swift; sourceTree = "<group>"; };
+		9562FCCC2C615CF3009ED55F /* GroupSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingViewController.swift; sourceTree = "<group>"; };
+		9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberListCell.swift; sourceTree = "<group>"; };
+		9562FCD02C673CCD009ED55F /* GroupSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsViewModel.swift; sourceTree = "<group>"; };
 		9576D9F92C0D8BC700AB62AA /* CreateAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewModel.swift; sourceTree = "<group>"; };
 		9576DA1B2C1C198B00AB62AA /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9576DA1D2C1C27D300AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
@@ -144,10 +159,11 @@
 		9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewController.swift; sourceTree = "<group>"; };
-		9576DABD2C20A58D00AB62AA /* inviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteScreenViewController.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
+		95B1C2972C2F314900A04364 /* InviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewModel.swift; sourceTree = "<group>"; };
 		95B4F2D92BA00EE500AB4952 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		95B4F31C2BB2E70500AB4952 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
@@ -302,6 +318,9 @@
 				9576DAAC2C20A58D00AB62AA /* CreateGroupViewModel.swift */,
 				9576DAAD2C20A58D00AB62AA /* CreateAlarmViewModel.swift */,
 				95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */,
+				95B1C2972C2F314900A04364 /* InviteViewModel.swift */,
+				9562FCCA2C5176A2009ED55F /* GroupJoinAlarmViewModel.swift */,
+				9562FCD02C673CCD009ED55F /* GroupSettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -325,7 +344,9 @@
 				9576DABA2C20A58D00AB62AA /* CreateGroupView.swift */,
 				9576DABB2C20A58D00AB62AA /* CreateGroupViewController.swift */,
 				9576DABC2C20A58D00AB62AA /* GroupCalendarViewController.swift */,
-				9576DABD2C20A58D00AB62AA /* inviteViewController.swift */,
+				9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */,
+				9562FCC82C4D14E1009ED55F /* GroupJoinAlarmViewController.swift */,
+				9562FCCC2C615CF3009ED55F /* GroupSettingViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,6 +356,7 @@
 			children = (
 				9576DAB82C20A58D00AB62AA /* ImageCollectionViewCell.swift */,
 				9576DAB92C20A58D00AB62AA /* GroupListCollectionViewCell.swift */,
+				9562FCCE2C622C00009ED55F /* GroupMemberListCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -490,6 +512,7 @@
 				F96B32792A8A022100BD3BF9 /* Network */,
 				F96B32782A8A021900BD3BF9 /* Resource */,
 				F96B32772A8A020F00BD3BF9 /* Screen */,
+				9562FCB22C3C0118009ED55F /* apple-app-site-association */,
 			);
 			path = TogetUp;
 			sourceTree = "<group>";
@@ -570,6 +593,7 @@
 				F9D679D02AC1786F006B1643 /* UIImagePickerController + Extension.swift */,
 				F9F52C382C319C6D006BCC10 /* UIFont + Extension.swift */,
 				F9BF4AA62C60F6BF00F775A8 /* String  + Extension.swift */,
+				9562FCC62C452D88009ED55F /* Reactive + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -824,6 +848,7 @@
 				F915EA1A2BF21EDD002B84BC /* IconAssets.xcassets in Resources */,
 				F99D0E972BB8418600437025 /* 1_onboarding.json in Resources */,
 				F991D0D52BC55F9600893E67 /* 2_onboarding.json in Resources */,
+				9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */,
 				F991D0D32BC5107B00893E67 /* 3_onboarding.json in Resources */,
 				F93140672A8FBD30000FB717 /* Home.storyboard in Resources */,
 				F96B326B2A8A002800BD3BF9 /* Main.storyboard in Resources */,
@@ -856,7 +881,9 @@
 				F9944F242ACD8FD800B39476 /* UIImageView + Extension.swift in Sources */,
 				F945D1552AA4DE7C0093F896 /* AlarmService.swift in Sources */,
 				F97CDC2A2B15DDA50057AA82 /* TimelineViewModel.swift in Sources */,
+				9562FCC92C4D14E1009ED55F /* GroupJoinAlarmViewController.swift in Sources */,
 				9576DABF2C20A58D00AB62AA /* CreateGroupViewModel.swift in Sources */,
+				9562FCCF2C622C01009ED55F /* GroupMemberListCell.swift in Sources */,
 				F9DA5D842AC146C1008E16A6 /* MissionPerformViewModel.swift in Sources */,
 				F98600F42AAEF3E900595646 /* MissionModel.swift in Sources */,
 				F9F52C392C319C6D006BCC10 /* UIFont + Extension.swift in Sources */,
@@ -871,6 +898,7 @@
 				F97CDC192B0B79370057AA82 /* PushAlarmModel.swift in Sources */,
 				F99BE7FE2AA0E2440005E66F /* URLConstant.swift in Sources */,
 				F93140642A8FBB43000FB717 /* HomeViewController.swift in Sources */,
+				9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */,
 				F9523E4D2B5C1F7B00B16CCB /* RealmDataManger.swift in Sources */,
 				F9C8ADC82A9CDF7500F541FD /* MissionListDetailViewController.swift in Sources */,
 				F9C602302B72044D008A43A0 /* CustomFloatingPanelLayout.swift in Sources */,
@@ -891,18 +919,22 @@
 				9576DACB2C20A58D00AB62AA /* GroupCalendarViewController.swift in Sources */,
 				F9E50D182A95E6BE0076FEF1 /* EditAlarmViewController.swift in Sources */,
 				F93140662A8FBBFB000FB717 /* TabBarViewController.swift in Sources */,
+				9562FCD12C673CCD009ED55F /* GroupSettingsViewModel.swift in Sources */,
 				F99BE8062AA1CC740005E66F /* LoginViewModel.swift in Sources */,
 				F99BE7FC2A9F8EAC0005E66F /* LoginModel.swift in Sources */,
 				F91BEF132AF503D3003395A0 /* FloatingPannelViewController.swift in Sources */,
+				9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */,
 				F91D01962AC2C74F003841D8 /* AlarmScheduleManager.swift in Sources */,
 				F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */,
 				F9BF4AA72C60F6BF00F775A8 /* String  + Extension.swift in Sources */,
 				9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */,
+				9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */,
 				9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */,
 				F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */,
 				F98600F02AAEC04A00595646 /* MissionViewModel.swift in Sources */,
 				F945D1512AA4AAFE0093F896 /* SettingViewModel.swift in Sources */,
 				F977EE292BB87BBF00EA9042 /* OnboardingViewController.swift in Sources */,
+				9562FCCD2C615CF3009ED55F /* GroupSettingViewController.swift in Sources */,
 				F97CDC262B1458E10057AA82 /* AvatarModel.swift in Sources */,
 				9576DAC22C20A58D00AB62AA /* GroupModel.swift in Sources */,
 				F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */,
@@ -917,6 +949,7 @@
 				F915EA182BF1D0A6002B84BC /* VersionCheckResponseModel.swift in Sources */,
 				F9C8ADCA2A9CE56700F541FD /* MissionListViewController.swift in Sources */,
 				F98601002AB2EDAD00595646 /* SplashViewController.swift in Sources */,
+				95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */,
 				9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */,
 				F97CDC1E2B13344A0057AA82 /* TimelineCollectionViewCell.swift in Sources */,
 			);
@@ -1108,11 +1141,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TogetUp/TogetUp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9HP6SS4WYV;
+				DEVELOPMENT_TEAM = 9HP6SS4WYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TogetUp/Resource/Supports/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "TogetUp에서 미션을 수행하기 위해 카메라 접근 권한이 필요합니다.";
@@ -1137,7 +1168,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yaewon.TogetUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "TogetUp Debug";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1155,11 +1185,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TogetUp/TogetUp.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 9HP6SS4WYV;
+				DEVELOPMENT_TEAM = 9HP6SS4WYV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TogetUp/Resource/Supports/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "TogetUp에서 미션을 수행하기 위해 카메라 접근 권한이 필요합니다.";
@@ -1180,7 +1209,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yaewon.TogetUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "TogetUp Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

@@ -26,7 +26,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
+        setupBindings()
         setupUI()
         addMissionNotificationCenter()
     }
@@ -54,7 +54,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - ViewModel Binding
-    private func bindViewModel() {
+    private func setupBindings() {
         let input = CreateGroupViewModel.Input(
             groupName: createGroupView.groupNameTextField.rx.text.orEmpty.asObservable(),
             groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
