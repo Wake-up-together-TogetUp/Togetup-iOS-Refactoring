@@ -345,6 +345,7 @@
                         <outlet property="currentDateLabel" destination="5xy-RX-doN" id="h4B-iG-cem"/>
                         <outlet property="currentTimeLabel" destination="cr7-PL-zNu" id="A8V-Gs-QyQ"/>
                         <outlet property="iconBackgroundView" destination="OwE-U5-6lr" id="cmU-AO-xiq"/>
+                        <outlet property="iconBackgroundViewTop" destination="tgq-9R-kmc" id="tVw-yE-AIl"/>
                         <outlet property="missionBackgroundView" destination="Gb7-d1-IaI" id="bvZ-d2-GdH"/>
                         <outlet property="missionObjectLabel" destination="Peg-AA-8e4" id="7XY-9X-Tyi"/>
                         <outlet property="missionPerformButton" destination="RiV-XE-ef5" id="hBR-Gy-zgm"/>

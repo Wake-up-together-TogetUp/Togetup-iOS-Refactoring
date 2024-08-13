@@ -23,6 +23,7 @@ class MissionPerformViewController: UIViewController {
     @IBOutlet weak var alarmNameLabel: UILabel!
     @IBOutlet weak var missionObjectLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var iconBackgroundViewTop: NSLayoutConstraint!
     
     // MARK: - Properties
     private let viewModel = MissionPerformViewModel()
@@ -50,14 +51,19 @@ class MissionPerformViewController: UIViewController {
         disableButtonIfNeeded()
         updateAlarmCompletedTime(alarmId: self.alarmId)
         completeMission()
+        adjustConstraintForSE3()
     }
-//    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        startCountdown()
-//    }
     
     // MARK: - Custom Method
+    private func adjustConstraintForSE3() {
+           if UIDevice.current.userInterfaceIdiom == .phone {
+               let screenHeight = UIScreen.main.bounds.size.height
+               if screenHeight == 667.0 {
+                   iconBackgroundViewTop.constant = 26
+               }
+           }
+       }
+    
     private func updateAlarmCompletedTime(alarmId: Int) {
         let realm = try! Realm()
         
@@ -88,7 +94,7 @@ class MissionPerformViewController: UIViewController {
         self.missionPerformButton.layer.cornerRadius = 12
         self.missionPerformButton.layer.borderWidth = 2
         
-        self.iconBackgroundView.layer.cornerRadius = 170
+        self.iconBackgroundView.layer.cornerRadius = 43
         self.iconBackgroundView.layer.borderWidth = 2
         
         self.missionBackgroundView.layer.cornerRadius = 12
