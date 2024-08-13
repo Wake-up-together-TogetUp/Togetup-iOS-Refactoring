@@ -28,6 +28,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     @IBOutlet weak var isVibrate: UISwitch!
     @IBOutlet weak var timePicker: UIDatePicker!
     @IBOutlet weak var alarmNameCountLabel: UILabel!
+    @IBOutlet weak var missionEditButton: UIButton!
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
@@ -75,6 +76,8 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         if navigatedFromScreen == "AlarmList", let id = alarmId {
             loadAlarmData(id: id)
             setUpDatePicker()
+            missionEditButton.isHidden = true
+            missionView.isUserInteractionEnabled = false
         } else {
             setUpDatePicker()
         }
@@ -114,7 +117,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         saturday.isSelected = result.saturday
         missionIcon = result.icon
     }
-    
     
     private func customUI() {
         dayOfWeekButtons.forEach {
@@ -262,7 +264,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         return String(text.prefix(10))
     }
     
-    
     private func updateLabelColorAndText(truncatedText: String, originalText: String) {
         alarmNameCountLabel.text = "\(truncatedText.count)/10"
         alarmNameCountLabel.textColor = originalText.count > 10 ? UIColor(named: "error500") : UIColor(named: "neutral500")
@@ -330,12 +331,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             self?.missionObjectId = missionObjectId
             self?.missionEndpoint = ""
         }
-        
-        vc.modalPresentationStyle = .fullScreen
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func dayOfWeekButtonTapped(_ sender: UIButton) {

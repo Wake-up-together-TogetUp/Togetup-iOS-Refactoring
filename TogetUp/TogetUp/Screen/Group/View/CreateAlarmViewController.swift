@@ -19,6 +19,9 @@ class CreateAlarmViewController: UIViewController {
     var groupIntro: String = ""
     var missionId: Int = 2
     var missionObjectId: Int? = 1
+    var missionEndpoint: String = ""
+    var missionKoreanName: String = ""
+    var icon: String = ""
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -213,13 +216,20 @@ class CreateAlarmViewController: UIViewController {
             groupName: Observable.just(groupName),
             groupIntro: Observable.just(groupIntro),
             missionId: Observable.just(missionId),
-            missionObjectId: Observable.just(missionObjectId)
+            missionObjectId: Observable.just(missionObjectId),
+            missionEndpoint: Observable.just(missionEndpoint),
+            missionKoreanName: Observable.just(missionKoreanName),
+            icon: Observable.just(icon)
         )
         
         let output = viewModel.transform(input: input)
         
         output.isCreateButtonEnabled
-            .bind(to: openedButton.rx.isEnabled)
+            .bind { [weak self] isEnabled in
+                self?.openedButton.isEnabled = isEnabled
+                self?.openedButton.backgroundColor = isEnabled ? UIColor(named: "primary400") : UIColor(named: "neutral200")
+                self?.openedButton.setTitleColor(isEnabled ? .white : UIColor(named: "neutral400"), for: .normal)
+            }
             .disposed(by: disposeBag)
         
         output.createAlarmResponse

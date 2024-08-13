@@ -12,10 +12,29 @@ import RealmSwift
 
 class AlarmListViewController: UIViewController {
     // MARK: - UI Components
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var personalCollectionView: UICollectionView!
     @IBOutlet weak var addAlarmButton: UIButton!
     @IBOutlet weak var noExistingAlarmLabel: UILabel!
     @IBOutlet weak var setAlarmLabel: UILabel!
+    
+    private lazy var groupCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: self.view.frame.width - 40, height: 124)
+        layout.minimumLineSpacing = 16
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(GroupAlarmCollectionViewCell.self, forCellWithReuseIdentifier: GroupAlarmCollectionViewCell.identifier)
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
+    private var bottomLineView = UIView().then {
+        $0.backgroundColor = UIColor(named: "primary300")
+    }
     
     // MARK: - Properties
     private let viewModel = AlarmListViewModel()
@@ -26,17 +45,30 @@ class AlarmListViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupGroupCollectionView()
         bindLabels()
         fetchAndSaveAlarmsIfFirstLogin()
+        fetchAndSaveGroupAlarmsIfFirstLogin()
         setUpNavigationBar()
         setCollectionViewFlowLayout()
+        setGroupCollectionViewFlowLayout()
         personalCollectionViewItemSelected()
+        groupCollectionViewItemSelected()
+        setupSegmentedControl()
+        setupBottomLineView()
+        updateViewForSelectedSegment()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
+        setGroupCollectionView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateBottomLinePosition(animated: false)
     }
     
     // MARK: - Custom Method
@@ -50,6 +82,17 @@ class AlarmListViewController: UIViewController {
             .map { !$0 }
             .bind(to: setAlarmLabel.rx.isHidden)
             .disposed(by: disposeBag)
+    }
+    
+    private func setupGroupCollectionView() {
+        view.addSubview(groupCollectionView)
+        
+        NSLayoutConstraint.activate([
+            groupCollectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20),
+            groupCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            groupCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            groupCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        ])
     }
     
     private func setCollectionView() {
@@ -67,6 +110,23 @@ class AlarmListViewController: UIViewController {
         .disposed(by: disposeBag)
     }
     
+    private func setGroupCollectionView() {
+        self.groupCollectionView.delegate = nil
+        self.groupCollectionView.dataSource = nil
+        viewModel.getGroupAlarmList()
+            .bind(to: groupCollectionView.rx.items(cellIdentifier: GroupAlarmCollectionViewCell.identifier, cellType: GroupAlarmCollectionViewCell.self)) { index, alarm, cell in
+                cell.configure(with: alarm)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchAndSaveGroupAlarmsIfFirstLogin() {
+        if AppStatusManager.shared.isFirstLogin {
+            viewModel.getAndSaveAlarmList(type: "group")
+            AppStatusManager.shared.markAsLogined()
+        }
+    }
+    
     private func personalCollectionViewItemSelected() {
         personalCollectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
@@ -79,7 +139,7 @@ class AlarmListViewController: UIViewController {
                 
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
                 
-                vc.alarmId = selectedAlarmId
+                vc.alarmId = self.selectedAlarmId
                 vc.navigatedFromScreen = "AlarmList"
                 
                 let navi = UINavigationController(rootViewController: vc)
@@ -92,6 +152,36 @@ class AlarmListViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func groupCollectionViewItemSelected() {
+        groupCollectionView.rx.itemSelected
+            .withLatestFrom(viewModel.getGroupAlarmList()) { (indexPath, groupAlarms) in
+                (indexPath, groupAlarms)
+            }
+            .subscribe(onNext: { [weak self] indexPath, groupAlarms in
+                guard let self = self else { return }
+                
+                guard indexPath.row < groupAlarms.count else { return }
+                
+                let selectedAlarm = groupAlarms[indexPath.row]
+                self.selectedAlarmId = selectedAlarm.id
+                
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
+                
+                vc.alarmId = self.selectedAlarmId
+                vc.navigatedFromScreen = "AlarmList"
+                
+                let navi = UINavigationController(rootViewController: vc)
+                navi.modalPresentationStyle = .fullScreen
+                navi.isNavigationBarHidden = true
+                navi.navigationBar.backgroundColor = .clear
+                navi.interactivePopGestureRecognizer?.isEnabled = true
+                
+                self.present(navi, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+
     
     private func editIsActivatedToggle(for alarm: Alarm) {
         viewModel.toggleAlarm(alarmId: alarm.id)
@@ -131,6 +221,13 @@ class AlarmListViewController: UIViewController {
         personalCollectionView.collectionViewLayout = layout
     }
     
+    private func setGroupCollectionViewFlowLayout() {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: self.view.frame.width - 40, height: 124)
+        layout.minimumLineSpacing = 16
+        groupCollectionView.collectionViewLayout = layout
+    }
+    
     private func setUpNavigationBar() {
         let titleLabel = UILabel()
         titleLabel.textColor = UIColor.black
@@ -139,7 +236,66 @@ class AlarmListViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
     }
     
-    // MARK: - @
+    private func setupSegmentedControl() {
+        segmentedControl.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+         segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+         segmentedControl.setTitleTextAttributes([
+             NSAttributedString.Key.foregroundColor: UIColor(named: "neutral400")!,
+             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+         ], for: .normal)
+         segmentedControl.setTitleTextAttributes([
+             NSAttributedString.Key.foregroundColor: UIColor.black,
+             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+         ], for: .selected)
+    }
+    
+    private func setupBottomLineView() {
+        view.addSubview(bottomLineView)
+        updateBottomLinePosition(animated: false)
+    }
+    
+    private func updateBottomLinePosition(animated: Bool) {
+        let selectedIndex = CGFloat(segmentedControl.selectedSegmentIndex)
+        let segmentWidth = segmentedControl.frame.width / CGFloat(segmentedControl.numberOfSegments)
+        let leadingDistance = segmentWidth * selectedIndex
+        
+        let updatePosition = {
+            self.bottomLineView.frame = CGRect(
+                x: leadingDistance,
+                y: self.segmentedControl.frame.maxY + 8,
+                width: segmentWidth,
+                height: 2
+            )
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: updatePosition)
+        } else {
+            updatePosition()
+        }
+    }
+    
+    private func updateViewForSelectedSegment() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            personalCollectionView.isHidden = false
+            groupCollectionView.isHidden = true
+        } else {
+            personalCollectionView.isHidden = true
+            groupCollectionView.isHidden = false
+        }
+    }
+    
+    @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
+        let segmentIndex = CGFloat(sender.selectedSegmentIndex)
+        let segmentWidth = sender.frame.width / CGFloat(sender.numberOfSegments)
+        let leadingDistance = segmentWidth * segmentIndex
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        })
+        updateViewForSelectedSegment()
+        updateBottomLinePosition(animated: true)
+    }
+    
     @IBAction func createAlarmBtnTapped(_ sender: Any) {
         if realmManger.countActivatedAlarms() > 64 {
             showAlertForExcessiveAlarms()

@@ -75,6 +75,9 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
                 createAlarmVC.groupIntro = groupIntro
                 createAlarmVC.missionId = self?.missionId ?? 2
                 createAlarmVC.missionObjectId = self?.missionObjectId
+                createAlarmVC.missionKoreanName = self?.createGroupView.missionTextLabel.text ?? ""
+                createAlarmVC.missionEndpoint = self?.missionEndpoint ?? ""
+                createAlarmVC.icon = self?.createGroupView.missionImageLabel.text ?? ""
                 self?.navigationController?.pushViewController(createAlarmVC, animated: true)
             })
             .disposed(by: disposeBag)
