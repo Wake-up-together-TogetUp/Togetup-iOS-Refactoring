@@ -25,9 +25,10 @@ class AlarmListViewController: UIViewController {
         layout.minimumLineSpacing = 16
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(GroupAlarmCollectionViewCell.self, forCellWithReuseIdentifier: GroupAlarmCollectionViewCell.identifier)
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
     
@@ -63,6 +64,11 @@ class AlarmListViewController: UIViewController {
         setCollectionView()
         setGroupCollectionView()
         AlarmScheduleManager.shared.printAllScheduledNotifications()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateBottomLinePosition(animated: false)
     }
     
     // MARK: - Custom Method

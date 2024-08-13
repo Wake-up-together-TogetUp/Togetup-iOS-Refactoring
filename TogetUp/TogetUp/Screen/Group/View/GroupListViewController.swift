@@ -42,7 +42,7 @@ class GroupListViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 68)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(GroupListCollectionViewCell.self, forCellWithReuseIdentifier: GroupListCollectionViewCell.identifier)
