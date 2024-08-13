@@ -43,7 +43,6 @@ struct CreateOrEditAlarmRequest: Codable {
     let saturday: Bool
     let sunday: Bool
     let isActivated: Bool
-    let roomId: Int?
 }
 
 struct GetAlarmResult: Codable {

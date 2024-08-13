@@ -7,10 +7,9 @@
 
 import UIKit
 import RxSwift
-import MCEmojiPicker
 import RealmSwift
 
-class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate, MCEmojiPickerDelegate {
+class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     // MARK: - UI Components
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var missionView: UIView!
@@ -26,11 +25,8 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     @IBOutlet weak var missionIconLabel: UILabel!
     @IBOutlet weak var missionTitleLabel: UILabel!
     @IBOutlet weak var alarmNameTextField: UITextField!
-    @IBOutlet weak var alarmIconLabel: UILabel!
     @IBOutlet weak var isVibrate: UISwitch!
     @IBOutlet weak var timePicker: UIDatePicker!
-    @IBOutlet weak var addEmojiButton: UIButton!
-    @IBOutlet weak var deleteEmojiButton: UIButton!
     @IBOutlet weak var alarmNameCountLabel: UILabel!
     
     // MARK: - Properties
@@ -45,7 +41,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     private var alarmMinute = 0
     var alarmId: Int?
     var navigatedFromScreen = "CreateAlarm"
-    //navigatedFromScreen = "AlarmList", "CreateAlarm", "CreateGroupAlarm"
+    //navigatedFromScreen = "AlarmList", "CreateAlarm"
     var missionEndpoint = "person"
     
     // MARK: - Life Cycle
@@ -78,7 +74,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     private func setUpScreenStatus() {
         if navigatedFromScreen == "AlarmList", let id = alarmId {
             loadAlarmData(id: id)
-            self.addEmojiButton.setImage(UIImage(named: "iconExist"), for: .normal)
             setUpDatePicker()
         } else {
             setUpDatePicker()
@@ -100,10 +95,8 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         guard let result = response.result else { return }
         
         configureMission(with: result)
-        
         alarmNameTextField.text = result.name
         alarmNameCountLabel.text = "\(result.name.count)/10"
-        alarmIconLabel.text = result.icon
         
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
@@ -119,6 +112,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         thursday.isSelected = result.thursday
         friday.isSelected = result.friday
         saturday.isSelected = result.saturday
+        missionIcon = result.icon
     }
     
     
@@ -161,12 +155,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         return true
     }
     
-    func didGetEmoji(emoji: String) {
-        self.addEmojiButton.setImage(UIImage(named: "iconExist"), for: .normal)
-        self.deleteEmojiButton.isHidden = false
-        self.alarmIconLabel.text = emoji
-    }
-    
     private func setUpDatePicker() {
         setStandardizedAlarmTime(from: timePicker.date)
     }
@@ -190,6 +178,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         } else if let missionObjectRes = result.getMissionObjectRes {
             missionTitleLabel.text = missionObjectRes.kr
             missionIconLabel.text = missionObjectRes.icon
+            self.missionIcon = missionObjectRes.icon
             self.missionId = result.getMissionRes?.id ?? 0
             self.missionObjectId = missionObjectRes.id
             self.missionEndpoint = missionObjectRes.name
@@ -202,7 +191,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         if self.missionId == 1 && self.missionObjectId == 1 {
             paramMissionObjId = nil
         }
-        let alarmIcon = self.alarmIconLabel.text?.isEmpty ?? true ? "⏰" : self.alarmIconLabel.text!
+        let alarmIcon = self.missionIcon
         let alarmName = self.alarmNameTextField.text?.isEmpty ?? true ? "알람" : self.alarmNameTextField.text!
         
         return CreateOrEditAlarmRequest(
@@ -219,8 +208,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             friday: friday.isSelected,
             saturday: saturday.isSelected,
             sunday: sunday.isSelected,
-            isActivated: true,
-            roomId: nil
+            isActivated: true
         )
     }
     
@@ -294,21 +282,8 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     }
     
     // MARK: - @
-    @IBAction func deleteEmoji(_ sender: UIButton) {
-        self.alarmIconLabel.text = ""
-        self.addEmojiButton.setImage(UIImage(named: "addAlarmIconBasic"), for: .normal)
-        self.deleteEmojiButton.isHidden = true
-    }
-    
     @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
-    }
-    
-    @IBAction func EditEmojiButtonTapped(_ sender: UIButton) {
-        let viewController = MCEmojiPickerViewController()
-        viewController.delegate = self
-        viewController.sourceView = sender
-        present(viewController, animated: true)
     }
     
     @IBAction func datePickerChanged(_ sender: UIDatePicker) {
@@ -336,6 +311,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         
         self.missionTitleLabel.text = kr
         self.missionIconLabel.text = icon
+        self.missionIcon = icon
         self.missionObjectId = missionObjectId
         self.missionId = missionId
         self.missionEndpoint = missionName
@@ -349,6 +325,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             self?.missionTitleLabel.text = missionKoreanName
             self?.missionKoreanName = missionKoreanName
             self?.missionIconLabel.text = missionIcon
+            self?.missionIcon = missionIcon
             self?.missionId = missionId
             self?.missionObjectId = missionObjectId
             self?.missionEndpoint = ""

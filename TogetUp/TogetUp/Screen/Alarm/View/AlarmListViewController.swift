@@ -37,7 +37,6 @@ class AlarmListViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
-        AlarmScheduleManager.shared.printAllScheduledNotifications()
     }
     
     // MARK: - Custom Method
