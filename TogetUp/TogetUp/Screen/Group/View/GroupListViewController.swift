@@ -20,6 +20,22 @@ class GroupListViewController: UIViewController {
     private let isCodeInvalid = BehaviorRelay<Bool>(value: false)
     
     // MARK: - Component
+    private let noGroupLabel = UILabel().then {
+        $0.text = "참여중인 그룹이 없어요"
+        $0.textColor = .black
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
+    
+    private let noGroupSubLabel = UILabel().then {
+        $0.text = "그룹에 참여하면 연동 알람이 생성됩니다"
+        $0.textColor = UIColor(named: "neutral600")
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
+    
     private let titleLabel = UILabel().then {
         $0.text = "그룹"
         $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 26)
@@ -121,6 +137,18 @@ class GroupListViewController: UIViewController {
         view.addSubview(createButton)
         view.addSubview(inviteButton)
         view.addSubview(collectionView)
+        view.addSubview(noGroupLabel)
+        view.addSubview(noGroupSubLabel)
+        
+        noGroupLabel.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
+            $0.centerY.equalTo(view.safeAreaLayoutGuide.snp.centerY).offset(-4)
+         }
+        
+        noGroupSubLabel.snp.makeConstraints {
+            $0.top.equalTo(noGroupLabel.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+        }
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
@@ -208,6 +236,8 @@ class GroupListViewController: UIViewController {
             .drive(onNext: { [weak self] groupResults in
                 self?.groupResults = groupResults
                 self?.collectionView.reloadData()
+                self?.noGroupLabel.isHidden = !groupResults.isEmpty
+                self?.noGroupSubLabel.isHidden = !groupResults.isEmpty
             })
             .disposed(by: disposeBag)
         

@@ -371,7 +371,7 @@ class GroupSettingsViewController: UIViewController {
         alertView.addSubview(copyButton)
 
         alertView.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.center.equalTo(view.safeAreaLayoutGuide.snp.center)
             $0.width.equalTo(270)
             $0.height.equalTo(155)
         }
