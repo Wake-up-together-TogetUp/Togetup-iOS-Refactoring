@@ -106,7 +106,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         let alarmTimeDate = formatter.date(from: result.alarmTime)
         timePicker.date = alarmTimeDate!
         self.alarmTimeString = String(result.alarmTime.prefix(5))
-
+        
         isVibrate.isOn = result.isVibrate
         sunday.isSelected = result.sunday
         monday.isSelected = result.monday
@@ -309,27 +309,36 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
               let missionName = userInfo["name"] as? String else {
             return
         }
-        
-        self.missionTitleLabel.text = kr
-        self.missionIconLabel.text = icon
-        self.missionIcon = icon
-        self.missionObjectId = missionObjectId
-        self.missionId = missionId
-        self.missionEndpoint = missionName
-        self.missionKoreanName = kr
+        if navigatedFromScreen != "AlarmList" {
+            self.missionTitleLabel.text = kr
+            self.missionIconLabel.text = icon
+            self.missionIcon = icon
+            self.missionObjectId = missionObjectId
+            self.missionId = missionId
+            self.missionEndpoint = missionName
+            self.missionKoreanName = kr
+        }
     }
     
     @IBAction func missionEditButton(_ sender: Any) {
-        guard let vc = storyboard?.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
-        
-        vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
-            self?.missionTitleLabel.text = missionKoreanName
-            self?.missionKoreanName = missionKoreanName
-            self?.missionIconLabel.text = missionIcon
-            self?.missionIcon = missionIcon
-            self?.missionId = missionId
-            self?.missionObjectId = missionObjectId
-            self?.missionEndpoint = ""
+        if navigatedFromScreen != "AlarmList" {
+            guard let vc = storyboard?.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
+            
+            vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
+                self?.missionTitleLabel.text = missionKoreanName
+                self?.missionKoreanName = missionKoreanName
+                self?.missionIconLabel.text = missionIcon
+                self?.missionIcon = missionIcon
+                self?.missionId = missionId
+                self?.missionObjectId = missionObjectId
+                self?.missionEndpoint = ""
+            }
+            
+            vc.modalPresentationStyle = .fullScreen
+            navigationController?.isNavigationBarHidden = false
+            navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            navigationController?.interactivePopGestureRecognizer?.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     

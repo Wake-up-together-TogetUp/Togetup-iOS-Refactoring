@@ -17,10 +17,27 @@ class RealmAlarmDataManager {
         return try! Realm()
     }
     
+    func configureRealmMigration() {
+        let config = Realm.Configuration(
+            schemaVersion: 3,
+            
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 3 {
+                    migration.enumerateObjects(ofType: Alarm.className()) { _, newObject in
+                        newObject?["isPersonalAlarm"] = false
+                    }
+                }
+            })
+
+        Realm.Configuration.defaultConfiguration = config
+    }
+    
     func fetchAlarms() -> [Alarm] {
-        let alarms = realm.objects(Alarm.self).sorted {
-            ($0.alarmHour * 60 + $0.alarmMinute) < ($1.alarmHour * 60 + $1.alarmMinute)
-        }
+        let alarms = realm.objects(Alarm.self)
+            .filter("isPersonalAlarm == true")
+            .sorted(byKeyPath: "alarmHour", ascending: true)
+            .sorted(byKeyPath: "alarmMinute", ascending: true)
+        dump(alarms)
         return Array(alarms)
     }
     
@@ -45,17 +62,17 @@ class RealmAlarmDataManager {
         }
     }
     
-    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String) {
+    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
         do {
             try realm.write {
                 let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId)
                 if alarm == nil {
                     let newAlarm = Alarm()
                     newAlarm.id = alarmId
-                    mapRequestToAlarm(request, alarm: newAlarm, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+                    mapRequestToAlarm(request, alarm: newAlarm, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: isPersonalAlarm)
                     realm.add(newAlarm)
                 } else {
-                    mapRequestToAlarm(request, alarm: alarm!, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+                    mapRequestToAlarm(request, alarm: alarm!, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: isPersonalAlarm)
                 }
             }
         } catch {
@@ -152,7 +169,7 @@ class RealmAlarmDataManager {
     }
     
     
-    private func mapRequestToAlarm(_ request: CreateOrEditAlarmRequest, alarm: Alarm, missionEndpoint: String, missionKoreanName: String) {
+    private func mapRequestToAlarm(_ request: CreateOrEditAlarmRequest, alarm: Alarm, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
         alarm.missionId = request.missionId
         alarm.missionObjectId = request.missionObjectId ?? 1
         alarm.name = request.name
@@ -171,6 +188,7 @@ class RealmAlarmDataManager {
         alarm.missionName = missionKoreanName
         alarm.missionEndpoint = missionEndpoint
         alarm.createdDate = Date()
+        alarm.isPersonalAlarm = isPersonalAlarm ?? false
     }
     
     private func getHour(from time: String) -> Int {
