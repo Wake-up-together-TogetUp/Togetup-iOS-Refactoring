@@ -66,7 +66,6 @@
 		F96B326D2A8A002900BD3BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96B326C2A8A002900BD3BF9 /* Assets.xcassets */; };
 		F96B32702A8A002900BD3BF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96B326E2A8A002900BD3BF9 /* LaunchScreen.storyboard */; };
 		F96B327F2A8A358000BD3BF9 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = F96B327E2A8A358000BD3BF9 /* RxMoya */; };
-		F96B32872A8A3BD200BD3BF9 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F96B32862A8A3BD200BD3BF9 /* MCEmojiPicker */; };
 		F96B32942A8CB57C00BD3BF9 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */; };
 		F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32952A8CBA5500BD3BF9 /* LoginViewController.swift */; };
 		F96B32A12A8E8BD300BD3BF9 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = F96B32A02A8E8BD300BD3BF9 /* KeychainAccess */; };
@@ -273,7 +272,6 @@
 				F9D679D92AC1BD2E006B1643 /* Lottie in Frameworks */,
 				F9C226C62BF65CAC00B14D11 /* Then in Frameworks */,
 				F96B327F2A8A358000BD3BF9 /* RxMoya in Frameworks */,
-				F96B32872A8A3BD200BD3BF9 /* MCEmojiPicker in Frameworks */,
 				9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */,
 				F96B32942A8CB57C00BD3BF9 /* RxKakaoSDK in Frameworks */,
 				9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */,
@@ -778,7 +776,6 @@
 			name = TogetUp;
 			packageProductDependencies = (
 				F96B327E2A8A358000BD3BF9 /* RxMoya */,
-				F96B32862A8A3BD200BD3BF9 /* MCEmojiPicker */,
 				F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */,
 				F96B32A02A8E8BD300BD3BF9 /* KeychainAccess */,
 				F9D679D82AC1BD2E006B1643 /* Lottie */,
@@ -820,7 +817,6 @@
 			mainGroup = F96B32572A8A002800BD3BF9;
 			packageReferences = (
 				F96B327D2A8A358000BD3BF9 /* XCRemoteSwiftPackageReference "Moya" */,
-				F96B32852A8A3BD200BD3BF9 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 				F96B32922A8CB57C00BD3BF9 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				F96B329F2A8E8BD300BD3BF9 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				F9D679D72AC1BD2E006B1643 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -931,7 +927,7 @@
 				F91D01962AC2C74F003841D8 /* AlarmScheduleManager.swift in Sources */,
 				F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */,
 				F9BF4AA72C60F6BF00F775A8 /* String  + Extension.swift in Sources */,
-				9576DACC2C20A58D00AB62AA /* inviteViewController.swift in Sources */,
+				9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */,
 				9576DACC2C20A58D00AB62AA /* InviteScreenViewController.swift in Sources */,
 				9576DABE2C20A58D00AB62AA /* GroupListViewModel.swift in Sources */,
 				F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */,
@@ -1279,14 +1275,6 @@
 				minimumVersion = 15.0.0;
 			};
 		};
-		F96B32852A8A3BD200BD3BF9 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		F96B32922A8CB57C00BD3BF9 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
@@ -1358,11 +1346,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F96B327D2A8A358000BD3BF9 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
-		};
-		F96B32862A8A3BD200BD3BF9 /* MCEmojiPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F96B32852A8A3BD200BD3BF9 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
-			productName = MCEmojiPicker;
 		};
 		F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;

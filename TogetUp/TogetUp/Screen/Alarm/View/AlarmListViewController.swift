@@ -64,7 +64,6 @@ class AlarmListViewController: UIViewController {
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
         setGroupCollectionView()
-        AlarmScheduleManager.shared.printAllScheduledNotifications()
     }
     
     override func viewDidLayoutSubviews() {

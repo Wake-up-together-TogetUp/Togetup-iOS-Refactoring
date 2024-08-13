@@ -121,8 +121,7 @@ class RealmAlarmDataManager {
             friday: storedAlarm.friday,
             saturday: storedAlarm.saturday,
             sunday: storedAlarm.sunday,
-            isActivated: !storedAlarm.isActivated,
-            roomId: nil
+            isActivated: !storedAlarm.isActivated
         )
     }
     
