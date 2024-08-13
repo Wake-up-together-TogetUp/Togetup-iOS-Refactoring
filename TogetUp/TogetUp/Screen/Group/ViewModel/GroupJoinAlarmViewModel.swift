@@ -20,6 +20,9 @@ class GroupJoinAlarmViewModel: ViewModelType {
         let roomId: Int
         let missionId: Int
         let missionObjectId: Int
+        let missionEndpoint: String
+        let missionKoreanName: String
+        let icon: String
     }
     
     struct Output {
@@ -30,6 +33,7 @@ class GroupJoinAlarmViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     private let provider = MoyaProvider<GroupAPI>()
     private let networkManager = NetworkManager()
+    private let realmManager = RealmAlarmDataManager()
     
     func transform(input: Input) -> Output {
         let isJoinButtonEnabled = Observable.combineLatest(input.alarmName, input.weekdaySelection)
@@ -64,20 +68,49 @@ class GroupJoinAlarmViewModel: ViewModelType {
                     missionId: input.missionId,
                     missionObjectId: input.missionObjectId
                 )
+                
+                let localRequest = CreateOrEditAlarmRequest(
+                    missionId: input.missionId,
+                    missionObjectId: input.missionObjectId,
+                    name: finalAlarmName,
+                    icon: input.icon,
+                    isVibrate: vibrationEnabled,
+                    alarmTime: formattedTime,
+                    monday: weekdays[0],
+                    tuesday: weekdays[1],
+                    wednesday: weekdays[2],
+                    thursday: weekdays[3],
+                    friday: weekdays[4],
+                    saturday: weekdays[5],
+                    sunday: weekdays[6],
+                    isActivated: true,
+                    roomId: nil
+                )
                 return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: GroupAlarmRequest.self)
                     .asObservable()
-                    .do(onNext: { response in
-                        print("Response data: \(response)")
-                    })
-                    .map { $0 }
+                    .flatMap { result -> Observable<Result<GroupAlarmRequest, NetWorkingError>> in
+                        switch result {
+                        case .success(let response):
+                            self.saveAlarmToLocalDatabase(request: localRequest, missionEndpoint: input.missionEndpoint, missionKoreanName: input.missionKoreanName)
+                            return .just(.success(response))
+                        case .failure(let error):
+                            return .just(.failure(error))
+                        }
+                    }
                     .catch { error in
-                        print("Error: \(error.localizedDescription)")
-                        return .just(.failure(error as? NetWorkingError ?? .parsingError))
+                        let networkError = error as? NetWorkingError ?? .parsingError
+                        return .just(.failure(networkError))
                     }
             }
         
         return Output(isJoinButtonEnabled: isJoinButtonEnabled, joinGroupResponse: joinGroupResponse)
         
+    }
+    
+    private func saveAlarmToLocalDatabase(request: CreateOrEditAlarmRequest, missionEndpoint: String, missionKoreanName: String) {
+        let newAlarm = Alarm()
+        newAlarm.id = UUID().hashValue
+        realmManager.updateAlarm(with: request, for: newAlarm.id, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
     }
     
     private func formatDate(date: Date) -> String {

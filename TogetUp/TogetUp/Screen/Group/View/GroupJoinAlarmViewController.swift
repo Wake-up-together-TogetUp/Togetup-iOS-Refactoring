@@ -19,6 +19,7 @@ class GroupJoinAlarmViewController: UIViewController {
     var missionKr: String = ""
     var missionId: Int = 2
     var missionObjectId: Int? = 1
+    var missionEndpoint: String = ""
     private let vibrationToggle = UISwitch()
     
     lazy var timePicker: UIDatePicker = {
@@ -288,7 +289,10 @@ class GroupJoinAlarmViewController: UIViewController {
             joinButtonTapped: openedButton.rx.tap.asObservable(),
             roomId: roomId,
             missionId: missionId,
-            missionObjectId: missionObjectId ?? 1
+            missionObjectId: missionObjectId ?? 1,
+            missionEndpoint: missionEndpoint,
+            missionKoreanName: missionKr,
+            icon: icon
         )
         
         let output = viewModel.transform(input: input)
@@ -296,11 +300,11 @@ class GroupJoinAlarmViewController: UIViewController {
         output.isJoinButtonEnabled
             .bind(to: openedButton.rx.isEnabled)
             .disposed(by: disposeBag)
-        
+
         output.joinGroupResponse
             .subscribe(onNext: { [weak self] result in
                 switch result {
-                case .success:
+                case .success(let createGroupResponse):
                     if let navigationController = self?.navigationController {
                         navigationController.popViewController(animated: true)
                         
@@ -309,14 +313,8 @@ class GroupJoinAlarmViewController: UIViewController {
                         }
                     }
                 case .failure(let error):
-                    switch error {
-                    case .parsingError:
-                        print("Parsing error occurred")
-                    case .network(let underlyingError):
-                        print("Network error: \(underlyingError.localizedDescription)")
-                    default:
-                        print("Unknown error: \(error.localizedDescription)")
-                    }
+                    let errorMessage = NetworkManager().errorMessage(for: error)
+                    print("에러: \(errorMessage)")
                     if let navigationController = self?.navigationController {
                         navigationController.popViewController(animated: true)
                         
