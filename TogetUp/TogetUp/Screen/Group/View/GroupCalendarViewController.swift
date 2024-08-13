@@ -297,6 +297,14 @@ extension GroupCalendarViewController: FSCalendarDelegate, FSCalendarDataSource 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         dateSelectedSubject.onNext(date)
     }
+    
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        return date <= Date()
+    }
+
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        return date > Date() ? UIColor(named: "neutral200") : nil
+    }
 }
 
 extension GroupCalendarViewController: FSCalendarDelegateAppearance {
@@ -324,9 +332,6 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
 }
 
 extension GroupCalendarViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    }
-    
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
       calendarView.snp.updateConstraints {
         $0.height.equalTo(bounds.height)

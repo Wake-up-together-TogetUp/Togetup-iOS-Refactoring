@@ -32,6 +32,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     @IBOutlet weak var addEmojiButton: UIButton!
     @IBOutlet weak var deleteEmojiButton: UIButton!
     @IBOutlet weak var alarmNameCountLabel: UILabel!
+    @IBOutlet weak var missionEditButton: UIButton!
     
     // MARK: - Properties
     private let disposeBag = DisposeBag()
@@ -80,6 +81,8 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             loadAlarmData(id: id)
             self.addEmojiButton.setImage(UIImage(named: "iconExist"), for: .normal)
             setUpDatePicker()
+            missionEditButton.isHidden = true
+            missionView.isUserInteractionEnabled = false
         } else {
             setUpDatePicker()
         }
@@ -120,7 +123,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         friday.isSelected = result.friday
         saturday.isSelected = result.saturday
     }
-    
     
     private func customUI() {
         dayOfWeekButtons.forEach {
@@ -274,7 +276,6 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         return String(text.prefix(10))
     }
     
-    
     private func updateLabelColorAndText(truncatedText: String, originalText: String) {
         alarmNameCountLabel.text = "\(truncatedText.count)/10"
         alarmNameCountLabel.textColor = originalText.count > 10 ? UIColor(named: "error500") : UIColor(named: "neutral500")
@@ -334,31 +335,35 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             return
         }
         
-        self.missionTitleLabel.text = kr
-        self.missionIconLabel.text = icon
-        self.missionObjectId = missionObjectId
-        self.missionId = missionId
-        self.missionEndpoint = missionName
-        self.missionKoreanName = kr
+        if navigatedFromScreen != "AlarmList" {
+            self.missionTitleLabel.text = kr
+            self.missionIconLabel.text = icon
+            self.missionObjectId = missionObjectId
+            self.missionId = missionId
+            self.missionEndpoint = missionName
+            self.missionKoreanName = kr
+        }
     }
     
     @IBAction func missionEditButton(_ sender: Any) {
-        guard let vc = storyboard?.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
-        
-        vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
-            self?.missionTitleLabel.text = missionKoreanName
-            self?.missionKoreanName = missionKoreanName
-            self?.missionIconLabel.text = missionIcon
-            self?.missionId = missionId
-            self?.missionObjectId = missionObjectId
-            self?.missionEndpoint = ""
+        if navigatedFromScreen != "AlarmList" {
+            guard let vc = storyboard?.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
+            
+            vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in
+                self?.missionTitleLabel.text = missionKoreanName
+                self?.missionKoreanName = missionKoreanName
+                self?.missionIconLabel.text = missionIcon
+                self?.missionId = missionId
+                self?.missionObjectId = missionObjectId
+                self?.missionEndpoint = ""
+            }
+            
+            vc.modalPresentationStyle = .fullScreen
+            navigationController?.isNavigationBarHidden = false
+            navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            navigationController?.interactivePopGestureRecognizer?.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
         }
-        
-        vc.modalPresentationStyle = .fullScreen
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func dayOfWeekButtonTapped(_ sender: UIButton) {

@@ -70,10 +70,10 @@ final class GroupListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        self.backgroundColor = UIColor(named: "secondary025")
+        self.backgroundColor = .white
          self.layer.cornerRadius = 10
          self.layer.masksToBounds = true
-         self.layer.borderWidth = 1
+         self.layer.borderWidth = 2
          self.layer.borderColor = UIColor.black.cgColor
         
         contentView.addSubview(img)
