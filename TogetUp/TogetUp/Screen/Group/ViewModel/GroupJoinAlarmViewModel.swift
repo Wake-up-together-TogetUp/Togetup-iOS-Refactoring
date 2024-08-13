@@ -83,8 +83,7 @@ class GroupJoinAlarmViewModel: ViewModelType {
                     friday: weekdays[4],
                     saturday: weekdays[5],
                     sunday: weekdays[6],
-                    isActivated: true,
-                    roomId: nil
+                    isActivated: true
                 )
                 return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: GroupAlarmRequest.self)
                     .asObservable()
