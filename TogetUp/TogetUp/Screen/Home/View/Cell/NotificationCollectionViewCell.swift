@@ -45,6 +45,7 @@ class NotificationCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         contentView.backgroundColor = UIColor(red: 0.967, green: 0.967, blue: 0.967, alpha: 1)
         contentView.layer.cornerRadius = 12
+        contentView.layer.borderWidth = 2
         contentView.layer.masksToBounds = true
         
         contentView.addSubview(timeLabel)

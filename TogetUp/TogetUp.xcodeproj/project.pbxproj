@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95164C4C2C70FDC500ECF275 /* PushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */; };
 		95164C4F2C710F9A00ECF275 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */; };
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
 		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
@@ -137,6 +138,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationViewController.swift; sourceTree = "<group>"; };
 		95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
@@ -911,6 +913,7 @@
 				F93140642A8FBB43000FB717 /* HomeViewController.swift in Sources */,
 				9562FCCB2C5176A3009ED55F /* GroupJoinAlarmViewModel.swift in Sources */,
 				F9523E4D2B5C1F7B00B16CCB /* RealmDataManger.swift in Sources */,
+				95164C4C2C70FDC500ECF275 /* PushNotificationViewController.swift in Sources */,
 				F9C8ADC82A9CDF7500F541FD /* MissionListDetailViewController.swift in Sources */,
 				F9C602302B72044D008A43A0 /* CustomFloatingPanelLayout.swift in Sources */,
 				F9A7CC332B8DA36600C73401 /* ThemeManager.swift in Sources */,
