@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95164C4F2C710F9A00ECF275 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */; };
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
 		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
 		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
@@ -136,6 +137,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
 		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
@@ -281,6 +283,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95164C4D2C710F8B00ECF275 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		9576DAA82C20A1C000AB62AA /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,12 +475,14 @@
 		F931405F2A8FBAE0000FB717 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				95164C4D2C710F8B00ECF275 /* Cell */,
 				F93140692A8FBD30000FB717 /* Home.storyboard */,
 				F93140632A8FBB43000FB717 /* HomeViewController.swift */,
 				F91BEF122AF503D3003395A0 /* FloatingPannelViewController.swift */,
 				F97CDC1D2B13344A0057AA82 /* TimelineCollectionViewCell.swift */,
 				F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */,
 				F9C6022F2B72044D008A43A0 /* CustomFloatingPanelLayout.swift */,
+				95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -949,6 +961,7 @@
 				F915EA182BF1D0A6002B84BC /* VersionCheckResponseModel.swift in Sources */,
 				F9C8ADCA2A9CE56700F541FD /* MissionListViewController.swift in Sources */,
 				F98601002AB2EDAD00595646 /* SplashViewController.swift in Sources */,
+				95164C4F2C710F9A00ECF275 /* NotificationCollectionViewCell.swift in Sources */,
 				95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */,
 				9576DAC02C20A58D00AB62AA /* CreateAlarmViewModel.swift in Sources */,
 				F97CDC1E2B13344A0057AA82 /* TimelineCollectionViewCell.swift in Sources */,
