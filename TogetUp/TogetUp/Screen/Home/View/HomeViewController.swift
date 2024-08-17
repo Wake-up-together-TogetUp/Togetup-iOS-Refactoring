@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
     @IBOutlet weak var avatarChooseCollectionView: UICollectionView!
     @IBOutlet weak var mainAvatarImageView: UIImageView!
     @IBOutlet weak var avatarSpeechLabel: UILabel!
+    @IBOutlet weak var NotificationButton: UIButton!
     
     // MARK: - Properties
     private var fpc: FloatingPanelController!
