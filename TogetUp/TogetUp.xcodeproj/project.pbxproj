@@ -34,6 +34,7 @@
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		957D7E8B2C6A0EF200A45BD6 /* GroupAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957D7E8A2C6A0EF100A45BD6 /* GroupAlarmCollectionViewCell.swift */; };
+		959E2BDB2C722FB700050912 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959E2BDA2C722FB700050912 /* NotificationModel.swift */; };
 		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
 		95B1C2912C245FF200A04364 /* GroupCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */; };
 		95B1C2982C2F314900A04364 /* InviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2972C2F314900A04364 /* InviteViewModel.swift */; };
@@ -168,6 +169,7 @@
 		9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteScreenViewController.swift; sourceTree = "<group>"; };
 		957D7E8A2C6A0EF100A45BD6 /* GroupAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		959E2BDA2C722FB700050912 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
 		95B1C2972C2F314900A04364 /* InviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewModel.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				F97CDC1F2B13359E0057AA82 /* TimelineModel.swift */,
 				F97CDC252B1458E10057AA82 /* AvatarModel.swift */,
 				F915EA172BF1D0A6002B84BC /* VersionCheckResponseModel.swift */,
+				959E2BDA2C722FB700050912 /* NotificationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				F9C8ADC82A9CDF7500F541FD /* MissionListDetailViewController.swift in Sources */,
 				F9C602302B72044D008A43A0 /* CustomFloatingPanelLayout.swift in Sources */,
 				F9A7CC332B8DA36600C73401 /* ThemeManager.swift in Sources */,
+				959E2BDB2C722FB700050912 /* NotificationModel.swift in Sources */,
 				F99BE8032AA1BBC80005E66F /* LoginService.swift in Sources */,
 				F91AA8882AB890BE00BDA437 /* AppStatusManager.swift in Sources */,
 				F9D679D62AC1A177006B1643 /* MissionProcessModel.swift in Sources */,
