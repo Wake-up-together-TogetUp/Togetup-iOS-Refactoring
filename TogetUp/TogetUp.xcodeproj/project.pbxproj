@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		95164C4C2C70FDC500ECF275 /* PushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */; };
 		95164C4F2C710F9A00ECF275 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */; };
+		95164C532C71491000ECF275 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C522C71491000ECF275 /* NotificationAPI.swift */; };
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
 		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
 		9562FCC72C452D88009ED55F /* Reactive + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562FCC62C452D88009ED55F /* Reactive + Extension.swift */; };
@@ -140,6 +141,7 @@
 /* Begin PBXFileReference section */
 		95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationViewController.swift; sourceTree = "<group>"; };
 		95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
+		95164C522C71491000ECF275 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
 		9562FCC62C452D88009ED55F /* Reactive + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive + Extension.swift"; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */,
+				95164C522C71491000ECF275 /* NotificationAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -935,6 +938,7 @@
 				F93140662A8FBBFB000FB717 /* TabBarViewController.swift in Sources */,
 				957D7E8B2C6A0EF200A45BD6 /* GroupAlarmCollectionViewCell.swift in Sources */,
 				9562FCD12C673CCD009ED55F /* GroupSettingsViewModel.swift in Sources */,
+				95164C532C71491000ECF275 /* NotificationAPI.swift in Sources */,
 				F99BE8062AA1CC740005E66F /* LoginViewModel.swift in Sources */,
 				F99BE7FC2A9F8EAC0005E66F /* LoginModel.swift in Sources */,
 				F91BEF132AF503D3003395A0 /* FloatingPannelViewController.swift in Sources */,
