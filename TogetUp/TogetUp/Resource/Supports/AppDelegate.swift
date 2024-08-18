@@ -10,11 +10,13 @@ import Firebase
 import RxKakaoSDKCommon
 import UserNotifications
 import RxSwift
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private let pushAlarmViewModel = PushAlarmViewModel()
     private let disposeBag = DisposeBag()
+    private let realmManager = RealmAlarmDataManager()
     
     var isLoggedIn: Bool {
         return KeyChainManager.shared.getToken() != nil
@@ -36,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
+        realmManager.configureRealmMigration()
         Messaging.messaging().delegate = self
         return true
     }

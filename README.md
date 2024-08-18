@@ -39,5 +39,4 @@ AI 기술을 통해 촬영한 사진을 인식해요
 - FloatingPanel
 - RxKakaoOpenSDK
 - Lottie
-- MCEmojiPicker
 ```
