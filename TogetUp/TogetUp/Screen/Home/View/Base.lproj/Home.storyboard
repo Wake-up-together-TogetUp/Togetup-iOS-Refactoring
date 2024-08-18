@@ -152,11 +152,11 @@
                                                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgC-uO-mOG">
                                                             <rect key="frame" x="35.333333333333343" y="217" width="49.666666666666657" height="17"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Bka-Rr-G67">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Bka-Rr-G67">
                                                                     <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
                                                                     <color key="tintColor" name="neutral200"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Lv.10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYa-jS-ebg">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lv.10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYa-jS-ebg">
                                                                     <rect key="frame" x="16.999999999999996" y="0.0" width="32.666666666666657" height="17"/>
                                                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="14"/>
                                                                     <color key="textColor" name="neutral400"/>
@@ -286,10 +286,14 @@
                                 <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
                                     <imageReference key="image" image="bell" catalog="system" symbolScale="large"/>
                                     <backgroundConfiguration key="background" strokeWidth="2">
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </backgroundConfiguration>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="notificationButtonTapped:" destination="mrA-Cz-560" eventType="touchUpInside" id="HXY-1x-0xf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cTC-Rg-ILA"/>
@@ -326,7 +330,6 @@
                     <navigationItem key="navigationItem" title="루틴 형성 51일째" id="EBK-Wj-nrb"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="NotificationButton" destination="Ohx-g9-i49" id="C8g-WE-rPy"/>
                         <outlet property="avatarChooseCollectionView" destination="Be6-57-cxv" id="21z-yj-86Q"/>
                         <outlet property="avatarSpeechLabel" destination="0h6-SE-nka" id="d1c-GQ-Van"/>
                         <outlet property="avatarView" destination="4Th-Kl-ZDr" id="qRr-me-hJl"/>
@@ -334,6 +337,7 @@
                         <outlet property="levelLabel" destination="dV2-u1-BUr" id="h9w-Dw-ocK"/>
                         <outlet property="mainAvatarImageView" destination="YtU-gE-mnu" id="eCg-I3-1oR"/>
                         <outlet property="nameLabel" destination="vHT-wd-8Fj" id="u88-4b-erb"/>
+                        <outlet property="notificationButton" destination="Ohx-g9-i49" id="Vnc-Ou-vh4"/>
                         <outlet property="progressBar" destination="4BJ-Bh-Eoi" id="kxC-I3-GRh"/>
                     </connections>
                 </viewController>
