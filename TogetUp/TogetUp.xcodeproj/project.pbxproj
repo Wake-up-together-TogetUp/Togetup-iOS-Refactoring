@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		95164C4C2C70FDC500ECF275 /* PushNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */; };
 		95164C4F2C710F9A00ECF275 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */; };
+		95164C512C71489A00ECF275 /* PushNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C502C71489A00ECF275 /* PushNotificationViewModel.swift */; };
 		95164C532C71491000ECF275 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95164C522C71491000ECF275 /* NotificationAPI.swift */; };
 		952AD2832B82661500598680 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 952AD2822B82661500598680 /* SnapKit */; };
 		9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 9562FCB22C3C0118009ED55F /* apple-app-site-association */; };
@@ -145,6 +146,7 @@
 /* Begin PBXFileReference section */
 		95164C4B2C70FDC500ECF275 /* PushNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationViewController.swift; sourceTree = "<group>"; };
 		95164C4E2C710F9A00ECF275 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
+		95164C502C71489A00ECF275 /* PushNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationViewModel.swift; sourceTree = "<group>"; };
 		95164C522C71491000ECF275 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		952AD2D22B87099000598680 /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		9562FCB22C3C0118009ED55F /* apple-app-site-association */ = {isa = PBXFileReference; explicitFileType = text.json; name = "apple-app-site-association"; path = ".well-know/apple-app-site-association"; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 			children = (
 				F97CDC232B144C530057AA82 /* HomeViewModel.swift */,
 				F97CDC292B15DDA50057AA82 /* TimelineViewModel.swift */,
+				95164C502C71489A00ECF275 /* PushNotificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				F99BE8032AA1BBC80005E66F /* LoginService.swift in Sources */,
 				F91AA8882AB890BE00BDA437 /* AppStatusManager.swift in Sources */,
 				F9D679D62AC1A177006B1643 /* MissionProcessModel.swift in Sources */,
+				95164C512C71489A00ECF275 /* PushNotificationViewModel.swift in Sources */,
 				F9D679D12AC1786F006B1643 /* UIImagePickerController + Extension.swift in Sources */,
 				F9C9C1FF2BEE3C5400A6C66E /* WebkitViewController.swift in Sources */,
 				F98600F22AAEC1A400595646 /* MissionService.swift in Sources */,
