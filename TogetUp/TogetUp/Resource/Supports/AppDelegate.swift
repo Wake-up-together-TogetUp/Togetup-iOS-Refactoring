@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 import RxKakaoSDKCommon
 import UserNotifications
 import RxSwift
@@ -22,6 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+        )
+        
         AppStatusManager.shared.clearSensitiveDataOnFirstLaunch()
         if let kakaoAppKey = Bundle.main.object(forInfoDictionaryKey: "KakaoAppKey") as? String {
             RxKakaoSDK.initSDK(appKey: kakaoAppKey)
@@ -30,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
         realmManager.configureRealmMigration()
+        Messaging.messaging().delegate = self
         return true
     }
     
@@ -61,6 +71,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
            let sceneDelegate = scene.delegate as? SceneDelegate {
             sceneDelegate.navigateToMissionPerformViewController(with: alarmId)
         }
+        completionHandler([.list, .banner])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -72,5 +83,33 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             sceneDelegate.navigateToMissionPerformViewController(with: alarmId)
         }
         completionHandler()
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("APNS token: \(deviceToken)")
+        Messaging.messaging().apnsToken = deviceToken
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+      print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        pushAlarmViewModel.sendFcmToken(token: fcmToken ?? "")
+                            .subscribe(onNext: { response in
+                               print(response)
+                           })
+                           .disposed(by: disposeBag)
+
+      let dataDict: [String: String] = ["token": fcmToken ?? ""]
+      NotificationCenter.default.post(
+        name: Notification.Name("FCMToken"),
+        object: nil,
+        userInfo: dataDict
+      )
+      // TODO: If necessary send token to application server.
+      // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 }

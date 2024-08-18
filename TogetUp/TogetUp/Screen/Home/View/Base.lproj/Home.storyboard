@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mrA-Cz-560">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mrA-Cz-560">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -49,7 +49,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content=" ">
                                         <attributes>
-                                            <font key="NSFont" size="16" name="Jua-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="16"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -275,6 +275,26 @@
                                     <action selector="showAvatarView:" destination="mrA-Cz-560" eventType="touchUpInside" id="r9X-hz-GW8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohx-g9-i49">
+                                <rect key="frame" x="329" y="86" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="LWj-4Y-X7h"/>
+                                    <constraint firstAttribute="height" constant="44" id="b81-q6-B3f"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <imageReference key="image" image="bell" catalog="system" symbolScale="large"/>
+                                    <backgroundConfiguration key="background" strokeWidth="2">
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="notificationButtonTapped:" destination="mrA-Cz-560" eventType="touchUpInside" id="HXY-1x-0xf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cTC-Rg-ILA"/>
                         <color key="backgroundColor" name="chick"/>
@@ -300,8 +320,10 @@
                             <constraint firstItem="tUE-eb-PfC" firstAttribute="centerX" secondItem="BVN-eZ-cPA" secondAttribute="centerX" id="eEw-Vp-S2h"/>
                             <constraint firstItem="YtU-gE-mnu" firstAttribute="top" secondItem="vHT-wd-8Fj" secondAttribute="bottom" constant="24" id="i4T-vR-5au"/>
                             <constraint firstItem="2rB-4J-qdc" firstAttribute="leading" secondItem="cTC-Rg-ILA" secondAttribute="leading" constant="20" id="nMO-8N-lle"/>
+                            <constraint firstItem="cTC-Rg-ILA" firstAttribute="trailing" secondItem="Ohx-g9-i49" secondAttribute="trailing" constant="20" id="se5-bx-GFD"/>
                             <constraint firstItem="cTC-Rg-ILA" firstAttribute="trailing" secondItem="4BJ-Bh-Eoi" secondAttribute="trailing" constant="240" id="vJm-5x-JrO"/>
                             <constraint firstItem="0h6-SE-nka" firstAttribute="centerX" secondItem="iMz-cn-Lvw" secondAttribute="centerX" id="yZi-cC-7OH"/>
+                            <constraint firstItem="Ohx-g9-i49" firstAttribute="top" secondItem="cTC-Rg-ILA" secondAttribute="top" constant="27" id="zOt-nH-0TG"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="home-line" selectedImage="home_selected" id="Nou-t8-wa2"/>
@@ -315,6 +337,7 @@
                         <outlet property="levelLabel" destination="dV2-u1-BUr" id="h9w-Dw-ocK"/>
                         <outlet property="mainAvatarImageView" destination="YtU-gE-mnu" id="eCg-I3-1oR"/>
                         <outlet property="nameLabel" destination="vHT-wd-8Fj" id="u88-4b-erb"/>
+                        <outlet property="notificationButton" destination="Ohx-g9-i49" id="Vnc-Ou-vh4"/>
                         <outlet property="progressBar" destination="4BJ-Bh-Eoi" id="kxC-I3-GRh"/>
                     </connections>
                 </viewController>
@@ -557,6 +580,7 @@
         <image name="arrow-right" width="24" height="24"/>
         <image name="avatarBackNolLine" width="120" height="178"/>
         <image name="avatarCustomButton" width="24" height="24"/>
+        <image name="bell" catalog="system" width="125" height="128"/>
         <image name="check" width="16" height="16"/>
         <image name="home-line" width="24" height="24"/>
         <image name="homeFIilledCircle" width="771" height="771"/>

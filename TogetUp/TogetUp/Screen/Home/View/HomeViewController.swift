@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
     @IBOutlet weak var hangerButton: UIButton!
     @IBOutlet weak var avatarChooseCollectionView: UICollectionView!
     @IBOutlet weak var mainAvatarImageView: UIImageView!
+    @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var avatarSpeechLabel: UILabel!
     
     // MARK: - Properties
@@ -265,6 +266,15 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
     }
     
     // MARK: - @
+    @IBAction func notificationButtonTapped(_ sender: UIButton) {
+        let notificationVC = PushNotificationViewController()
+         let navigationController = UINavigationController(rootViewController: notificationVC)
+         
+         navigationController.navigationBar.isHidden = false
+        navigationController.modalPresentationStyle = .fullScreen
+         present(navigationController, animated: true, completion: nil)
+    }
+    
     @IBAction func showAvatarView(_ sender: Any) {
         updateUIComponentsVisibility(isAvatarViewVisible: true)
         if let currentUserData = UserDataManager.shared.currentUserData {
