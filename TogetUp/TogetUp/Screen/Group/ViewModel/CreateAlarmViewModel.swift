@@ -147,7 +147,7 @@ class CreateAlarmViewModel: ViewModelType {
     private func saveAlarmToLocalDatabase(request: CreateOrEditAlarmRequest, missionEndpoint: String, missionKoreanName: String) {
         let newAlarm = Alarm()
         newAlarm.id = UUID().hashValue
-        realmManager.updateAlarm(with: request, for: newAlarm.id, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+        realmManager.updateAlarm(with: request, for: newAlarm.id, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false)
     }
 
     private func formatDate(date: Date) -> String {

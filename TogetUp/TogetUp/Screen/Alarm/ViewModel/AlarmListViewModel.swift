@@ -28,6 +28,8 @@ class AlarmListViewModel {
     
     func fetchAlarmsFromRealm() {
         let alarmsFromRealm = realmManager.fetchAlarms()
+        print("=================")
+        print(alarmsFromRealm)
         alarms.onNext(alarmsFromRealm)
     }
     
@@ -90,6 +92,7 @@ class AlarmListViewModel {
             alarm.saturday = apiAlarm.saturday
             alarm.sunday = apiAlarm.sunday
             alarm.isActivated = apiAlarm.isActivated
+            alarm.isPersonalAlarm = true
             
             let timeComponents = apiAlarm.alarmTime.split(separator: ":").map { Int($0) }
             

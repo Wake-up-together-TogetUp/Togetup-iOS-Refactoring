@@ -35,9 +35,8 @@ class EditAlarmViewModel {
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in
                 switch result {
                 case .success(let response):
-                    print(response)
                     let alarmId = response.result
-                    self?.realmManager.updateAlarm(with: param, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+                    self?.realmManager.updateAlarm(with: param, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true)
                     AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)
                     return .just(.success(()))
                 case .failure(let error):
@@ -51,7 +50,7 @@ class EditAlarmViewModel {
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in
                 switch result {
                 case .success:
-                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true)
                     AlarmScheduleManager.shared.removeNotification(for: alarmId) {
                         DispatchQueue.main.async {
                             AlarmScheduleManager.shared.scheduleNotification(for: alarmId)
