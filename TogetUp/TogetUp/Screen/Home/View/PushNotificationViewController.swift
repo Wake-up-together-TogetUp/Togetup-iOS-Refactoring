@@ -6,69 +6,91 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SnapKit
 
 class PushNotificationViewController: UIViewController {
-    
-    private var push: [NotificationMessage] = []
+    private let viewModel = PushNotificationViewModel()
+    private let disposeBag = DisposeBag()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 68)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
         return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        fetchData()
+        bindViewModel()
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
+        self.title = "알림"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron-left"), style: .plain, target: self, action: #selector(dismissViewController))
     }
     
     private func setupCollectionView() {
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        collectionView.backgroundColor = .white
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.register(NotificationCollectionViewCell.self, forCellWithReuseIdentifier: NotificationCollectionViewCell.identifier)
+        collectionView.delegate = self
     }
     
-    private func fetchData() {
-        push = [
-            NotificationMessage(message: "알림 내용 1", date: Date(), isRead: false),
-            NotificationMessage(message: "알림 내용 2", date: Date(), isRead: true),
-            NotificationMessage(message: "알림 내용 3", date: Date(), isRead: false)
-        ]
-        collectionView.reloadData()
+    private func bindViewModel() {
+        let deleteNotificationSubject = PublishSubject<Int>()
+        let markAsReadSubject = PublishSubject<Int>()
+
+        let input = PushNotificationViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            deleteNotification: deleteNotificationSubject.asObservable(),
+            markAsRead: markAsReadSubject.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.notifications
+            .drive(collectionView.rx.items(cellIdentifier: NotificationCollectionViewCell.identifier, cellType: NotificationCollectionViewCell.self)) { [weak self] index, notification, cell in
+                guard let cell = cell as? NotificationCollectionViewCell else { return }
+                
+                cell.configure(with: notification)
+                cell.onDeleteButtonTapped
+                    .bind(onNext: { [weak self] in
+                        deleteNotificationSubject.onNext(notification.id)
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.onCellTapped
+                    .bind(onNext: { [weak self] in
+                        markAsReadSubject.onNext(notification.id)
+                    })
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.error
+            .drive(onNext: { error in
+                print("Error: \(error.localizedDescription)")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @objc private func dismissViewController() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension PushNotificationViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return push.count
+extension PushNotificationViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 40, height: 68)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NotificationCollectionViewCell.identifier, for: indexPath) as! NotificationCollectionViewCell
-        let notification = push[indexPath.item]
-//        cell.configure(with: notification)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("알림 선택됨: \(push[indexPath.item].message)")
-    }
-}
-
-struct NotificationMessage {
-    let message: String
-    let date: Date
-    let isRead: Bool
 }

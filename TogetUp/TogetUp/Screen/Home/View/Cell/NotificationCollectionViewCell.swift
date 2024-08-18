@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SnapKit
 
 class NotificationCollectionViewCell: UICollectionViewCell {
     
@@ -29,13 +32,19 @@ class NotificationCollectionViewCell: UICollectionViewCell {
         $0.clipsToBounds = true
     }
     
-    private let exitButton = UIButton().then {
+    private let deleteButton = UIButton().then {
         $0.setImage(UIImage(named: "x"), for: .normal)
+        $0.tintColor = .black
     }
+    
+    var disposeBag = DisposeBag()
+    let onDeleteButtonTapped = PublishSubject<Void>()
+    let onCellTapped = PublishSubject<Void>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +60,7 @@ class NotificationCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(timeLabel)
         contentView.addSubview(messageLabel)
         contentView.addSubview(isReadView)
-        contentView.addSubview(exitButton)
+        contentView.addSubview(deleteButton)
         
         timeLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-14)
@@ -69,14 +78,28 @@ class NotificationCollectionViewCell: UICollectionViewCell {
             $0.width.height.equalTo(6)
         }
         
-        exitButton.snp.makeConstraints {
+        deleteButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-14)
             $0.width.height.equalTo(16)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        contentView.addGestureRecognizer(tapGesture)
     }
     
-    func configure(with notification: Notification) {
-
+    private func setupBindings() {
+        deleteButton.rx.tap
+            .bind(to: onDeleteButtonTapped)
+            .disposed(by: disposeBag)
+    }
+    
+    @objc private func cellTapped() {
+        onCellTapped.onNext(())
+    }
+    func configure(with notification: NotificationList) {
+        timeLabel.text = notification.body
+        messageLabel.text = notification.title
+        isReadView.isHidden = notification.isRead
     }
 }
