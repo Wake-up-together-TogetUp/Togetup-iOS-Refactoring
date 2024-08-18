@@ -34,6 +34,9 @@
 		9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DACD2C20A72C00AB62AA /* FSCalendar */; };
 		9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9576DAD02C20C8A800AB62AA /* FloatingPanel */; };
 		957D7E8B2C6A0EF200A45BD6 /* GroupAlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957D7E8A2C6A0EF100A45BD6 /* GroupAlarmCollectionViewCell.swift */; };
+		959E2BD32C72034600050912 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 959E2BD22C72034600050912 /* FirebaseAnalytics */; };
+		959E2BD52C72034700050912 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 959E2BD42C72034700050912 /* FirebaseMessaging */; };
+		959E2BD92C721A8900050912 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 959E2BD82C721A8900050912 /* GoogleService-Info.plist */; };
 		959E2BDB2C722FB700050912 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959E2BDA2C722FB700050912 /* NotificationModel.swift */; };
 		95B1C28F2C245CF100A04364 /* GroupCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */; };
 		95B1C2912C245FF200A04364 /* GroupCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */; };
@@ -169,6 +172,7 @@
 		9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteScreenViewController.swift; sourceTree = "<group>"; };
 		957D7E8A2C6A0EF100A45BD6 /* GroupAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		959E2BD82C721A8900050912 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959E2BDA2C722FB700050912 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -273,12 +277,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				959E2BD52C72034700050912 /* FirebaseMessaging in Frameworks */,
 				952AD2832B82661500598680 /* SnapKit in Frameworks */,
 				F939222A2B73486300BAA171 /* KeychainAccess in Frameworks */,
 				95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */,
 				F96B32A12A8E8BD300BD3BF9 /* KeychainAccess in Frameworks */,
 				F9D679D92AC1BD2E006B1643 /* Lottie in Frameworks */,
 				F9C226C62BF65CAC00B14D11 /* Then in Frameworks */,
+				959E2BD32C72034600050912 /* FirebaseAnalytics in Frameworks */,
 				F96B327F2A8A358000BD3BF9 /* RxMoya in Frameworks */,
 				9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */,
 				F96B32942A8CB57C00BD3BF9 /* RxKakaoSDK in Frameworks */,
@@ -585,6 +591,7 @@
 		F96B327B2A8A023800BD3BF9 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				959E2BD82C721A8900050912 /* GoogleService-Info.plist */,
 				F915EA192BF21EDD002B84BC /* IconAssets.xcassets */,
 				F982EB242BE34AC100392314 /* Config.xcconfig */,
 				F91B2C0E2BDEA3EB00A23A59 /* Jua-Regular.ttf */,
@@ -805,6 +812,8 @@
 				95F198B02BF760D3002BD1B4 /* RealmSwift */,
 				9576DACD2C20A72C00AB62AA /* FSCalendar */,
 				9576DAD02C20C8A800AB62AA /* FloatingPanel */,
+				959E2BD22C72034600050912 /* FirebaseAnalytics */,
+				959E2BD42C72034700050912 /* FirebaseMessaging */,
 			);
 			productName = TogetUp;
 			productReference = F96B32602A8A002800BD3BF9 /* TogetUp.app */;
@@ -845,6 +854,7 @@
 				952AD2812B82661500598680 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				F9C226C42BF65CAC00B14D11 /* XCRemoteSwiftPackageReference "Then" */,
 				9576DACF2C20C8A800AB62AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				959E2BD12C72034600050912 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F96B32612A8A002800BD3BF9 /* Products */;
 			projectDirPath = "";
@@ -869,6 +879,7 @@
 				F991D0D52BC55F9600893E67 /* 2_onboarding.json in Resources */,
 				9562FCB32C3C0119009ED55F /* apple-app-site-association in Resources */,
 				F991D0D32BC5107B00893E67 /* 3_onboarding.json in Resources */,
+				959E2BD92C721A8900050912 /* GoogleService-Info.plist in Resources */,
 				F93140672A8FBD30000FB717 /* Home.storyboard in Resources */,
 				F96B326B2A8A002800BD3BF9 /* Main.storyboard in Resources */,
 				F91B2C0F2BDEA40100A23A59 /* Jua-Regular.ttf in Resources */,
@@ -1283,6 +1294,14 @@
 				minimumVersion = 2.8.3;
 			};
 		};
+		959E2BD12C72034600050912 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
 		F93012AE2ADEBD180086C348 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
@@ -1355,6 +1374,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9576DACF2C20C8A800AB62AA /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
+		};
+		959E2BD22C72034600050912 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 959E2BD12C72034600050912 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		959E2BD42C72034700050912 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 959E2BD12C72034600050912 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		95F198B02BF760D3002BD1B4 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;

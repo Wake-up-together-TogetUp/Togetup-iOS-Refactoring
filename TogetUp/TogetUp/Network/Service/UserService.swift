@@ -41,7 +41,7 @@ extension UserService: TargetType {
         case .deleteUser, .deleteAppleUser:
             return .delete
         case .sendFcmToken:
-            return .patch
+            return .post
         case .getAvatarList:
             return .get
         case .changeAvatar:
