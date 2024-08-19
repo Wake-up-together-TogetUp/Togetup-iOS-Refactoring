@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SENIOR_CHICK.png",
+      "filename" : "profile_chick.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SENIOR_CHICK 1.png",
+      "filename" : "profile_chick@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SENIOR_CHICK 2.png",
+      "filename" : "profile_chick@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -9,6 +9,7 @@ struct CreateGroupResponse: Codable {
     let httpStatusCode: Int
     let httpReasonPhrase: String
     let message: String
+    let result: Int
 }
 
 struct CreateGroupRequest: Codable {
@@ -63,4 +64,5 @@ struct GroupInfo: Codable {
     let headCount: Int
     let missionObjectId: Int
     let missionKr: String
+    let missionName: String
 }

@@ -54,9 +54,7 @@ extension MissionService: TargetType {
             if let objectValue = object {
                 parameters["object"] = objectValue
             }
-            let parametersPart = parameters.map { MultipartFormData(provider: .data("\($0.value)".data(using: .utf8)!), name: $0.key) }
-            let allParts = [imagePart] + parametersPart
-            return .uploadCompositeMultipart(allParts, urlParameters: [:])
+            return .uploadCompositeMultipart([imagePart], urlParameters: parameters)
         case .missionComplete(let param):
             return .requestJSONEncodable(param)
         }

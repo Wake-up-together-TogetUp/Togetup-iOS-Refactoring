@@ -48,6 +48,7 @@ struct RoomData: Codable {
 
 struct MissionData: Codable {
     let icon: String
+    let name: String
     let missionKr: String
 }
 

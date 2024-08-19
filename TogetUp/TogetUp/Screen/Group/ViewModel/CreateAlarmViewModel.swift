@@ -129,7 +129,9 @@ class CreateAlarmViewModel: ViewModelType {
                     .flatMap { result -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                         switch result {
                         case .success(let response):
-                            self.saveAlarmToLocalDatabase(request: localRequest, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName)
+                            let alarmId = response.result
+                            self.realmManager.updateAlarm(with: localRequest, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false)
+                            AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)
                             return .just(.success(response))
                         case .failure(let error):
                             return .just(.failure(error))

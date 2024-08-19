@@ -63,6 +63,24 @@ class EditAlarmViewModel {
             }
     }
     
+    func groupEditAlarm(param: CreateOrEditAlarmRequest, missionEndpoint: String, missionKoreanName: String, alarmId: Int) -> Single<Result<Void, Error>> {
+        return networkManager.handleAPIRequest(provider.rx.request(.editAlarm(alarmId: alarmId, param: param)), dataType: CreateEditDeleteAlarmResponse.self)
+            .flatMap { [weak self] result -> Single<Result<Void, Error>> in
+                switch result {
+                case .success:
+                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false)
+                    AlarmScheduleManager.shared.removeNotification(for: alarmId) {
+                        DispatchQueue.main.async {
+                            AlarmScheduleManager.shared.scheduleNotification(for: alarmId)
+                        }
+                    }
+                    return .just(.success(()))
+                case .failure(let error):
+                    return .just(.failure(error))
+                }
+            }
+    }
+    
     func deleteAlarm(alarmId: Int) -> Single<Result<Void, Error>> {
         return networkManager.handleAPIRequest(provider.rx.request(.deleteAlarm(alarmId: alarmId)), dataType: CreateEditDeleteAlarmResponse.self)
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in

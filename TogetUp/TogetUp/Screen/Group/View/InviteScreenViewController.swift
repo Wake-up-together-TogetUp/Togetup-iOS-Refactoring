@@ -236,6 +236,7 @@ class InviteScreenViewController: UIViewController {
                 joinAlarmVC.missionId = info.missionObjectId < 64 ? 2 : 3
                 joinAlarmVC.missionKr = info.missionKr
                 joinAlarmVC.missionObjectId = info.missionObjectId
+                joinAlarmVC.missionEndpoint = info.missionName
                 self.navigationController?.pushViewController(joinAlarmVC, animated: true)
             })
             .disposed(by: disposeBag)
