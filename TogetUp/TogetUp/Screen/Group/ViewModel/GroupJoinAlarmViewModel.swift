@@ -27,7 +27,7 @@ class GroupJoinAlarmViewModel: ViewModelType {
     
     struct Output {
         let isJoinButtonEnabled: Observable<Bool>
-        let joinGroupResponse: Observable<Result<GroupAlarmRequest, NetWorkingError>>
+        let joinGroupResponse: Observable<Result<CreateGroupResponse, NetWorkingError>>
     }
     
     var disposeBag = DisposeBag()
@@ -51,7 +51,7 @@ class GroupJoinAlarmViewModel: ViewModelType {
 
         let joinGroupResponse = input.joinButtonTapped
             .withLatestFrom(combinedInputs)
-            .flatMapLatest { alarmName, timeSelected, weekdays, vibrationEnabled -> Observable<Result<GroupAlarmRequest, NetWorkingError>> in
+            .flatMapLatest { alarmName, timeSelected, weekdays, vibrationEnabled -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                 let finalAlarmName = alarmName.isEmpty ? "알람" : alarmName
                 let formattedTime = self.formatDate(date: timeSelected)
                 let request = GroupAlarmRequest(
@@ -85,12 +85,14 @@ class GroupJoinAlarmViewModel: ViewModelType {
                     sunday: weekdays[6],
                     isActivated: true
                 )
-                return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: GroupAlarmRequest.self)
+                return self.networkManager.handleAPIRequest(self.provider.rx.request(.joinGroup(roomId: input.roomId, request: request)), dataType: CreateGroupResponse.self)
                     .asObservable()
-                    .flatMap { result -> Observable<Result<GroupAlarmRequest, NetWorkingError>> in
+                    .flatMap { result -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                         switch result {
                         case .success(let response):
-                            self.saveAlarmToLocalDatabase(request: localRequest, missionEndpoint: input.missionEndpoint, missionKoreanName: input.missionKoreanName)
+                            let alarmId = response.result
+                            self.realmManager.updateAlarm(with: localRequest, for: alarmId ?? 0, missionEndpoint: input.missionEndpoint, missionKoreanName: input.missionKoreanName, isPersonalAlarm: false)
+                            AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)
                             return .just(.success(response))
                         case .failure(let error):
                             return .just(.failure(error))
