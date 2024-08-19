@@ -158,8 +158,6 @@ class GroupCalendarViewController: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = ""
-        navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingButtonTapped))
     }

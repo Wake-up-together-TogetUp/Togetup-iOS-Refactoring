@@ -362,5 +362,7 @@ extension GroupListViewController: UICollectionViewDelegate {
         let roomDetailVC = GroupCalendarViewController(roomId: selectedRoomCode)
         roomDetailVC.selectedRoomId = selectedRoomCode
         navigationController?.pushViewController(roomDetailVC, animated: true)
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.backBarButtonItem = backButton
     }
 }
