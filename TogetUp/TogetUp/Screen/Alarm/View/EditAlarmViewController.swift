@@ -244,6 +244,19 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
             .disposed(by: disposeBag)
     }
     
+    private func groupEditAlarm(with param: CreateOrEditAlarmRequest) {
+        viewModel.groupEditAlarm(param: param, missionEndpoint: self.missionEndpoint, missionKoreanName: missionKoreanName, alarmId: self.alarmId ?? 0)
+            .subscribe(onSuccess: { [weak self] result in
+                switch result {
+                case .success:
+                    self?.presentingViewController?.dismiss(animated: true)
+                case .failure(_):
+                    self?.showErrorAlert(message: "잠시후 다시 시도해주세요")
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func getMissionEndPoint(alarmId: Int) -> String? {
         let realm = try! Realm()
         return realm.object(ofType: Alarm.self, forPrimaryKey: alarmId)?.missionEndpoint
@@ -297,8 +310,10 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         let param = createAlarmRequestParam()
-        if navigatedFromScreen == "AlarmList" || navigatedFromScreen == "GroupAlarmList" {
+        if navigatedFromScreen == "AlarmList" {
             self.editAlarm(with: param)
+        } else if navigatedFromScreen == "GroupAlarmList" {
+            self.groupEditAlarm(with: param)
         } else if navigatedFromScreen == "CreateAlarm" {
             self.createAlarm(with: param)
         }
