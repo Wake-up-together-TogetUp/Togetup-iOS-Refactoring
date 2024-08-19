@@ -69,11 +69,25 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(with image: UIImage, text: String) {
-        imageView.image = image
+    func configure(with imageUrl: String, text: String) {
         textLabel.text = text
         roundedView.snp.updateConstraints {
             $0.width.equalTo(textLabel.intrinsicContentSize.width + 24)
+            if let url = URL(string: imageUrl) {
+                URLSession.shared.dataTask(with: url) { data, response, error in
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            self.imageView.image = image
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.imageView.image = UIImage(named: "missionDefault")
+                        }
+                    }
+                }.resume()
+            } else {
+                self.imageView.image = UIImage(named: "missionDefault")
+            }
         }
     }
 }

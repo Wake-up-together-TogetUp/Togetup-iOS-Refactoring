@@ -322,11 +322,8 @@ extension GroupCalendarViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell 
         else { return UICollectionViewCell() }
         let userLog = viewModel.selectedDateImagesRelay.value[indexPath.item]
-        if userLog.userCompleteType == "SUCCESS" {
-            cell.configure(with: UIImage(named: "missionDefault")!, text: userLog.userName)
-        } else {
-            cell.configure(with: UIImage(named: "missionDefault")!, text: userLog.userName)
-        }
+        let imageUrl = userLog.userCompleteType == "SUCCESS" ? userLog.missionPicLink : ""
+        cell.configure(with: imageUrl, text: userLog.userName)
         return cell
     }
 }
