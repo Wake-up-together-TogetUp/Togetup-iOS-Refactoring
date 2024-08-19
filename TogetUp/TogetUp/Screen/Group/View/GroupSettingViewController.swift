@@ -339,7 +339,7 @@ class GroupSettingsViewController: UIViewController {
                 self.descriptionLabel.text = groupInfo.roomData.intro
                 self.createdDateLabel.text = groupInfo.roomData.createdAt
                 self.missionImageLabel.text = groupInfo.missionData.icon
-                self.missionTextLabel.text = groupInfo.missionData.missionKr
+                self.missionTextLabel.text = groupInfo.missionData.name
 
             })
             .disposed(by: disposeBag)

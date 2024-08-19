@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ASTRONAUT_BEAR.png",
+      "filename" : "profile_racoon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "profile_bear@2x.png",
+      "filename" : "profile_racoon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "profile_bear@3x.png",
+      "filename" : "profile_racoon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
