@@ -169,7 +169,7 @@ class AlarmListViewController: UIViewController {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
                 
                 vc.alarmId = self.selectedAlarmId
-                vc.navigatedFromScreen = "AlarmList"
+                vc.navigatedFromScreen = "GroupAlarmList"
                 
                 let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen
