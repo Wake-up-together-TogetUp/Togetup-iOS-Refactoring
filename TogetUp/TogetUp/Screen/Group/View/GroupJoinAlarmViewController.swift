@@ -20,7 +20,9 @@ class GroupJoinAlarmViewController: UIViewController {
     var missionId: Int = 2
     var missionObjectId: Int? = 1
     var missionEndpoint: String = ""
-    private let vibrationToggle = UISwitch()
+    private let vibrationToggle = UISwitch().then {
+        $0.onTintColor = .black
+    }
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -252,6 +254,7 @@ class GroupJoinAlarmViewController: UIViewController {
             let button = UIButton()
             button.setTitle(weekday, for: .normal)
             button.backgroundColor = UIColor(named: "neutral050")
+            button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
             button.setTitleColor(UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
             button.layer.cornerRadius = 17
             button.tag = index
