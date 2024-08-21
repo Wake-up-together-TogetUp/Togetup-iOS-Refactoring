@@ -331,8 +331,9 @@ class GroupSettingsViewController: UIViewController {
                 
                 self.userProfileData = groupInfo.userProfileData
                 self.tableView.reloadData()
+                let tableViewHeight = CGFloat(self.userProfileData.count * 58 + 50)
                 self.tableView.snp.updateConstraints {
-                    $0.height.equalTo(self.tableView.contentSize.height + 45)
+                    $0.height.equalTo(tableViewHeight)
                 }
                 self.iconImageView.text = groupInfo.missionData.icon
                 self.titleLabel.text = groupInfo.roomData.name
