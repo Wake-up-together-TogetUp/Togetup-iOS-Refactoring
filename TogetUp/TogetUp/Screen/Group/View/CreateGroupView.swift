@@ -118,7 +118,7 @@ class CreateGroupView: UIView {
     
     var missionImageLabel: UILabel = {
         let img = UILabel()
-        img.text = "⏰"
+        img.text = "👤"
         img.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 36)
         return img
     }()
@@ -127,7 +127,7 @@ class CreateGroupView: UIView {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)
-        label.text = "미션 내용"
+        label.text = "사람"
         return label
     }()
     
