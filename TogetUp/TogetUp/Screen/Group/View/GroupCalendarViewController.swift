@@ -271,7 +271,7 @@ class GroupCalendarViewController: UIViewController {
       } else {
         self.calendarView.setScope(.month, animated: true)
         self.calendarView.appearance.headerDateFormat = "YYYY년 MM월"
-          toggleCalendarButton.setImage(UIImage(named: "chevron-down"), for: .normal)
+          toggleCalendarButton.setImage(UIImage(named: "cheveron-up"), for: .normal)
       }
     }
     
