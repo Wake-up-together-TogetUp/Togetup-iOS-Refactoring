@@ -40,6 +40,7 @@ class CreateGroupView: UIView {
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 10
+        textField.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)
         textField.layer.borderColor = UIColor.black.cgColor
         return textField
     }()
@@ -53,6 +54,12 @@ class CreateGroupView: UIView {
         return label
     }()
     
+    let groupNameCountLabel = UILabel().then {
+        $0.text = "0/10"
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        $0.textColor = UIColor(named: "neutral500")
+    }
+    
     let groupIntroLabel: UILabel = {
         let label = UILabel()
         label.text = "소개"
@@ -61,6 +68,12 @@ class CreateGroupView: UIView {
         label.backgroundColor = .white
         return label
     }()
+    
+    let groupIntroCountLabel = UILabel().then {
+        $0.text = "0/50"
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        $0.textColor = UIColor(named: "neutral500")
+    }
     
     let groupIntroTextView: UITextView = {
         let textView = UITextView()
@@ -79,12 +92,11 @@ class CreateGroupView: UIView {
         return label
     }()
     
-    let missionSubLabel: UILabel = {
-       let label = UILabel()
-        label.text = "그룹 참여자가 수행할 미션을 선택해주세요"
-        label.textColor = .lightGray
-        return label
-    }()
+    private let missionSubLabel = UILabel().then {
+        $0.text = "그룹 참여자가 수행할 미션을 선택해주세요"
+        $0.textColor = UIColor(named: "neutral500")
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+    }
     
     let addMissionButton: UIButton = {
         let button = UIButton()
@@ -114,7 +126,7 @@ class CreateGroupView: UIView {
     var missionTextLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)
         label.text = "미션 내용"
         return label
     }()
@@ -138,7 +150,9 @@ class CreateGroupView: UIView {
         addSubview(nextButton)
         addSubview(groupNameTextField)
         addSubview(groupNameLabel)
+        groupNameTextField.addSubview(groupNameCountLabel)
         addSubview(groupIntroTextView)
+        addSubview(groupIntroCountLabel)
         addSubview(groupIntroLabel)
         addSubview(missionSubLabel)
         addSubview(missionSettingLabel)
@@ -174,17 +188,28 @@ class CreateGroupView: UIView {
             make.width.equalTo(groupNameLabel.intrinsicContentSize.width + 15)
         }
 
-        groupNameTextField.snp.makeConstraints { make in
-            make.top.equalTo(groupNameLabel.snp.bottom).offset(-10)
-            make.leading.equalTo(self.snp.leading).offset(20)
-            make.trailing.equalTo(self.snp.trailing).offset(-20)
-            make.height.equalTo(54)
+        groupNameTextField.snp.makeConstraints {
+            $0.top.equalTo(groupNameLabel.snp.bottom).offset(-10)
+            $0.leading.equalTo(self.snp.leading).offset(20)
+            $0.trailing.equalTo(self.snp.trailing).offset(-20)
+            $0.height.equalTo(54)
+        }
+        
+        groupNameCountLabel.snp.makeConstraints {
+            $0.centerY.equalTo(groupNameTextField.snp.centerY)
+            $0.trailing.equalTo(groupNameTextField.snp.trailing).offset(-20)
         }
 
-        groupIntroLabel.snp.makeConstraints { make in
-            make.top.equalTo(groupNameTextField.snp.bottom).offset(25)
-            make.leading.equalTo(self.snp.leading).offset(37)
-            make.width.equalTo(groupIntroLabel.intrinsicContentSize.width + 15)
+
+        groupIntroLabel.snp.makeConstraints {
+            $0.top.equalTo(groupNameTextField.snp.bottom).offset(25)
+            $0.leading.equalTo(self.snp.leading).offset(37)
+            $0.width.equalTo(groupIntroLabel.intrinsicContentSize.width + 15)
+        }
+        
+        groupIntroCountLabel.snp.makeConstraints {
+            $0.bottom.equalTo(groupIntroTextView.snp.bottom).offset(-16)
+            $0.trailing.equalTo(groupIntroTextView.snp.trailing).offset(-20)
         }
 
         groupIntroTextView.snp.makeConstraints { make in

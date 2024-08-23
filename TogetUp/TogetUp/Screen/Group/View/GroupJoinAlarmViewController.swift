@@ -79,12 +79,11 @@ class GroupJoinAlarmViewController: UIViewController {
         return label
     }()
     
-    private let missionSubLabel: UILabel = {
-       let label = UILabel()
-        label.text = "방장만 수정할 수 있어요"
-        label.textColor = .lightGray
-        return label
-    }()
+    private let missionSubLabel = UILabel().then {
+        $0.text = "알람을 끄려면 해당 물건을 촬영해야해요"
+        $0.textColor = UIColor(named: "neutral500")
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+    }
     
     private let addMissionButton: UIButton = {
         let button = UIButton()
