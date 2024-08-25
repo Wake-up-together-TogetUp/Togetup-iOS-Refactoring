@@ -135,7 +135,7 @@ class GroupSettingsViewController: UIViewController {
     }
 
     private let inviteCodeLabel = UILabel().then {
-        $0.text = ""  // 초대코드
+        $0.text = "" 
         $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         $0.textAlignment = .center
         $0.textColor = UIColor(named: "neutral800")
@@ -320,9 +320,30 @@ class GroupSettingsViewController: UIViewController {
     }
     
     private func setupBindings() {
+        let exitButtonTappedWithAlert = exitButton.rx.tap
+            .flatMapLatest { [weak self] _ -> Observable<Void> in
+                return Observable<Void>.create { observer in
+                    let alert = UIAlertController(title: "방을 나가시겠습니까?", message: nil, preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
+                        observer.onCompleted()
+                    }
+                    let confirmAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+                        observer.onNext(())
+                        observer.onCompleted()
+                    }
+                    alert.addAction(cancelAction)
+                    alert.addAction(confirmAction)
+                    self?.present(alert, animated: true, completion: nil)
+                    return Disposables.create {
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+
         let input = GroupSettingsViewModel.Input(viewDidLoad: Observable.just(()),
                                                  inviteCodeButtonTapped: inviteCodeButton.rx.tap.asObservable(),
-                                                 exitButtonTapped: exitButton.rx.tap.asObservable())
+                                                 exitButtonTapped: exitButtonTappedWithAlert)
+
         let output = viewModel.transform(input: input)
         
         output.groupInfo
@@ -354,7 +375,7 @@ class GroupSettingsViewController: UIViewController {
         output.didExitButtonTapped
             .emit(onNext: { [weak self] isSuccess in
                 guard isSuccess else {
-                    print("Exit button 실패")
+                    print("방 나가기 실패")
                     return
                 }
                 self?.navigationController?.popToRootViewController(animated: true)
