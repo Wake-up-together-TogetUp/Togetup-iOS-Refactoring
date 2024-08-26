@@ -310,11 +310,13 @@ class AlarmListViewController: UIViewController {
     
     private func updateViewForSelectedSegment() {
         if segmentedControl.selectedSegmentIndex == 0 {
+            addAlarmButton.isHidden = false
             personalCollectionView.isHidden = false
             groupCollectionView.isHidden = true
             bindLabels()
             
         } else {
+            addAlarmButton.isHidden = true
             personalCollectionView.isHidden = true
             groupCollectionView.isHidden = false
             updateGroupAlarmsVisibility()

@@ -37,7 +37,6 @@ class RealmAlarmDataManager {
             .filter("isPersonalAlarm == true")
             .sorted(byKeyPath: "alarmHour", ascending: true)
             .sorted(byKeyPath: "alarmMinute", ascending: true)
-        dump(alarms)
         return Array(alarms)
     }
     
