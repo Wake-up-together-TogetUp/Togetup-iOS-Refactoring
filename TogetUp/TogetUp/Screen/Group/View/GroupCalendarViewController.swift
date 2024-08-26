@@ -271,19 +271,30 @@ class GroupCalendarViewController: UIViewController {
       } else {
         self.calendarView.setScope(.month, animated: true)
         self.calendarView.appearance.headerDateFormat = "YYYY년 MM월"
-          toggleCalendarButton.setImage(UIImage(named: "chevron-down"), for: .normal)
+          toggleCalendarButton.setImage(UIImage(named: "cheveron-up"), for: .normal)
       }
     }
     
     @objc private func previousMonthTapped() {
-        var previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
-        calendarView.setCurrentPage(previousMonth!, animated: true)
+        if calendarView.scope == .week {
+            let previousWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: calendarView.currentPage)
+            calendarView.setCurrentPage(previousWeek!, animated: true)
+        } else {
+            let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarView.currentPage)
+            calendarView.setCurrentPage(previousMonth!, animated: true)
+        }
     }
-    
+
     @objc private func nextMonthTapped() {
-        var nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
-        calendarView.setCurrentPage(nextMonth!, animated: true)
+        if calendarView.scope == .week {
+            let nextWeek = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: calendarView.currentPage)
+            calendarView.setCurrentPage(nextWeek!, animated: true)
+        } else {
+            let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: calendarView.currentPage)
+            calendarView.setCurrentPage(nextMonth!, animated: true)
+        }
     }
+
     
     @objc private func settingButtonTapped() {
         let settinglVC = GroupSettingsViewController(roomId:selectedRoomId)

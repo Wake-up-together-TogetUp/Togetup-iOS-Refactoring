@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RealmSwift
+import Then
+import SnapKit
 
 class AlarmListViewController: UIViewController {
     // MARK: - UI Components
@@ -31,6 +33,22 @@ class AlarmListViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
+    private let noGroupLabel = UILabel().then {
+        $0.text = "참여중인 그룹이 없어요"
+        $0.textColor = .black
+        $0.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
+    
+    private let noGroupSubLabel = UILabel().then {
+        $0.text = "그룹에 참여하면 연동 알람이 생성됩니다"
+        $0.textColor = UIColor(named: "neutral600")
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        $0.textAlignment = .center
+        $0.isHidden = true
+    }
     
     private var bottomLineView = UIView().then {
         $0.backgroundColor = UIColor(named: "primary300")
@@ -56,7 +74,6 @@ class AlarmListViewController: UIViewController {
         groupCollectionViewItemSelected()
         setupSegmentedControl()
         setupBottomLineView()
-        updateViewForSelectedSegment()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +81,7 @@ class AlarmListViewController: UIViewController {
         viewModel.fetchAlarmsFromRealm()
         setCollectionView()
         setGroupCollectionView()
+        updateViewForSelectedSegment()
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,17 +100,32 @@ class AlarmListViewController: UIViewController {
             .map { !$0 }
             .bind(to: setAlarmLabel.rx.isHidden)
             .disposed(by: disposeBag)
+        
+        noGroupLabel.isHidden = true
+        noGroupSubLabel.isHidden = true
     }
     
     private func setupGroupCollectionView() {
         view.addSubview(groupCollectionView)
+        view.addSubview(noGroupLabel)
+        view.addSubview(noGroupSubLabel)
         
-        NSLayoutConstraint.activate([
-            groupCollectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20),
-            groupCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            groupCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            groupCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
-        ])
+        groupCollectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-20)
+        }
+        
+        noGroupLabel.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
+            $0.centerY.equalTo(view.safeAreaLayoutGuide.snp.centerY).offset(-4)
+        }
+        
+        noGroupSubLabel.snp.makeConstraints {
+            $0.top.equalTo(noGroupLabel.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func setCollectionView() {
@@ -238,15 +271,15 @@ class AlarmListViewController: UIViewController {
     
     private func setupSegmentedControl() {
         segmentedControl.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
-         segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
-         segmentedControl.setTitleTextAttributes([
-             NSAttributedString.Key.foregroundColor: UIColor(named: "neutral400")!,
-             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
-         ], for: .normal)
-         segmentedControl.setTitleTextAttributes([
-             NSAttributedString.Key.foregroundColor: UIColor.black,
-             NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
-         ], for: .selected)
+        segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .selected, rightSegmentState: .normal, barMetrics: .default)
+        segmentedControl.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor(named: "neutral400")!,
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+        ], for: .normal)
+        segmentedControl.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: UIFont(name: "AppleSDGothicNeo-SemiBold", size: 16)!
+        ], for: .selected)
     }
     
     private func setupBottomLineView() {
@@ -280,20 +313,32 @@ class AlarmListViewController: UIViewController {
             addAlarmButton.isHidden = false
             personalCollectionView.isHidden = false
             groupCollectionView.isHidden = true
+            bindLabels()
+            
         } else {
             addAlarmButton.isHidden = true
             personalCollectionView.isHidden = true
             groupCollectionView.isHidden = false
+            updateGroupAlarmsVisibility()
         }
     }
     
+    private func updateGroupAlarmsVisibility() {
+        viewModel.getGroupAlarmList()
+            .map { $0.isEmpty }
+            .subscribe(onNext: { [weak self] isGroupAlarmEmpty in
+                guard let self = self else { return }
+                
+                self.noGroupLabel.isHidden = !isGroupAlarmEmpty
+                self.noGroupSubLabel.isHidden = !isGroupAlarmEmpty
+                
+                self.noExistingAlarmLabel.isHidden = true
+                self.setAlarmLabel.isHidden = true
+            })
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
-        let segmentIndex = CGFloat(sender.selectedSegmentIndex)
-        let segmentWidth = sender.frame.width / CGFloat(sender.numberOfSegments)
-        let leadingDistance = segmentWidth * segmentIndex
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in
-            self?.view.layoutIfNeeded()
-        })
         updateViewForSelectedSegment()
         updateBottomLinePosition(animated: true)
     }

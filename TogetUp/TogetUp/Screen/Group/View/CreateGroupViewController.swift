@@ -29,6 +29,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         setupBindings()
         setupUI()
         addMissionNotificationCenter()
+        configureAlarmNameTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +86,48 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private func addMissionNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
+    }
+    
+    private func truncateMaxLength(text: String) -> String {
+        return String(text.prefix(10))
+    }
+    
+    private func limitTextLength(text: String) -> String {
+        return String(text.prefix(50))
+    }
+    
+    private func updateGroupNameLabelColorAndText(truncatedText: String, originalText: String) {
+        createGroupView.groupNameCountLabel.text = "\(truncatedText.count)/10"
+        createGroupView.groupNameCountLabel.textColor = originalText.count > 10 ? UIColor(named: "error500") : UIColor(named: "neutral500")
+    }
+    
+    private func updateGroupIntroLabelColorAndText(limitTextLength: String, originalText: String) {
+        createGroupView.groupIntroCountLabel.text = "\(limitTextLength.count)/50"
+        createGroupView.groupIntroCountLabel.textColor = originalText.count > 50 ? UIColor(named: "error500") : UIColor(named: "neutral500")
+    }
+    
+    private func configureAlarmNameTextField() {
+        createGroupView.groupNameTextField.rx.text.orEmpty
+            .map { [weak self] text -> String in
+                let truncatedText = self?.truncateMaxLength(text: text) ?? ""
+                DispatchQueue.main.async {
+                    self?.updateGroupNameLabelColorAndText(truncatedText: truncatedText, originalText: text)
+                }
+                return truncatedText
+            }
+            .bind(to: createGroupView.groupNameTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        createGroupView.groupIntroTextView.rx.text.orEmpty
+            .map { [weak self] text -> String in
+                let limitText = self?.limitTextLength(text: text) ?? ""
+                DispatchQueue.main.async {
+                    self?.updateGroupIntroLabelColorAndText(limitTextLength: limitText, originalText: text)
+                }
+                return limitText
+            }
+            .bind(to: createGroupView.groupIntroTextView.rx.text)
+            .disposed(by: disposeBag)
     }
     
     @objc func missionSelected(_ notification: Notification) {

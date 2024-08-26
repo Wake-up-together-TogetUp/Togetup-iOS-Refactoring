@@ -14,7 +14,6 @@ class CreateAlarmViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel = CreateAlarmViewModel()
-    private let vibrationToggle = UISwitch()
     var groupName: String = ""
     var groupIntro: String = ""
     var missionId: Int = 2
@@ -22,6 +21,10 @@ class CreateAlarmViewController: UIViewController {
     var missionEndpoint: String = ""
     var missionKoreanName: String = ""
     var icon: String = ""
+    
+    private let vibrationToggle = UISwitch().then {
+        $0.onTintColor = .black
+    }
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -65,6 +68,12 @@ class CreateAlarmViewController: UIViewController {
         return label
     }()
     
+    private let alarmNameCountLabel = UILabel().then {
+        $0.text = "0/10"
+        $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        $0.textColor = UIColor(named: "neutral500")
+    }
+    
     private let vibrationLabel: UILabel = {
         let label = UILabel()
         label.text = "진동"
@@ -98,17 +107,20 @@ class CreateAlarmViewController: UIViewController {
         view.backgroundColor = .white
         setupUI()
         setupBindings()
+        configureAlarmNameTextField()
     }
     
     private func setupUI() {
         navigationController?.isNavigationBarHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        navigationController?.navigationBar.tintColor = .black
         
         view.addSubview(topLabel)
         view.addSubview(timePicker)
         view.addSubview(containerView)
         containerView.addSubview(weekdayButtonsStackView)
         containerView.addSubview(alarmNameLabel)
+        containerView.addSubview(alarmNameCountLabel)
         containerView.addSubview(vibrationLabel)
         containerView.addSubview(alarmNameTextField)
         containerView.addSubview(vibrationToggle)
@@ -152,7 +164,12 @@ class CreateAlarmViewController: UIViewController {
         
         alarmNameTextField.snp.makeConstraints {
             $0.centerY.equalTo(alarmNameLabel.snp.centerY)
-            $0.leading.equalTo(alarmNameLabel.snp.trailing).offset(10)
+            $0.leading.equalTo(alarmNameLabel.snp.trailing).offset(16)
+        }
+        
+        alarmNameCountLabel.snp.makeConstraints {
+            $0.centerY.equalTo(alarmNameLabel.snp.centerY)
+            $0.leading.equalTo(alarmNameTextField.snp.trailing).offset(6)
             $0.trailing.equalTo(containerView.snp.trailing).offset(-20)
         }
         
@@ -182,6 +199,7 @@ class CreateAlarmViewController: UIViewController {
             button.backgroundColor = UIColor(named: "neutral050")
             button.setTitleColor(UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
             button.layer.cornerRadius = 17
+            button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
             button.tag = index
             button.addTarget(self, action: #selector(weekdayButtonTapped(_:)), for: .touchUpInside)
             weekdayButtonsStackView.addArrangedSubview(button)
@@ -243,6 +261,28 @@ class CreateAlarmViewController: UIViewController {
                     print("에러: \(errorMessage)")
                 }
             })
+            .disposed(by: disposeBag)
+    }
+    
+    private func truncateMaxLength(text: String) -> String {
+        return String(text.prefix(10))
+    }
+    
+    private func updateLabelColorAndText(truncatedText: String, originalText: String) {
+        alarmNameCountLabel.text = "\(truncatedText.count)/10"
+        alarmNameCountLabel.textColor = originalText.count > 10 ? UIColor(named: "error500") : UIColor(named: "neutral500")
+    }
+    
+    private func configureAlarmNameTextField() {
+        alarmNameTextField.rx.text.orEmpty
+            .map { [weak self] text -> String in
+                let truncatedText = self?.truncateMaxLength(text: text) ?? ""
+                DispatchQueue.main.async {
+                    self?.updateLabelColorAndText(truncatedText: truncatedText, originalText: text)
+                }
+                return truncatedText
+            }
+            .bind(to: alarmNameTextField.rx.text)
             .disposed(by: disposeBag)
     }
     

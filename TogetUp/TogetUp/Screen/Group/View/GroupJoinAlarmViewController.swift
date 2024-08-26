@@ -20,7 +20,20 @@ class GroupJoinAlarmViewController: UIViewController {
     var missionId: Int = 2
     var missionObjectId: Int? = 1
     var missionEndpoint: String = ""
-    private let vibrationToggle = UISwitch()
+    private let vibrationToggle = UISwitch().then {
+        $0.onTintColor = .black
+    }
+    
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
     
     lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -77,12 +90,11 @@ class GroupJoinAlarmViewController: UIViewController {
         return label
     }()
     
-    private let missionSubLabel: UILabel = {
-       let label = UILabel()
-        label.text = "방장만 수정할 수 있어요"
-        label.textColor = .lightGray
-        return label
-    }()
+    private let missionSubLabel = UILabel().then {
+        $0.text = "알람을 끄려면 해당 물건을 촬영해야해요"
+        $0.textColor = UIColor(named: "neutral500")
+        $0.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+    }
     
     private let addMissionButton: UIButton = {
         let button = UIButton()
@@ -118,7 +130,7 @@ class GroupJoinAlarmViewController: UIViewController {
     }()
     
     private let openedButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitle("참여하기", for: .normal)
         button.backgroundColor = UIColor(named: "primary400")
         button.layer.cornerRadius = 12
@@ -145,17 +157,19 @@ class GroupJoinAlarmViewController: UIViewController {
         missionImageLabel.text = icon
         missionTextLabel.text = missionKr
         
-        view.addSubview(timePicker)
-        view.addSubview(containerView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(timePicker)
+        contentView.addSubview(containerView)
         containerView.addSubview(weekdayButtonsStackView)
         containerView.addSubview(alarmLabel)
         containerView.addSubview(vibrationLabel)
         containerView.addSubview(alarmNameTextField)
         containerView.addSubview(vibrationToggle)
         containerView.addSubview(openedButton)
-        view.addSubview(missionSubLabel)
-        view.addSubview(missionSettingLabel)
-        view.addSubview(addMissionButton)
+        contentView.addSubview(missionSubLabel)
+        contentView.addSubview(missionSettingLabel)
+        contentView.addSubview(addMissionButton)
         addMissionButton.addSubview(circleView)
         addMissionButton.addSubview(missionTextLabel)
         circleView.addSubview(missionImageLabel)
@@ -165,18 +179,25 @@ class GroupJoinAlarmViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        timePicker.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.frameLayoutGuide)
+            $0.bottom.equalTo(openedButton.snp.bottom).offset(20)
+        }
+        
         timePicker.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(0)
+            $0.top.equalToSuperview().offset(20)
         }
         
         containerView.snp.makeConstraints {
             $0.top.equalTo(timePicker.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(40)
         }
         
         weekdayButtonsStackView.snp.makeConstraints {
@@ -227,11 +248,11 @@ class GroupJoinAlarmViewController: UIViewController {
             $0.leading.equalToSuperview().offset(8)
             $0.width.height.equalTo(60)
         }
-
+        
         missionImageLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-
+        
         missionTextLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(circleView.snp.trailing).offset(8)
@@ -239,9 +260,10 @@ class GroupJoinAlarmViewController: UIViewController {
         }
         
         openedButton.snp.makeConstraints {
+            $0.top.greaterThanOrEqualTo(addMissionButton.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalToSuperview().offset(-50)
-            $0.trailing.equalTo(containerView.snp.trailing).offset(-20)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(-20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(56)
         }
     }
@@ -252,6 +274,7 @@ class GroupJoinAlarmViewController: UIViewController {
             let button = UIButton()
             button.setTitle(weekday, for: .normal)
             button.backgroundColor = UIColor(named: "neutral050")
+            button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
             button.setTitleColor(UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
             button.layer.cornerRadius = 17
             button.tag = index
@@ -280,7 +303,7 @@ class GroupJoinAlarmViewController: UIViewController {
                 }
             }
         ).startWith(weekdayButtons.map { $0.isSelected })
-
+        
         let input = GroupJoinAlarmViewModel.Input(
             alarmName: alarmNameTextField.rx.text.orEmpty.asObservable(),
             timeSelected: timePicker.rx.date.asObservable(),
@@ -304,7 +327,7 @@ class GroupJoinAlarmViewController: UIViewController {
                 self?.openedButton.setTitleColor(isEnabled ? .white : UIColor(named: "neutral400"), for: .normal)
             }
             .disposed(by: disposeBag)
-
+        
         output.joinGroupResponse
             .subscribe(onNext: { [weak self] result in
                 switch result {
@@ -330,7 +353,7 @@ class GroupJoinAlarmViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-
+    
     private func showAlert(message: String) {
         let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default))
