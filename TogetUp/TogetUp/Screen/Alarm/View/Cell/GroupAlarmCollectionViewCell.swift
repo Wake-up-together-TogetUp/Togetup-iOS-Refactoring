@@ -148,12 +148,19 @@ final class GroupAlarmCollectionViewCell: UICollectionViewCell {
         let activeDays = days.filter { $0.0 }.map { $0.1 }
         
         let dayString: String
-        if activeDays.count > 1 {
-            dayString = activeDays.joined(separator: ", ") + "요일마다"
-        } else if let onlyDay = activeDays.first {
-            dayString = onlyDay + "요일마다"
-        } else {
+        switch activeDays.count {
+        case 7:
+            dayString = "매일"
+        case 5 where activeDays.contains("월") && activeDays.contains("화") && activeDays.contains("수") && activeDays.contains("목") && activeDays.contains("금"):
+            dayString = "주중"
+        case 2 where activeDays.contains("토") && activeDays.contains("일"):
+            dayString = "주말"
+        case 1:
+            dayString = activeDays.first! + "요일마다"
+        case 0:
             dayString = "알람 없음"
+        default:
+            dayString = activeDays.joined(separator: ", ") + "요일마다"
         }
         
         let missionObject = alarm.getMissionObjectRes?.kr ?? ""
