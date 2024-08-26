@@ -60,6 +60,9 @@
 		F93140672A8FBD30000FB717 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F93140692A8FBD30000FB717 /* Home.storyboard */; };
 		F9387BC62AD569D9000A5121 /* alarmSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F9387BC52AD569D9000A5121 /* alarmSound.mp3 */; };
 		F939222A2B73486300BAA171 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = F93922292B73486300BAA171 /* KeychainAccess */; };
+		F93F3AD62C7C8EA0008D2136 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3AD52C7C8EA0008D2136 /* RxMoya */; };
+		F93F3AD92C7C8F21008D2136 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3AD82C7C8F21008D2136 /* RxKakaoSDKAuth */; };
+		F93F3ADB2C7C8F21008D2136 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3ADA2C7C8F21008D2136 /* RxKakaoSDKUser */; };
 		F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D14C2AA4A8C60093F896 /* UserService.swift */; };
 		F945D14F2AA4AA1E0093F896 /* WithdrawlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */; };
 		F945D1512AA4AAFE0093F896 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D1502AA4AAFE0093F896 /* SettingViewModel.swift */; };
@@ -73,8 +76,6 @@
 		F96B326B2A8A002800BD3BF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96B32692A8A002800BD3BF9 /* Main.storyboard */; };
 		F96B326D2A8A002900BD3BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96B326C2A8A002900BD3BF9 /* Assets.xcassets */; };
 		F96B32702A8A002900BD3BF9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96B326E2A8A002900BD3BF9 /* LaunchScreen.storyboard */; };
-		F96B327F2A8A358000BD3BF9 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = F96B327E2A8A358000BD3BF9 /* RxMoya */; };
-		F96B32942A8CB57C00BD3BF9 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */; };
 		F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32952A8CBA5500BD3BF9 /* LoginViewController.swift */; };
 		F96B32A12A8E8BD300BD3BF9 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = F96B32A02A8E8BD300BD3BF9 /* KeychainAccess */; };
 		F96B32A42A8E8D8200BD3BF9 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32A32A8E8D8200BD3BF9 /* KeyChainManager.swift */; };
@@ -279,17 +280,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93F3ADB2C7C8F21008D2136 /* RxKakaoSDKUser in Frameworks */,
 				959E2BD52C72034700050912 /* FirebaseMessaging in Frameworks */,
 				952AD2832B82661500598680 /* SnapKit in Frameworks */,
 				F939222A2B73486300BAA171 /* KeychainAccess in Frameworks */,
+				F93F3AD92C7C8F21008D2136 /* RxKakaoSDKAuth in Frameworks */,
+				F93F3AD62C7C8EA0008D2136 /* RxMoya in Frameworks */,
 				95F198B12BF760D3002BD1B4 /* RealmSwift in Frameworks */,
 				F96B32A12A8E8BD300BD3BF9 /* KeychainAccess in Frameworks */,
 				F9D679D92AC1BD2E006B1643 /* Lottie in Frameworks */,
 				F9C226C62BF65CAC00B14D11 /* Then in Frameworks */,
 				959E2BD32C72034600050912 /* FirebaseAnalytics in Frameworks */,
-				F96B327F2A8A358000BD3BF9 /* RxMoya in Frameworks */,
 				9576DAD12C20C8A800AB62AA /* FloatingPanel in Frameworks */,
-				F96B32942A8CB57C00BD3BF9 /* RxKakaoSDK in Frameworks */,
 				9576DACE2C20A72C00AB62AA /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,8 +807,6 @@
 			);
 			name = TogetUp;
 			packageProductDependencies = (
-				F96B327E2A8A358000BD3BF9 /* RxMoya */,
-				F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */,
 				F96B32A02A8E8BD300BD3BF9 /* KeychainAccess */,
 				F9D679D82AC1BD2E006B1643 /* Lottie */,
 				F93922292B73486300BAA171 /* KeychainAccess */,
@@ -817,6 +817,9 @@
 				9576DAD02C20C8A800AB62AA /* FloatingPanel */,
 				959E2BD22C72034600050912 /* FirebaseAnalytics */,
 				959E2BD42C72034700050912 /* FirebaseMessaging */,
+				F93F3AD52C7C8EA0008D2136 /* RxMoya */,
+				F93F3AD82C7C8F21008D2136 /* RxKakaoSDKAuth */,
+				F93F3ADA2C7C8F21008D2136 /* RxKakaoSDKUser */,
 			);
 			productName = TogetUp;
 			productReference = F96B32602A8A002800BD3BF9 /* TogetUp.app */;
@@ -849,7 +852,6 @@
 			mainGroup = F96B32572A8A002800BD3BF9;
 			packageReferences = (
 				F96B327D2A8A358000BD3BF9 /* XCRemoteSwiftPackageReference "Moya" */,
-				F96B32922A8CB57C00BD3BF9 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				F96B329F2A8E8BD300BD3BF9 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				F9D679D72AC1BD2E006B1643 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				F93012AE2ADEBD180086C348 /* XCRemoteSwiftPackageReference "FSCalendar" */,
@@ -858,6 +860,7 @@
 				F9C226C42BF65CAC00B14D11 /* XCRemoteSwiftPackageReference "Then" */,
 				9576DACF2C20C8A800AB62AA /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				959E2BD12C72034600050912 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F93F3AD72C7C8F21008D2136 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = F96B32612A8A002800BD3BF9 /* Products */;
 			projectDirPath = "";
@@ -1099,7 +1102,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				KAKAO_APP_KEY = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1160,7 +1163,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				KAKAO_APP_KEY = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1194,12 +1197,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 2.0.0;
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-Xlinker",
 					"-no_warn_duplicate_libraries",
@@ -1239,12 +1242,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yaewon.TogetUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1314,20 +1317,20 @@
 				minimumVersion = 2.8.4;
 			};
 		};
+		F93F3AD72C7C8F21008D2136 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.22.5;
+			};
+		};
 		F96B327D2A8A358000BD3BF9 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 15.0.0;
-			};
-		};
-		F96B32922A8CB57C00BD3BF9 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 		F96B329F2A8E8BD300BD3BF9 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
@@ -1399,15 +1402,20 @@
 			package = F96B329F2A8E8BD300BD3BF9 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
 		};
-		F96B327E2A8A358000BD3BF9 /* RxMoya */ = {
+		F93F3AD52C7C8EA0008D2136 /* RxMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F96B327D2A8A358000BD3BF9 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = RxMoya;
 		};
-		F96B32932A8CB57C00BD3BF9 /* RxKakaoSDK */ = {
+		F93F3AD82C7C8F21008D2136 /* RxKakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F96B32922A8CB57C00BD3BF9 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
-			productName = RxKakaoSDK;
+			package = F93F3AD72C7C8F21008D2136 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKAuth;
+		};
+		F93F3ADA2C7C8F21008D2136 /* RxKakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F93F3AD72C7C8F21008D2136 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKUser;
 		};
 		F96B32A02A8E8BD300BD3BF9 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
