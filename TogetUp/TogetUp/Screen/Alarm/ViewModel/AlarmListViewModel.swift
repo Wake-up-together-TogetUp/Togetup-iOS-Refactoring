@@ -28,8 +28,6 @@ class AlarmListViewModel {
     
     func fetchAlarmsFromRealm() {
         let alarmsFromRealm = realmManager.fetchAlarms()
-        print("=================")
-        print(alarmsFromRealm)
         alarms.onNext(alarmsFromRealm)
     }
     
