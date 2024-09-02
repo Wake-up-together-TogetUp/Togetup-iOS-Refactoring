@@ -80,7 +80,7 @@ class AlarmListViewModel {
             }
             
             alarm.name = apiAlarm.name
-            alarm.icon = apiAlarm.icon
+            alarm.icon = apiAlarm.icon ?? "📷"
             alarm.isVibrate = apiAlarm.isVibrate
             alarm.monday = apiAlarm.monday
             alarm.tuesday = apiAlarm.tuesday
