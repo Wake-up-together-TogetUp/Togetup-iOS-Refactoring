@@ -76,7 +76,7 @@ class HomeViewModel {
     }
     
     func deactivateAlarms() {
-        let activeAlarmIds = realmManager.fetchPastNonRepeatingActivatedAlarms()
+        let activeAlarmIds = realmManager.fetchTodayNonRepeatingActivatedAlarms()
         alarmProvider.rx.request(.deactivateAlarms(alarmIds: activeAlarmIds))
             .filterSuccessfulStatusCodes()
             .subscribe { response in

@@ -87,7 +87,7 @@ class HomeViewController: UIViewController, FloatingPanelControllerDelegate {
     }
     
     private func deactivateAlarms() {
-        let alarmIds = realmManager.fetchPastNonRepeatingActivatedAlarms()
+        let alarmIds = realmManager.fetchTodayNonRepeatingActivatedAlarms()
         if !alarmIds.isEmpty {
             viewModel.deactivateAlarms()
         }

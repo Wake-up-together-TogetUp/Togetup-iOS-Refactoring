@@ -16,15 +16,17 @@ class RealmAlarmDataManager {
     private var realm: Realm {
         return try! Realm()
     }
+    private let calendar = Calendar.current
     
     func configureRealmMigration() {
         let config = Realm.Configuration(
-            schemaVersion: 3,
+            schemaVersion: 4,
             
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 3 {
+                if oldSchemaVersion < 4 {
                     migration.enumerateObjects(ofType: Alarm.className()) { _, newObject in
                         newObject?["isPersonalAlarm"] = false
+                        newObject?["alarmDate"] = nil
                     }
                 }
             })
@@ -94,16 +96,23 @@ class RealmAlarmDataManager {
         }
     }
     
-    func fetchPastNonRepeatingActivatedAlarms() -> [Int] {
+    func fetchTodayNonRepeatingActivatedAlarms() -> [Int] {
         let now = Date()
-        let filteredAlarms = realm.objects(Alarm.self).filter("isActivated == true AND (monday == false AND tuesday == false AND wednesday == false AND thursday == false AND friday == false AND saturday == false AND sunday == false) AND createdDate < %@", now)
-        
+        let startOfDay = calendar.startOfDay(for: now)
+        guard let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: startOfDay) else {
+            return []
+        }
+        let filteredAlarms = realm.objects(Alarm.self).filter(
+            "isActivated == true AND (monday == false AND tuesday == false AND wednesday == false AND thursday == false AND friday == false AND saturday == false AND sunday == false) AND alarmDate >= %@ AND alarmDate <= %@ AND alarmDate <= %@", startOfDay, endOfDay, now
+        )
         let alarmIds = filteredAlarms.map { $0.id }
+        
         return Array(alarmIds)
     }
+
     
     func deactivateAlarms() {
-        let alarmIds = fetchPastNonRepeatingActivatedAlarms()
+        let alarmIds = fetchTodayNonRepeatingActivatedAlarms()
         let alarmsToDeactivate = realm.objects(Alarm.self).filter("id IN %@", alarmIds)
         
         do {
@@ -170,6 +179,17 @@ class RealmAlarmDataManager {
         }
     }
     
+    func calculateAlarmDate(alarmHour: Int, alarmMinute: Int) -> Date? {
+        let now = Date()
+        var alarmDateComponents = DateComponents()
+        alarmDateComponents.hour = alarmHour
+        alarmDateComponents.minute = alarmMinute
+        
+        if let nextAlarmDate = calendar.nextDate(after: now, matching: alarmDateComponents, matchingPolicy: .nextTime) {
+            return nextAlarmDate >= now ? nextAlarmDate : calendar.date(byAdding: .day, value: 1, to: nextAlarmDate)
+        }
+        return nil
+    }
     
     private func mapRequestToAlarm(_ request: CreateOrEditAlarmRequest, alarm: Alarm, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
         alarm.missionId = request.missionId
@@ -191,6 +211,10 @@ class RealmAlarmDataManager {
         alarm.missionEndpoint = missionEndpoint
         alarm.createdDate = Date()
         alarm.isPersonalAlarm = isPersonalAlarm ?? false
+        
+        if let alarmDate = calculateAlarmDate(alarmHour: alarm.alarmHour, alarmMinute: alarm.alarmMinute) {
+            alarm.alarmDate = alarmDate
+        }
     }
     
     private func getHour(from time: String) -> Int {
