@@ -28,16 +28,18 @@ class RealmAlarmDataManager {
                     }
                 }
             })
-
+        
         Realm.Configuration.defaultConfiguration = config
     }
     
     func fetchAlarms() -> [Alarm] {
         let alarms = realm.objects(Alarm.self)
-            .sorted(byKeyPath: "alarmHour", ascending: true)
-            .sorted(byKeyPath: "alarmMinute", ascending: true)
             .filter("isPersonalAlarm == true")
-            
+            .sorted(by: [
+                SortDescriptor(keyPath: "alarmHour", ascending: true),
+                SortDescriptor(keyPath: "alarmMinute", ascending: true)
+            ])
+
         return Array(alarms)
     }
     
