@@ -188,8 +188,9 @@ class AlarmListViewController: UIViewController {
     
     private func groupCollectionViewItemSelected() {
         groupCollectionView.rx.itemSelected
-            .withLatestFrom(viewModel.getGroupAlarmList()) { (indexPath, groupAlarms) in
-                (indexPath, groupAlarms)
+            .flatMapLatest { [weak self] indexPath -> Observable<(IndexPath, [GetAlarmResult])> in
+                guard let self = self else { return .empty() }
+                return self.viewModel.getGroupAlarmList().map { (indexPath, $0) }
             }
             .subscribe(onNext: { [weak self] indexPath, groupAlarms in
                 guard let self = self else { return }
