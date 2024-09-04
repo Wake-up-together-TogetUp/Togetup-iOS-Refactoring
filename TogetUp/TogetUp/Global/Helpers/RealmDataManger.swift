@@ -20,13 +20,14 @@ class RealmAlarmDataManager {
     
     func configureRealmMigration() {
         let config = Realm.Configuration(
-            schemaVersion: 4,
+            schemaVersion: 5,
             
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 4 {
+                if oldSchemaVersion < 5 {
                     migration.enumerateObjects(ofType: Alarm.className()) { _, newObject in
                         newObject?["isPersonalAlarm"] = false
                         newObject?["alarmDate"] = nil
+                        newObject?["roomId"] = RealmProperty<Int?>()
                     }
                 }
             })
