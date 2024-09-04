@@ -69,6 +69,7 @@
 		F945D1552AA4DE7C0093F896 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D1542AA4DE7C0093F896 /* AlarmService.swift */; };
 		F9523E4D2B5C1F7B00B16CCB /* RealmDataManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4C2B5C1F7B00B16CCB /* RealmDataManger.swift */; };
 		F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */; };
+		F95564DC2C86045200028D68 /* MoveToGroupPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95564DB2C86045200028D68 /* MoveToGroupPopUpView.swift */; };
 		F9614A4C2A8FAC0A00610784 /* Alarm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9614A4E2A8FAC0A00610784 /* Alarm.storyboard */; };
 		F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32632A8A002800BD3BF9 /* AppDelegate.swift */; };
 		F96B32662A8A002800BD3BF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */; };
@@ -210,6 +211,7 @@
 		F945D1542AA4DE7C0093F896 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
 		F9523E4C2B5C1F7B00B16CCB /* RealmDataManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataManger.swift; sourceTree = "<group>"; };
 		F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F95564DB2C86045200028D68 /* MoveToGroupPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToGroupPopUpView.swift; sourceTree = "<group>"; };
 		F9614A4D2A8FAC0A00610784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Alarm.storyboard; sourceTree = "<group>"; };
 		F96B32602A8A002800BD3BF9 /* TogetUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TogetUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96B32632A8A002800BD3BF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -777,6 +779,7 @@
 			children = (
 				F9E6D2DA2ABFCDEE009004D9 /* MissionPerformViewController.swift */,
 				F9DA5D852AC16526008E16A6 /* CapturedImageViewController.swift */,
+				F95564DB2C86045200028D68 /* MoveToGroupPopUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
+				F95564DC2C86045200028D68 /* MoveToGroupPopUpView.swift in Sources */,
 				F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */,
 				F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */,
 				9576DAC82C20A58D00AB62AA /* GroupListCollectionViewCell.swift in Sources */,
