@@ -41,7 +41,7 @@ class RealmAlarmDataManager {
                 SortDescriptor(keyPath: "alarmHour", ascending: true),
                 SortDescriptor(keyPath: "alarmMinute", ascending: true)
             ])
-
+        
         return Array(alarms)
     }
     
@@ -109,7 +109,7 @@ class RealmAlarmDataManager {
         
         return Array(alarmIds)
     }
-
+    
     
     func deactivateAlarms() {
         let alarmIds = fetchTodayNonRepeatingActivatedAlarms()
@@ -225,5 +225,14 @@ class RealmAlarmDataManager {
     private func getMinute(from time: String) -> Int {
         let components = time.split(separator: ":").map(String.init)
         return Int(components.count > 1 ? components[1] : "0") ?? 0
+    }
+    
+    func checkIfAlarmIsPersonal(withId id: Int) -> Bool {
+        if let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: id) {
+            return alarm.isPersonalAlarm
+        } else {
+            print("\(id) Alarm doesn't exist")
+            return false
+        }
     }
 }

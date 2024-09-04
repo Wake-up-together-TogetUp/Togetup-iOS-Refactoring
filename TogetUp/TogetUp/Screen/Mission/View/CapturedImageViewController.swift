@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Lottie
+import SnapKit
 
 class CapturedImageViewController: UIViewController {
     // MARK: - UI Components
@@ -24,16 +25,19 @@ class CapturedImageViewController: UIViewController {
     @IBOutlet weak var congratLabel: UILabel!
     @IBOutlet weak var levelUpView: UIView!
     @IBOutlet weak var newAvatarAvailabelLabel: UILabel!
+    
     // MARK: - Properties
     var image = UIImage()
     var missionId = 0
     var missionEndpoint: String?
     private let viewModel = MissionProcessViewModel()
+    private let realmManager = RealmAlarmDataManager()
     private let disposeBag = DisposeBag()
     private var countdownTimer: Timer?
     private var countdownValue = 5
     private var filePath = ""
     var alarmId = 0
+    lazy var isPersonlAlarm = realmManager.checkIfAlarmIsPersonal(withId: alarmId)
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -114,7 +118,15 @@ class CapturedImageViewController: UIViewController {
                 if let userLevelUp = response.result?.userLevelUp, userLevelUp {
                     self.handleCompleteResponseUI(response)
                 }
-                self.startCountdown()
+                if self.isPersonlAlarm {
+                    self.startCountdown()
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self.progressView.isHidden = true
+                        self.showMoveToGroupPopUpView()
+                    }
+                }
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -163,12 +175,43 @@ class CapturedImageViewController: UIViewController {
         }
     }
     
-    private func navigateToHome() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else {
-            return
+    private func showMoveToGroupPopUpView() {
+        let popup = MoveToGroupPopUpView()
+        
+        popup.leftButtonAction = { [weak self] in
+            self?.navigateToHome()
+            popup.isHidden = true
         }
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
+        
+        popup.rightButtonActoin = { [weak self] in
+            self?.navigateToGroup()
+            popup.isHidden = true
+        }
+        
+        view.addSubview(popup)
+        
+        popup.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(270)
+            make.height.equalTo(157)
+        }
+    }
+    
+    private func navigateToHome() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first else { return }
+        
+        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else { return }
+        
+        let navController = UINavigationController(rootViewController: tabBarVC)
+        navController.modalPresentationStyle = .fullScreen
+        
+        window.rootViewController = navController
+        window.makeKeyAndVisible()
+    }
+    
+    private func navigateToGroup() {
+        
     }
     
     private func setLottieAnimation() {
