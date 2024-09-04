@@ -176,25 +176,28 @@ class CapturedImageViewController: UIViewController {
     }
     
     private func showMoveToGroupPopUpView() {
-        let popup = MoveToGroupPopUpView()
+        let dialog = DialogTypeChoice(
+            title: "그룹 게시판 업로드 완료",
+            subtitle: "5초 후 자동으로 홈 이동",
+            leftButtonTitle: "홈으로 이동",
+            rightButtonTitle: "보러가기",
+            leftAction: {
+                self.navigateToHome()
+            },
+            rightAction: {
+                self.navigateToGroup()
+            }
+        )
         
-        popup.leftButtonAction = { [weak self] in
-            self?.navigateToHome()
-            popup.isHidden = true
-        }
+        view.addSubview(dialog)
         
-        popup.rightButtonActoin = { [weak self] in
-            self?.navigateToGroup()
-            popup.isHidden = true
-        }
-        
-        view.addSubview(popup)
-        
-        popup.snp.makeConstraints { make in
+        dialog.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalTo(270)
             make.height.equalTo(157)
         }
+        
+        dialog.startCounting()
     }
     
     private func navigateToHome() {

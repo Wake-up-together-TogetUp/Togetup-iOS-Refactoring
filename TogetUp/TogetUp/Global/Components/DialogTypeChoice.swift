@@ -9,18 +9,16 @@ import UIKit
 import SnapKit
 import Then
 
-class MoveToGroupPopUpView: UIView {
+class DialogTypeChoice: UIView {
     // MARK: Properties
-    var counting = 5
-    private var timer: Timer?
+
     
     // MARK: - Callbacks
     var leftButtonAction: (() -> Void)?
-    var rightButtonActoin: (() -> Void)?
+    var rightButtonAction: (() -> Void)?
     
     // MARK: UIComponents
     private var titleLabel = UILabel().then {
-        $0.text = "그룹 게시판 업로드 완료"
         $0.font = .titleMedium
     }
     private var subtitleLabel = UILabel().then {
@@ -28,7 +26,6 @@ class MoveToGroupPopUpView: UIView {
         $0.textColor = UIColor(named: "neutral800")
     }
     private var leftButton = UIButton().then {
-        $0.setTitle("홈으로 이동", for: .normal)
         $0.setTitleColor(UIColor(named: "neutral700"), for: .normal)
         $0.titleLabel?.font = .buttonSmall
         $0.backgroundColor = UIColor(named: "neutral025")
@@ -36,7 +33,6 @@ class MoveToGroupPopUpView: UIView {
         $0.layer.cornerRadius = 12
     }
     private var rightButton = UIButton().then {
-        $0.setTitle("보러가기", for: .normal)
         $0.tintColor = .white
         $0.titleLabel?.font = .buttonSmall
         $0.backgroundColor = UIColor(named: "primary400")
@@ -50,11 +46,17 @@ class MoveToGroupPopUpView: UIView {
     }
     
     // MARK: - Initializer
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(title: String, subtitle: String, leftButtonTitle: String, rightButtonTitle: String, leftAction: @escaping () -> Void, rightAction: @escaping () -> Void) {
+        super.init(frame: .zero)
+        self.titleLabel.text = title
+        self.subtitleLabel.text = subtitle
+        self.leftButton.setTitle(leftButtonTitle, for: .normal)
+        self.rightButton.setTitle(rightButtonTitle, for: .normal)
+        self.leftButtonAction = leftAction
+        self.rightButtonAction = rightAction
+        
         setUpBorderandBackground()
         setConstraints()
-        startCounting()
         addTargets()
     }
     
@@ -100,15 +102,18 @@ class MoveToGroupPopUpView: UIView {
         }
     }
     
-    private func startCounting() {
+    func startCounting() {
+        var counting = 5
+        var timer: Timer?
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            if self.counting > 0 {
-                self.counting -= 1
-                self.subtitleLabel.text = "\(self.counting)초후 자동으로 홈 이동"
+            if counting > 0 {
+                counting -= 1
+                self.subtitleLabel.text = "\(counting)초후 자동으로 홈 이동"
             } else {
-                self.timer?.invalidate()
-                self.timer = nil
+                timer?.invalidate()
+                timer = nil
                 leftButtonAction?()
             }
         }
@@ -119,6 +124,6 @@ class MoveToGroupPopUpView: UIView {
     }
     
     @objc private func rightButtonTapped() {
-        rightButtonActoin?()
+        rightButtonAction?()
     }
 }
