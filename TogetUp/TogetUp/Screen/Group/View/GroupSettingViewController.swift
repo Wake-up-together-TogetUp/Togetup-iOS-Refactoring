@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import UIKit
 
-class GroupSettingsViewController: UIViewController {
+final class GroupSettingsViewController: UIViewController {
     private let viewModel: GroupSettingsViewModel
     private let disposeBag = DisposeBag()
     private var userProfileData: [UserProfileData] = []
@@ -452,7 +452,9 @@ extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegat
             return UITableViewCell()
         }
         let userProfile = userProfileData[indexPath.row]
-        cell.configure(with: userProfile)
+        let isCurrentUser = indexPath.row == 0
+        cell.configure(with: userProfile, isCurrentUser: isCurrentUser)
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -464,10 +466,23 @@ extension GroupSettingsViewController: UITableViewDataSource, UITableViewDelegat
         headerLabel.text = "참여중인 멤버"
         headerLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 18)
         headerLabel.textColor = .black
+        
+        let countLabel = UILabel()
+        countLabel.text = String(userProfileData.count)
+        countLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
+        countLabel.textColor = UIColor(named: "primary500")
+        
         headerView.addSubview(headerLabel)
+        headerView.addSubview(countLabel)
+        
         headerLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
             $0.centerY.equalToSuperview()
+        }
+        
+        countLabel.snp.makeConstraints {
+            $0.centerY.equalTo(headerLabel.snp.centerY)
+            $0.leading.equalTo(headerLabel.snp.trailing).offset(8)
         }
         
         let separatorLine = UIView()

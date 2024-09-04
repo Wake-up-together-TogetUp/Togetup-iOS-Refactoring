@@ -30,6 +30,12 @@ class GroupMemberListCell: UITableViewCell {
         $0.textColor = UIColor(named: "neutral400")
     }
     
+    private let badgeMe = UIImageView().then {
+        $0.image = UIImage(named: "badge-me")
+        $0.contentMode = .center
+        $0.isHidden = true
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -44,6 +50,7 @@ class GroupMemberListCell: UITableViewCell {
         contentView.addSubview(profileImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(levelLabel)
+        contentView.addSubview(badgeMe)
     }
     
     private func setupConstraints() {
@@ -62,11 +69,18 @@ class GroupMemberListCell: UITableViewCell {
             $0.top.equalTo(profileImageView.snp.top)
             $0.leading.equalTo(nameLabel.snp.leading)
         }
+        
+        badgeMe.snp.makeConstraints {
+            $0.leading.equalTo(nameLabel.snp.trailing).offset(8)
+            $0.centerY.equalTo(nameLabel.snp.centerY)
+            $0.width.height.equalTo(16)
+        }
     }
     
-    func configure(with data: UserProfileData) {
+    func configure(with data: UserProfileData, isCurrentUser: Bool) {
         nameLabel.text = data.userName
         profileImageView.image = UIImage(named: "P_\(data.theme)")
         levelLabel.text = "Lv.\(data.level)"
+        badgeMe.isHidden = !isCurrentUser
     }
 }
