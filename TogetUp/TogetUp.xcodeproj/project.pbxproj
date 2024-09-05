@@ -87,7 +87,7 @@
 		F97CDC1C2B0B7ACC0057AA82 /* PushAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1B2B0B7ACC0057AA82 /* PushAlarmViewModel.swift */; };
 		F97CDC1E2B13344A0057AA82 /* TimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1D2B13344A0057AA82 /* TimelineCollectionViewCell.swift */; };
 		F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1F2B13359E0057AA82 /* TimelineModel.swift */; };
-		F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC212B133CBE0057AA82 /* HomeService.swift */; };
+		F97CDC222B133CBE0057AA82 /* AvatarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC212B133CBE0057AA82 /* AvatarService.swift */; };
 		F97CDC242B144C530057AA82 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC232B144C530057AA82 /* HomeViewModel.swift */; };
 		F97CDC262B1458E10057AA82 /* AvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC252B1458E10057AA82 /* AvatarModel.swift */; };
 		F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */; };
@@ -231,7 +231,7 @@
 		F97CDC1B2B0B7ACC0057AA82 /* PushAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushAlarmViewModel.swift; sourceTree = "<group>"; };
 		F97CDC1D2B13344A0057AA82 /* TimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		F97CDC1F2B13359E0057AA82 /* TimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineModel.swift; sourceTree = "<group>"; };
-		F97CDC212B133CBE0057AA82 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		F97CDC212B133CBE0057AA82 /* AvatarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarService.swift; sourceTree = "<group>"; };
 		F97CDC232B144C530057AA82 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F97CDC252B1458E10057AA82 /* AvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModel.swift; sourceTree = "<group>"; };
 		F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -722,7 +722,7 @@
 				F945D14C2AA4A8C60093F896 /* UserService.swift */,
 				F945D1542AA4DE7C0093F896 /* AlarmService.swift */,
 				F98600F12AAEC1A400595646 /* MissionService.swift */,
-				F97CDC212B133CBE0057AA82 /* HomeService.swift */,
+				F97CDC212B133CBE0057AA82 /* AvatarService.swift */,
 				F915EA122BF05A92002B84BC /* DevService.swift */,
 			);
 			path = Service;
@@ -961,7 +961,7 @@
 				F9C9C1FF2BEE3C5400A6C66E /* WebkitViewController.swift in Sources */,
 				F98600F22AAEC1A400595646 /* MissionService.swift in Sources */,
 				F9D679D32AC19FB9006B1643 /* MissionProcessViewModel.swift in Sources */,
-				F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */,
+				F97CDC222B133CBE0057AA82 /* AvatarService.swift in Sources */,
 				F97A896F2AADA34C00EBFB36 /* AlarmModel.swift in Sources */,
 				9576DAC92C20A58D00AB62AA /* CreateGroupView.swift in Sources */,
 				9576DAC72C20A58D00AB62AA /* ImageCollectionViewCell.swift in Sources */,
