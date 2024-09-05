@@ -55,13 +55,13 @@ class AlarmScheduleManager {
     
     private func scheduleRepeatingAlarms(for alarm: Alarm, with content: UNMutableNotificationContent, using notificationCenter: UNUserNotificationCenter) {
         let weekdays = [
-            (alarm.monday, 2), // 월
-            (alarm.tuesday, 3), // 화
-            (alarm.wednesday, 4), // 수
-            (alarm.thursday, 5), // 목
-            (alarm.friday, 6), // 금
-            (alarm.saturday, 7), // 토
-            (alarm.sunday, 1)  // 일
+            (alarm.monday, 2),
+            (alarm.tuesday, 3),
+            (alarm.wednesday, 4),
+            (alarm.thursday, 5),
+            (alarm.friday, 6),
+            (alarm.saturday, 7),
+            (alarm.sunday, 1)
         ]
         
         weekdays.forEach { isScheduled, weekday in

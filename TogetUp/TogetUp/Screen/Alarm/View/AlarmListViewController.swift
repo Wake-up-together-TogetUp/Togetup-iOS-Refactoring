@@ -173,7 +173,7 @@ class AlarmListViewController: UIViewController {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
                 
                 vc.alarmId = self.selectedAlarmId
-                vc.navigatedFromScreen = "AlarmList"
+                vc.navigatedFrom = "AlarmList"
                 
                 let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen
@@ -203,7 +203,7 @@ class AlarmListViewController: UIViewController {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: "EditAlarmViewController") as? EditAlarmViewController else { return }
                 
                 vc.alarmId = self.selectedAlarmId
-                vc.navigatedFromScreen = "GroupAlarmList"
+                vc.navigatedFrom = "GroupAlarmList"
                 
                 let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen

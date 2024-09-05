@@ -40,7 +40,7 @@ class MissionProcessViewModel {
                     completion(.success(response))
                     if let userStat = response.result?.userStat {
                         UserDataManager.shared.updateUserStatus(level: userStat.level, expPercentage: userStat.expPercentage)
-                        ThemeManager.shared.updateIsNewForAvatar(withUnlockLevel: userStat.level, isNew: true)
+                        ThemeManager.shared.updateIsNewForAvatar(withUnlockLevel: userStat.level, isNew: response.result?.avatarUnlockAvailable ?? false)
                     }
                 case .failure(let error):
                     completion(.failure(error))
