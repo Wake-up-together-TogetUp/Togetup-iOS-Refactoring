@@ -70,7 +70,7 @@ class CreateGroupView: UIView {
     }()
     
     let groupIntroCountLabel = UILabel().then {
-        $0.text = "0/50"
+        $0.text = "0/30"
         $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
         $0.textColor = UIColor(named: "neutral500")
     }

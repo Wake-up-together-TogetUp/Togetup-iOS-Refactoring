@@ -93,7 +93,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func limitTextLength(text: String) -> String {
-        return String(text.prefix(50))
+        return String(text.prefix(30))
     }
     
     private func updateGroupNameLabelColorAndText(truncatedText: String, originalText: String) {
@@ -102,8 +102,8 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func updateGroupIntroLabelColorAndText(limitTextLength: String, originalText: String) {
-        createGroupView.groupIntroCountLabel.text = "\(limitTextLength.count)/50"
-        createGroupView.groupIntroCountLabel.textColor = originalText.count > 50 ? UIColor(named: "error500") : UIColor(named: "neutral500")
+        createGroupView.groupIntroCountLabel.text = "\(limitTextLength.count)/30"
+        createGroupView.groupIntroCountLabel.textColor = originalText.count > 30 ? UIColor(named: "error500") : UIColor(named: "neutral500")
     }
     
     private func configureAlarmNameTextField() {
