@@ -91,6 +91,8 @@ class MissionPerformViewController: UIViewController {
     }
     
     private func customUI() {
+        self.navigationController?.navigationBar.isHidden = true
+        
         self.missionPerformButton.layer.cornerRadius = 12
         self.missionPerformButton.layer.borderWidth = 2
         
