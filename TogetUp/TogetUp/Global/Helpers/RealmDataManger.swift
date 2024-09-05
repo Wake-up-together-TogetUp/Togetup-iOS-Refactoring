@@ -67,13 +67,14 @@ class RealmAlarmDataManager {
         }
     }
     
-    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
+    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?, roomId: Int?) {
         do {
             try realm.write {
                 let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId)
                 if alarm == nil {
                     let newAlarm = Alarm()
                     newAlarm.id = alarmId
+                    newAlarm.roomId.value = roomId
                     mapRequestToAlarm(request, alarm: newAlarm, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: isPersonalAlarm)
                     realm.add(newAlarm)
                 } else {
@@ -83,6 +84,14 @@ class RealmAlarmDataManager {
         } catch {
             print("Error updating or adding alarm: \(error)")
         }
+    }
+    
+    func getRoomId(for alarmId: Int) -> Int? {
+        guard let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) else {
+            print("Alarm with id \(alarmId) not found.")
+            return nil
+        }        
+        return alarm.roomId.value
     }
     
     func deleteAlarm(alarmId: Int) {

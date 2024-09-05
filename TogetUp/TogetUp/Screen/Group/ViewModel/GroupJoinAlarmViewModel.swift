@@ -90,8 +90,9 @@ class GroupJoinAlarmViewModel: ViewModelType {
                     .flatMap { result -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
                         switch result {
                         case .success(let response):
-                            let alarmId = response.result
-                            self.realmManager.updateAlarm(with: localRequest, for: alarmId ?? 0, missionEndpoint: input.missionEndpoint, missionKoreanName: input.missionKoreanName, isPersonalAlarm: false)
+                            let alarmId = response.result?.alarmId
+                            let roomId = response.result?.roomId
+                            self.realmManager.updateAlarm(with: localRequest, for: alarmId ?? 0, missionEndpoint: input.missionEndpoint, missionKoreanName: input.missionKoreanName, isPersonalAlarm: false, roomId: roomId)
                             AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)
                             return .just(.success(response))
                         case .failure(let error):
@@ -106,12 +107,6 @@ class GroupJoinAlarmViewModel: ViewModelType {
         
         return Output(isJoinButtonEnabled: isJoinButtonEnabled, joinGroupResponse: joinGroupResponse)
         
-    }
-    
-    private func saveAlarmToLocalDatabase(request: CreateOrEditAlarmRequest, missionEndpoint: String, missionKoreanName: String) {
-        let newAlarm = Alarm()
-        newAlarm.id = UUID().hashValue
-        realmManager.updateAlarm(with: request, for: newAlarm.id, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false)
     }
     
     private func formatDate(date: Date) -> String {
