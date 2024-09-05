@@ -11,7 +11,7 @@ import Then
 
 class DialogTypeChoice: UIView {
     // MARK: Properties
-
+    var timer: Timer?
     
     // MARK: - Callbacks
     var leftButtonAction: (() -> Void)?
@@ -104,7 +104,6 @@ class DialogTypeChoice: UIView {
     
     func startCounting() {
         var counting = 5
-        var timer: Timer?
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
@@ -125,5 +124,6 @@ class DialogTypeChoice: UIView {
     
     @objc private func rightButtonTapped() {
         rightButtonAction?()
+        timer?.invalidate()
     }
 }
