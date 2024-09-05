@@ -38,6 +38,7 @@ class CapturedImageViewController: UIViewController {
     private var filePath = ""
     var alarmId = 0
     lazy var isPersonlAlarm = realmManager.checkIfAlarmIsPersonal(withId: alarmId)
+    var onNavigateToGroup: ((Bool, Int) -> Void)?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -214,9 +215,23 @@ class CapturedImageViewController: UIViewController {
     }
     
     private func navigateToGroup() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first else { return }
         
+        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else { return }
+        
+        tabBarVC.selectedIndex = 2
+        
+        let navController = UINavigationController(rootViewController: tabBarVC)
+        navController.modalPresentationStyle = .fullScreen
+        
+        window.rootViewController = navController
+        window.makeKeyAndVisible()
+        
+        let roomId = realmManager.getRoomId(for: alarmId) ?? 0
+        onNavigateToGroup?(true, roomId)
     }
-    
+
     private func setLottieAnimation() {
         let animation = LottieAnimation.named("progress")
         progressBar.animation = animation
