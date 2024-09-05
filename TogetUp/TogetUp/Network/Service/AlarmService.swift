@@ -16,6 +16,7 @@ enum AlarmService {
     case getSingleAlarm(alarmId: Int)
     case editAlarm(alarmId: Int, param: CreateOrEditAlarmRequest)
     case deactivateAlarms(alarmIds: [Int])
+    case getTimeLine(timeZone: String)
 }
 
 extension AlarmService: TargetType {
@@ -31,6 +32,8 @@ extension AlarmService: TargetType {
             return URLConstant.deleteAlarm + "\(id)"
         case .deactivateAlarms:
             return URLConstant.deactivateAlarms
+        case .getTimeLine:
+            return URLConstant.getTimeline
         }
     }
     
@@ -38,7 +41,7 @@ extension AlarmService: TargetType {
         switch self {
         case .createAlarm:
             return .post
-        case .getAlarmList:
+        case .getAlarmList, .getTimeLine:
             return .get
         case .deleteAlarm:
             return .delete
@@ -63,17 +66,13 @@ extension AlarmService: TargetType {
             return .requestJSONEncodable(param)
         case .deactivateAlarms(let alarmIds):
             return .requestJSONEncodable(["alarmIds": alarmIds])
+        case .getTimeLine(let timeZone):
+            return .requestParameters(parameters: ["timezone" : timeZone], encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
-        switch self {
-        case .createAlarm, .getAlarmList, .deleteAlarm, .getSingleAlarm, .editAlarm, .deactivateAlarms:
-            let token = KeyChainManager.shared.getToken()
-            return [
-                "Authorization": "Bearer \(token ?? "")",
-                "Content-Type": "application/json"
-            ]
-        }
+        let token = KeyChainManager.shared.getToken()
+        return ["Authorization": "Bearer \(token ?? "")"]
     }
 }

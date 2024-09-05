@@ -69,6 +69,7 @@
 		F945D1552AA4DE7C0093F896 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D1542AA4DE7C0093F896 /* AlarmService.swift */; };
 		F9523E4D2B5C1F7B00B16CCB /* RealmDataManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4C2B5C1F7B00B16CCB /* RealmDataManger.swift */; };
 		F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */; };
+		F95564DC2C86045200028D68 /* DialogTypeChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95564DB2C86045200028D68 /* DialogTypeChoice.swift */; };
 		F9614A4C2A8FAC0A00610784 /* Alarm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9614A4E2A8FAC0A00610784 /* Alarm.storyboard */; };
 		F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32632A8A002800BD3BF9 /* AppDelegate.swift */; };
 		F96B32662A8A002800BD3BF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */; };
@@ -86,7 +87,7 @@
 		F97CDC1C2B0B7ACC0057AA82 /* PushAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1B2B0B7ACC0057AA82 /* PushAlarmViewModel.swift */; };
 		F97CDC1E2B13344A0057AA82 /* TimelineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1D2B13344A0057AA82 /* TimelineCollectionViewCell.swift */; };
 		F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC1F2B13359E0057AA82 /* TimelineModel.swift */; };
-		F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC212B133CBE0057AA82 /* HomeService.swift */; };
+		F97CDC222B133CBE0057AA82 /* AvatarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC212B133CBE0057AA82 /* AvatarService.swift */; };
 		F97CDC242B144C530057AA82 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC232B144C530057AA82 /* HomeViewModel.swift */; };
 		F97CDC262B1458E10057AA82 /* AvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC252B1458E10057AA82 /* AvatarModel.swift */; };
 		F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */; };
@@ -210,6 +211,7 @@
 		F945D1542AA4DE7C0093F896 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
 		F9523E4C2B5C1F7B00B16CCB /* RealmDataManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataManger.swift; sourceTree = "<group>"; };
 		F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F95564DB2C86045200028D68 /* DialogTypeChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTypeChoice.swift; sourceTree = "<group>"; };
 		F9614A4D2A8FAC0A00610784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Alarm.storyboard; sourceTree = "<group>"; };
 		F96B32602A8A002800BD3BF9 /* TogetUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TogetUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96B32632A8A002800BD3BF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -229,7 +231,7 @@
 		F97CDC1B2B0B7ACC0057AA82 /* PushAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushAlarmViewModel.swift; sourceTree = "<group>"; };
 		F97CDC1D2B13344A0057AA82 /* TimelineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCollectionViewCell.swift; sourceTree = "<group>"; };
 		F97CDC1F2B13359E0057AA82 /* TimelineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineModel.swift; sourceTree = "<group>"; };
-		F97CDC212B133CBE0057AA82 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		F97CDC212B133CBE0057AA82 /* AvatarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarService.swift; sourceTree = "<group>"; };
 		F97CDC232B144C530057AA82 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F97CDC252B1458E10057AA82 /* AvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModel.swift; sourceTree = "<group>"; };
 		F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -516,6 +518,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F95564DF2C8890EC00028D68 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F95564DB2C86045200028D68 /* DialogTypeChoice.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		F96B32572A8A002800BD3BF9 = {
 			isa = PBXGroup;
 			children = (
@@ -587,6 +597,7 @@
 		F96B327A2A8A022700BD3BF9 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				F95564DF2C8890EC00028D68 /* Components */,
 				F96B32A22A8E8D6200BD3BF9 /* Helpers */,
 				F96B32892A8A916C00BD3BF9 /* Extensions */,
 			);
@@ -711,7 +722,7 @@
 				F945D14C2AA4A8C60093F896 /* UserService.swift */,
 				F945D1542AA4DE7C0093F896 /* AlarmService.swift */,
 				F98600F12AAEC1A400595646 /* MissionService.swift */,
-				F97CDC212B133CBE0057AA82 /* HomeService.swift */,
+				F97CDC212B133CBE0057AA82 /* AvatarService.swift */,
 				F915EA122BF05A92002B84BC /* DevService.swift */,
 			);
 			path = Service;
@@ -909,6 +920,7 @@
 				F97CDC282B14CA220057AA82 /* AvatarCollectionViewCell.swift in Sources */,
 				F97CDC202B13359E0057AA82 /* TimelineModel.swift in Sources */,
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
+				F95564DC2C86045200028D68 /* DialogTypeChoice.swift in Sources */,
 				F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */,
 				F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */,
 				9576DAC82C20A58D00AB62AA /* GroupListCollectionViewCell.swift in Sources */,
@@ -949,7 +961,7 @@
 				F9C9C1FF2BEE3C5400A6C66E /* WebkitViewController.swift in Sources */,
 				F98600F22AAEC1A400595646 /* MissionService.swift in Sources */,
 				F9D679D32AC19FB9006B1643 /* MissionProcessViewModel.swift in Sources */,
-				F97CDC222B133CBE0057AA82 /* HomeService.swift in Sources */,
+				F97CDC222B133CBE0057AA82 /* AvatarService.swift in Sources */,
 				F97A896F2AADA34C00EBFB36 /* AlarmModel.swift in Sources */,
 				9576DAC92C20A58D00AB62AA /* CreateGroupView.swift in Sources */,
 				9576DAC72C20A58D00AB62AA /* ImageCollectionViewCell.swift in Sources */,

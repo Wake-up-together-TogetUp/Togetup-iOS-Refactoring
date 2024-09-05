@@ -16,27 +16,33 @@ class RealmAlarmDataManager {
     private var realm: Realm {
         return try! Realm()
     }
+    private let calendar = Calendar.current
     
     func configureRealmMigration() {
         let config = Realm.Configuration(
-            schemaVersion: 3,
+            schemaVersion: 6,
             
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 3 {
+                if oldSchemaVersion < 6 {
                     migration.enumerateObjects(ofType: Alarm.className()) { _, newObject in
                         newObject?["isPersonalAlarm"] = false
+                        newObject?["alarmDate"] = nil
+                        newObject?["roomId"] = RealmProperty<Int?>()
                     }
                 }
             })
-
+        
         Realm.Configuration.defaultConfiguration = config
     }
     
     func fetchAlarms() -> [Alarm] {
         let alarms = realm.objects(Alarm.self)
             .filter("isPersonalAlarm == true")
-            .sorted(byKeyPath: "alarmHour", ascending: true)
-            .sorted(byKeyPath: "alarmMinute", ascending: true)
+            .sorted(by: [
+                SortDescriptor(keyPath: "alarmHour", ascending: true),
+                SortDescriptor(keyPath: "alarmMinute", ascending: true)
+            ])
+        
         return Array(alarms)
     }
     
@@ -61,13 +67,14 @@ class RealmAlarmDataManager {
         }
     }
     
-    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
+    func updateAlarm(with request: CreateOrEditAlarmRequest, for alarmId: Int, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?, roomId: Int?) {
         do {
             try realm.write {
                 let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId)
                 if alarm == nil {
                     let newAlarm = Alarm()
                     newAlarm.id = alarmId
+                    newAlarm.roomId.value = roomId
                     mapRequestToAlarm(request, alarm: newAlarm, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: isPersonalAlarm)
                     realm.add(newAlarm)
                 } else {
@@ -77,6 +84,14 @@ class RealmAlarmDataManager {
         } catch {
             print("Error updating or adding alarm: \(error)")
         }
+    }
+    
+    func getRoomId(for alarmId: Int) -> Int? {
+        guard let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) else {
+            print("Alarm with id \(alarmId) not found.")
+            return nil
+        }        
+        return alarm.roomId.value
     }
     
     func deleteAlarm(alarmId: Int) {
@@ -91,16 +106,23 @@ class RealmAlarmDataManager {
         }
     }
     
-    func fetchPastNonRepeatingActivatedAlarms() -> [Int] {
+    func fetchTodayNonRepeatingActivatedAlarms() -> [Int] {
         let now = Date()
-        let filteredAlarms = realm.objects(Alarm.self).filter("isActivated == true AND (monday == false AND tuesday == false AND wednesday == false AND thursday == false AND friday == false AND saturday == false AND sunday == false) AND createdDate < %@", now)
-        
+        let startOfDay = calendar.startOfDay(for: now)
+        guard let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: startOfDay) else {
+            return []
+        }
+        let filteredAlarms = realm.objects(Alarm.self).filter(
+            "isActivated == true AND (monday == false AND tuesday == false AND wednesday == false AND thursday == false AND friday == false AND saturday == false AND sunday == false) AND alarmDate >= %@ AND alarmDate <= %@ AND alarmDate <= %@", startOfDay, endOfDay, now
+        )
         let alarmIds = filteredAlarms.map { $0.id }
+        
         return Array(alarmIds)
     }
     
+    
     func deactivateAlarms() {
-        let alarmIds = fetchPastNonRepeatingActivatedAlarms()
+        let alarmIds = fetchTodayNonRepeatingActivatedAlarms()
         let alarmsToDeactivate = realm.objects(Alarm.self).filter("id IN %@", alarmIds)
         
         do {
@@ -167,6 +189,17 @@ class RealmAlarmDataManager {
         }
     }
     
+    func calculateAlarmDate(alarmHour: Int, alarmMinute: Int) -> Date? {
+        let now = Date()
+        var alarmDateComponents = DateComponents()
+        alarmDateComponents.hour = alarmHour
+        alarmDateComponents.minute = alarmMinute
+        
+        if let nextAlarmDate = calendar.nextDate(after: now, matching: alarmDateComponents, matchingPolicy: .nextTime) {
+            return nextAlarmDate >= now ? nextAlarmDate : calendar.date(byAdding: .day, value: 1, to: nextAlarmDate)
+        }
+        return nil
+    }
     
     private func mapRequestToAlarm(_ request: CreateOrEditAlarmRequest, alarm: Alarm, missionEndpoint: String, missionKoreanName: String, isPersonalAlarm: Bool?) {
         alarm.missionId = request.missionId
@@ -188,6 +221,10 @@ class RealmAlarmDataManager {
         alarm.missionEndpoint = missionEndpoint
         alarm.createdDate = Date()
         alarm.isPersonalAlarm = isPersonalAlarm ?? false
+        
+        if let alarmDate = calculateAlarmDate(alarmHour: alarm.alarmHour, alarmMinute: alarm.alarmMinute) {
+            alarm.alarmDate = alarmDate
+        }
     }
     
     private func getHour(from time: String) -> Int {
@@ -198,5 +235,14 @@ class RealmAlarmDataManager {
     private func getMinute(from time: String) -> Int {
         let components = time.split(separator: ":").map(String.init)
         return Int(components.count > 1 ? components[1] : "0") ?? 0
+    }
+    
+    func checkIfAlarmIsPersonal(withId id: Int) -> Bool {
+        if let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: id) {
+            return alarm.isPersonalAlarm
+        } else {
+            print("\(id) Alarm doesn't exist")
+            return false
+        }
     }
 }

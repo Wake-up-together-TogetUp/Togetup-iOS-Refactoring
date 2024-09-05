@@ -36,7 +36,7 @@ class EditAlarmViewModel {
                 switch result {
                 case .success(let response):
                     let alarmId = response.result
-                    self?.realmManager.updateAlarm(with: param, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true)
+                    self?.realmManager.updateAlarm(with: param, for: alarmId ?? 0, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true, roomId: nil)
                     AlarmScheduleManager.shared.scheduleNotification(for: alarmId ?? 0)
                     return .just(.success(()))
                 case .failure(let error):
@@ -50,7 +50,7 @@ class EditAlarmViewModel {
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in
                 switch result {
                 case .success:
-                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true)
+                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: true, roomId: nil)
                     AlarmScheduleManager.shared.removeNotification(for: alarmId) {
                         DispatchQueue.main.async {
                             AlarmScheduleManager.shared.scheduleNotification(for: alarmId)
@@ -67,8 +67,9 @@ class EditAlarmViewModel {
         return networkManager.handleAPIRequest(provider.rx.request(.editAlarm(alarmId: alarmId, param: param)), dataType: CreateEditDeleteAlarmResponse.self)
             .flatMap { [weak self] result -> Single<Result<Void, Error>> in
                 switch result {
-                case .success:
-                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false)
+                case .success(let response):
+                    let roomId = self?.realmManager.getRoomId(for: alarmId)
+                    self?.realmManager.updateAlarm(with: param, for: alarmId, missionEndpoint: missionEndpoint, missionKoreanName: missionKoreanName, isPersonalAlarm: false, roomId: roomId)
                     AlarmScheduleManager.shared.removeNotification(for: alarmId) {
                         DispatchQueue.main.async {
                             AlarmScheduleManager.shared.scheduleNotification(for: alarmId)

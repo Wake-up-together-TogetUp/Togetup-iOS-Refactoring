@@ -15,11 +15,11 @@ class TimelineViewModel {
     var nextAlarmId: Int? = nil
     let disposeBag = DisposeBag()
     let networkManager = NetworkManager()
-    let provider = MoyaProvider<HomeService>()
+    let provider = MoyaProvider<AlarmService>()
     let dataLoaded = PublishSubject<Void>()
     
-    func fetchTimelineData() {
-        let request = provider.rx.request(.getTimeLine)
+    func fetchTimelineData(timeZone: String) {
+        let request = provider.rx.request(.getTimeLine(timeZone: timeZone))
         networkManager.handleAPIRequest(request, dataType: TimelineResponse.self)
             .subscribe { [weak self] result in
                 switch result {

@@ -18,6 +18,8 @@ class GroupListViewController: UIViewController {
     private let fetchGroupList = PublishSubject<Void>()
     private var groupResults = [GroupResult]()
     private let isCodeInvalid = BehaviorRelay<Bool>(value: false)
+    var shouldNavigateToGroupCalendar = false
+    var roomIdToNavigate: Int?
     
     // MARK: - Component
     private let noGroupLabel = UILabel().then {
@@ -52,7 +54,7 @@ class GroupListViewController: UIViewController {
         $0.setImage(image, for: .normal)
         $0.tintColor = .black
     }
-
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -117,6 +119,7 @@ class GroupListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = false
         fetchGroupList.onNext(())
+        handleNavigationToGroupCalendarIfNeeded()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -143,13 +146,13 @@ class GroupListViewController: UIViewController {
         noGroupLabel.snp.makeConstraints {
             $0.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
             $0.centerY.equalTo(view.safeAreaLayoutGuide.snp.centerY).offset(-4)
-         }
+        }
         
         noGroupSubLabel.snp.makeConstraints {
             $0.top.equalTo(noGroupLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
-
+        
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.leading.equalToSuperview().offset(20)
@@ -164,7 +167,7 @@ class GroupListViewController: UIViewController {
             $0.centerY.equalTo(titleLabel)
             $0.trailing.equalTo(createButton.snp.leading).offset(-10)
         }
-
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
@@ -329,8 +332,22 @@ class GroupListViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    private func handleNavigationToGroupCalendarIfNeeded() {
+        if shouldNavigateToGroupCalendar, let roomId = roomIdToNavigate {
+            shouldNavigateToGroupCalendar = false // 플래그 초기화
+            roomIdToNavigate = nil // roomId 초기화
+            navigateToGroupCalendar(roomId: roomId)
+        }
+    }
+    
+    // GroupCalendarViewController로 화면 전환 처리
+    private func navigateToGroupCalendar(roomId: Int) {
+        let groupCalendarVC = GroupCalendarViewController(roomId: roomId)
+        groupCalendarVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(groupCalendarVC, animated: true)
+    }
 }
-
 
 extension GroupListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

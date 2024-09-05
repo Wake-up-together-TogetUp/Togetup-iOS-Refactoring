@@ -34,7 +34,7 @@ class ThemeManager {
     
     func loadThemes() {
         themes = [
-            Avatar(avatarId: 1, mainAvatarName: "main_chick", collectionViewAvatarName: "home_chick", colorName: "chick", unlockLevel: 1, isNew: true, defaultSpeech: "안녕, 내가 니 선임이야~"),
+            Avatar(avatarId: 1, mainAvatarName: "main_chick", collectionViewAvatarName: "home_chick", colorName: "chick", unlockLevel: 1, isNew: false, defaultSpeech: "안녕, 내가 니 선임이야~"),
             Avatar(avatarId: 2, mainAvatarName: "main_bear", collectionViewAvatarName: "home_bear", colorName: "bear", unlockLevel: 15, isNew: false, defaultSpeech: "나랑 같이 우주탐험 하지 않을래?"),
             Avatar(avatarId: 3, mainAvatarName: "main_rabbit", collectionViewAvatarName: "home_rabbit", colorName: "rabbit", unlockLevel: 30, isNew: false, defaultSpeech: "사랑을 나누어 드릴게요..."),
             Avatar(avatarId: 4, mainAvatarName: "main_panda", collectionViewAvatarName: "home_panda", colorName: "panda", unlockLevel: 45, isNew: false, defaultSpeech: "먹는게 세상에서 제일 좋아~"),
@@ -69,5 +69,4 @@ class ThemeManager {
         themes[index].isNew = isNew
         updateIsNewValuesInUserDefaults()
     }
-
 }

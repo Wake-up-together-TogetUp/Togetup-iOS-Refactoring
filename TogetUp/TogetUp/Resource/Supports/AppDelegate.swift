@@ -65,13 +65,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
-        guard let alarmId = userInfo["alarmId"] as? Int else { return }
-        
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let sceneDelegate = scene.delegate as? SceneDelegate {
-            sceneDelegate.navigateToMissionPerformViewController(with: alarmId)
-        }
-        completionHandler([.list, .banner])
+        if let alarmId = userInfo["alarmId"] as? Int {
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let sceneDelegate = scene.delegate as? SceneDelegate {
+                sceneDelegate.navigateToMissionPerformViewController(with: alarmId)
+            }
+        } else {
+            completionHandler([.list, .banner])
+        }        
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
