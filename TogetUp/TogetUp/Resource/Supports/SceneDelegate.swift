@@ -17,6 +17,7 @@ import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    private let viewModel = PushAlarmViewModel()
     
     func navigateToMissionPerformViewController(with alarmId: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -89,9 +90,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let alarmToNavigate = latestAlarm {
             navigateToMissionPerformViewController(with: alarmToNavigate.id)
         }
+        
+        AppStatusManager.shared.checkNotificationPermission { isGranted in
+            self.viewModel.sendPushAgreement(agree: isGranted)
+        }
     }
-
-
     
     func sceneWillResignActive(_ scene: UIScene) {
         
