@@ -119,7 +119,6 @@ class GroupListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = false
         fetchGroupList.onNext(())
-        RealmAlarmDataManager().printNonPersonalAlarms()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
