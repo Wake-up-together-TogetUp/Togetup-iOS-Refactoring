@@ -41,8 +41,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     private var alarmHour = 0
     private var alarmMinute = 0
     var alarmId: Int?
-    var navigatedFromScreen = "CreateAlarm"
-    //navigatedFromScreen = "AlarmList", "CreateAlarm"
+    var navigatedFrom = "CreateAlarm"
     var missionEndpoint = "person"
     
     // MARK: - Life Cycle
@@ -73,10 +72,10 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     }
     
     private func setUpScreenStatus() {
-        if navigatedFromScreen == "AlarmList", let id = alarmId {
+        if navigatedFrom == "AlarmList", let id = alarmId {
             loadAlarmData(id: id)
             setUpDatePicker()
-        } else if navigatedFromScreen == "GroupAlarmList",let id = alarmId {
+        } else if navigatedFrom == "GroupAlarmList",let id = alarmId {
             loadAlarmData(id: id)
             setUpDatePicker()
             missionView.backgroundColor = UIColor(named: "neutral050")
@@ -119,7 +118,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         thursday.isSelected = result.thursday
         friday.isSelected = result.friday
         saturday.isSelected = result.saturday
-        missionIcon = result.icon
+        missionIcon = result.icon ?? "📷"
     }
     
     private func customUI() {
@@ -137,13 +136,13 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         
         deleteAlarmBtn.layer.cornerRadius = 12
         
-        if navigatedFromScreen == "CreateAlarm" {
+        if navigatedFrom == "CreateAlarm" {
             let currentTime = Date()
             let oneMinuteLater = Calendar.current.date(byAdding: .minute, value: 1, to: currentTime)
             timePicker.date = oneMinuteLater ?? currentTime
         }
         
-        if navigatedFromScreen == "CreateAlarm" || navigatedFromScreen == "GroupAlarmList" {
+        if navigatedFrom == "CreateAlarm" || navigatedFrom == "GroupAlarmList" {
             self.deleteAlarmBtn.isHidden = true
         } else {
             self.deleteAlarmBtn.isHidden = false
@@ -310,11 +309,11 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         let param = createAlarmRequestParam()
-        if navigatedFromScreen == "AlarmList" {
+        if navigatedFrom == "AlarmList" {
             self.editAlarm(with: param)
-        } else if navigatedFromScreen == "GroupAlarmList" {
+        } else if navigatedFrom == "GroupAlarmList" {
             self.groupEditAlarm(with: param)
-        } else if navigatedFromScreen == "CreateAlarm" {
+        } else if navigatedFrom == "CreateAlarm" {
             self.createAlarm(with: param)
         }
     }
@@ -328,7 +327,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
               let missionName = userInfo["name"] as? String else {
             return
         }
-        if navigatedFromScreen != "GroupAlarmList" {
+        if navigatedFrom != "GroupAlarmList" {
             self.missionTitleLabel.text = kr
             self.missionIconLabel.text = icon
             self.missionIcon = icon
@@ -340,7 +339,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     }
     
     @IBAction func missionEditButton(_ sender: Any) {
-        if navigatedFromScreen != "GroupAlarmList" {
+        if navigatedFrom != "GroupAlarmList" {
             guard let vc = storyboard?.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
             
             vc.customMissionDataHandler = {[weak self] missionKoreanName, missionIcon, missionId, missionObjectId in

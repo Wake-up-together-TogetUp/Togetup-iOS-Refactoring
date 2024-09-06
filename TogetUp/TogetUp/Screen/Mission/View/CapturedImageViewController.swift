@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Lottie
+import SnapKit
 
 class CapturedImageViewController: UIViewController {
     // MARK: - UI Components
@@ -24,16 +25,20 @@ class CapturedImageViewController: UIViewController {
     @IBOutlet weak var congratLabel: UILabel!
     @IBOutlet weak var levelUpView: UIView!
     @IBOutlet weak var newAvatarAvailabelLabel: UILabel!
+    
     // MARK: - Properties
     var image = UIImage()
     var missionId = 0
     var missionEndpoint: String?
     private let viewModel = MissionProcessViewModel()
+    private let realmManager = RealmAlarmDataManager()
     private let disposeBag = DisposeBag()
     private var countdownTimer: Timer?
     private var countdownValue = 5
     private var filePath = ""
     var alarmId = 0
+    lazy var isPersonlAlarm = realmManager.checkIfAlarmIsPersonal(withId: alarmId)
+    var onNavigateToGroup: ((Bool, Int) -> Void)?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -114,7 +119,15 @@ class CapturedImageViewController: UIViewController {
                 if let userLevelUp = response.result?.userLevelUp, userLevelUp {
                     self.handleCompleteResponseUI(response)
                 }
-                self.startCountdown()
+                if self.isPersonlAlarm {
+                    self.startCountdown()
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        self.progressView.isHidden = true
+                        self.showMoveToGroupPopUpView()
+                    }
+                }
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -163,14 +176,62 @@ class CapturedImageViewController: UIViewController {
         }
     }
     
-    private func navigateToHome() {
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else {
-            return
+    private func showMoveToGroupPopUpView() {
+        let dialog = DialogTypeChoice(
+            title: "그룹 게시판 업로드 완료",
+            subtitle: "5초 후 자동으로 홈 이동",
+            leftButtonTitle: "홈으로 이동",
+            rightButtonTitle: "보러가기",
+            leftAction: {
+                self.navigateToHome()
+            },
+            rightAction: {
+                self.navigateToGroup()
+            }
+        )
+        
+        view.addSubview(dialog)
+        
+        dialog.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalTo(270)
+            make.height.equalTo(157)
         }
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
+        
+        dialog.startCounting()
     }
     
+    private func navigateToHome() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first else { return }
+        
+        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") else { return }
+        
+        let navController = UINavigationController(rootViewController: tabBarVC)
+        navController.modalPresentationStyle = .fullScreen
+        
+        window.rootViewController = navController
+        window.makeKeyAndVisible()
+    }
+    
+    private func navigateToGroup() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first else { return }
+        
+        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else { return }
+        
+        tabBarVC.selectedIndex = 2
+        
+        let navController = UINavigationController(rootViewController: tabBarVC)
+        navController.modalPresentationStyle = .fullScreen
+        
+        window.rootViewController = navController
+        window.makeKeyAndVisible()
+        
+        let roomId = realmManager.getRoomId(for: alarmId) ?? 0
+        onNavigateToGroup?(true, roomId)
+    }
+
     private func setLottieAnimation() {
         let animation = LottieAnimation.named("progress")
         progressBar.animation = animation

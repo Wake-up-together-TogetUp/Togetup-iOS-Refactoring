@@ -28,12 +28,13 @@ struct URLConstant {
     static let agreePush = "users/push"
     
     // MARK: - 알람
-    static let getAlarmList = "alarm"
-    static let createAlarm = "alarm"
-    static let deleteAlarm = "alarm/"
-    static let editAlarm = "alarm/"
-    static let getSingleAlarm = "alarm/"
-    static let deactivateAlarms = "alarm/deactivate"
+    static let getAlarmList = "alarms"
+    static let createAlarm = "alarms"
+    static let deleteAlarm = "alarms/"
+    static let editAlarm = "alarms/"
+    static let getSingleAlarm = "alarms/"
+    static let deactivateAlarms = "alarms/deactivate"
+    static let getTimeline = "alarms/timeline"
     
     // MARK: - noti
     static let getNotification = "notification"
@@ -54,9 +55,8 @@ struct URLConstant {
     static let deleteMember = "room/"
     static let getGroupDetailWithCode = "room/information"
     
-    // MARK: - 홈
-    static let getTimeline = "home/brief-board/alarm/timeline"
-    static let getAvatarSpeech = "home/avatars"
+    // MARK: - 아바타
+    static let getAvatarSpeech = "avatars"
     
     // MARK: - 개발용
     static let versionCheck = "a-dev/version/check"
