@@ -44,11 +44,15 @@ class NotificationCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        setupBindings()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     private func setupViews() {
@@ -83,23 +87,22 @@ class NotificationCollectionViewCell: UICollectionViewCell {
             $0.trailing.equalToSuperview().offset(-14)
             $0.width.height.equalTo(16)
         }
+    }
+    
+    func configure(with notification: NotificationList) {
+        timeLabel.text = notification.body
+        messageLabel.text = notification.title
+        isReadView.isHidden = notification.isRead
+
+        deleteButton.rx.tap
+            .bind(to: onDeleteButtonTapped)
+            .disposed(by: disposeBag)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
         contentView.addGestureRecognizer(tapGesture)
     }
     
-    private func setupBindings() {
-        deleteButton.rx.tap
-            .bind(to: onDeleteButtonTapped)
-            .disposed(by: disposeBag)
-    }
-    
     @objc private func cellTapped() {
         onCellTapped.onNext(())
-    }
-    func configure(with notification: NotificationList) {
-        timeLabel.text = notification.body
-        messageLabel.text = notification.title
-        isReadView.isHidden = notification.isRead
     }
 }

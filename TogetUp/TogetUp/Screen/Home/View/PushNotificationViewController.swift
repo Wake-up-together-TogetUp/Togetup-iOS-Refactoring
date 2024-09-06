@@ -87,7 +87,7 @@ class PushNotificationViewController: UIViewController {
         
         output.notifications
             .drive(collectionView.rx.items(cellIdentifier: NotificationCollectionViewCell.identifier, cellType: NotificationCollectionViewCell.self)) { [weak self] index, notification, cell in
-                guard let cell = cell as? NotificationCollectionViewCell else { return }
+                guard let self = self else { return }
                 
                 cell.configure(with: notification)
                 cell.onDeleteButtonTapped
@@ -97,7 +97,7 @@ class PushNotificationViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.onCellTapped
-                    .bind(onNext: { [weak self] in
+                    .bind(onNext: {
                         markAsReadSubject.onNext(notification.id)
                     })
                     .disposed(by: cell.disposeBag)
