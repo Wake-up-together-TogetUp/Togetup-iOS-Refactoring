@@ -119,7 +119,7 @@ class GroupListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = false
         fetchGroupList.onNext(())
-        handleNavigationToGroupCalendarIfNeeded()
+        RealmAlarmDataManager().printNonPersonalAlarms()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -133,6 +133,11 @@ class GroupListViewController: UIViewController {
         setupBindings()
         setupButtonActions()
         setupTextFieldBinding()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNavigationNotification(_:)), name: .navigateToGroup, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupUI() {
@@ -333,19 +338,21 @@ class GroupListViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func handleNavigationToGroupCalendarIfNeeded() {
-        if shouldNavigateToGroupCalendar, let roomId = roomIdToNavigate {
-            shouldNavigateToGroupCalendar = false // 플래그 초기화
-            roomIdToNavigate = nil // roomId 초기화
+    @objc private func handleNavigationNotification(_ notification: Notification) {
+        if let shouldNavigate = notification.userInfo?["shouldNavigate"] as? Bool,
+           let roomId = notification.userInfo?["roomId"] as? Int, shouldNavigate {
+            print(shouldNavigate, roomId)
             navigateToGroupCalendar(roomId: roomId)
         }
     }
-    
-    // GroupCalendarViewController로 화면 전환 처리
+
     private func navigateToGroupCalendar(roomId: Int) {
         let groupCalendarVC = GroupCalendarViewController(roomId: roomId)
         groupCalendarVC.hidesBottomBarWhenPushed = true
+        groupCalendarVC.selectedRoomId = roomId
         navigationController?.pushViewController(groupCalendarVC, animated: true)
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.backBarButtonItem = backButton
     }
 }
 
@@ -382,4 +389,8 @@ extension GroupListViewController: UICollectionViewDelegate {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem = backButton
     }
+}
+
+extension Notification.Name {
+    static let navigateToGroup = Notification.Name("navigateToGroup")
 }

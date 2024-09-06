@@ -38,7 +38,6 @@ class CapturedImageViewController: UIViewController {
     private var filePath = ""
     var alarmId = 0
     lazy var isPersonlAlarm = realmManager.checkIfAlarmIsPersonal(withId: alarmId)
-    var onNavigateToGroup: ((Bool, Int) -> Void)?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -218,21 +217,22 @@ class CapturedImageViewController: UIViewController {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = scene.windows.first else { return }
         
-        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else { return }
-        
-        tabBarVC.selectedIndex = 2
-        
-        let navController = UINavigationController(rootViewController: tabBarVC)
-        navController.modalPresentationStyle = .fullScreen
-        
-        window.rootViewController = navController
-        window.makeKeyAndVisible()
-        
-        let roomId = realmManager.getRoomId(for: alarmId) ?? 0
-        onNavigateToGroup?(true, roomId)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController {
+            tabBarVC.selectedIndex = 2
+            
+            window.rootViewController = tabBarVC
+            window.makeKeyAndVisible()
+            DispatchQueue.main.async { [self] in
+                if let roomId = realmManager.getRoomId(for: alarmId) {
+                    NotificationCenter.default.post(name: .navigateToGroup, object: nil, userInfo: ["shouldNavigate": true, "roomId": roomId])
+                    print("Posted Notification: shouldNavigate = true, roomId = \(roomId)")
+                }
+            }
+        }
     }
-
-    private func setLottieAnimation() {
+    
+    private func setLottieAnimation() {        
         let animation = LottieAnimation.named("progress")
         progressBar.animation = animation
         progressBar.loopMode = .loop

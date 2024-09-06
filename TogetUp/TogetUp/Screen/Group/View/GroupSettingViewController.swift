@@ -171,23 +171,25 @@ class GroupSettingsViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        appearance.shadowColor = .clear
-        
-        appearance.titleTextAttributes = [
-            .font: UIFont(name: "AppleSDGothicNeo-Bold", size: 18),
-            .foregroundColor: UIColor.black
-        ]
-
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "그룹 설정"
-        navigationController?.navigationBar.topItem?.title = ""
-        navigationController?.navigationBar.tintColor = .black
+        DispatchQueue.main.async {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .clear
+            
+            appearance.titleTextAttributes = [
+                .font: UIFont(name: "AppleSDGothicNeo-Bold", size: 18),
+                .foregroundColor: UIColor.black
+            ]
+            
+            self.navigationController?.navigationBar.standardAppearance = appearance
+            self.navigationController?.navigationBar.compactAppearance = appearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationItem.title = "그룹 설정"
+            self.navigationController?.navigationBar.topItem?.title = ""
+            self.navigationController?.navigationBar.tintColor = .black
+        }
     }
 
     private func setupViews() {
