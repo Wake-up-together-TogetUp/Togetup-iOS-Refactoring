@@ -42,6 +42,7 @@ class CreateAlarmViewController: UIViewController {
         button.setTitleColor(UIColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1), for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = UIColor(named: "neutral050")
+        button.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         return button
     }()
     
@@ -83,9 +84,16 @@ class CreateAlarmViewController: UIViewController {
     
     var alarmNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "알람"
+        textField.placeholder = "알람명을 작성해주세요"
         textField.borderStyle = .none
         textField.textAlignment = .right
+        textField.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+        textField.attributedPlaceholder = NSAttributedString(
+            string: textField.placeholder ?? "알람명을 작성해주세요",
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor(named: "neutral500")
+            ]
+        )
         return textField
     }()
     
@@ -136,7 +144,8 @@ class CreateAlarmViewController: UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         topLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
+            $0.height.equalTo(36)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
@@ -169,7 +178,7 @@ class CreateAlarmViewController: UIViewController {
         
         alarmNameCountLabel.snp.makeConstraints {
             $0.centerY.equalTo(alarmNameLabel.snp.centerY)
-            $0.leading.equalTo(alarmNameTextField.snp.trailing).offset(6)
+            $0.leading.equalTo(alarmNameTextField.snp.trailing).offset(12)
             $0.trailing.equalTo(containerView.snp.trailing).offset(-20)
         }
         

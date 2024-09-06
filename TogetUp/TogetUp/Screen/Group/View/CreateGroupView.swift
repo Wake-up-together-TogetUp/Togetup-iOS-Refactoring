@@ -21,7 +21,7 @@ class CreateGroupView: UIView {
     let groupTitle: UILabel = {
         let label = UILabel()
         label.text = "그룹 생성"
-        label.font = UIFont(name: "AppleSDGothicNeo-ExtraBold", size: 18)
+        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
         label.textAlignment = .center
         return label
     }()
