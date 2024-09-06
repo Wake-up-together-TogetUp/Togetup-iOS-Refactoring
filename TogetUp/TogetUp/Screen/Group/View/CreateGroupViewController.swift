@@ -61,13 +61,13 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
             nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
         )
-
+        
         let output = viewModel.transform(input: input)
-
+        
         output.isNextButtonEnabled
             .bind(to: createGroupView.nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
-
+        
         createGroupView.nextButton.rx.tap
             .withLatestFrom(Observable.combineLatest(output.groupName, output.groupIntro))
             .subscribe(onNext: { [weak self] groupName, groupIntro in
@@ -83,7 +83,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             })
             .disposed(by: disposeBag)
     }
-
+    
     private func addMissionNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
     }
@@ -146,7 +146,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         self.missionEndpoint = missionName
         self.createGroupView.missionTextLabel.text = kr
     }
-
+    
     @objc private func addMissionButtonTapped() {
         let storyboard = UIStoryboard(name: "Alarm", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
@@ -167,6 +167,33 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        showCancelGroupPopUpView()
+    }
+    
+    private func showCancelGroupPopUpView() {
+        var dialog: DialogTypeChoice?
+        
+        dialog = DialogTypeChoice(
+            title: "그룹 개설 취소",
+            subtitle: "알람 설정을 그만두면\n그룹도 함께 삭제됩니다",
+            leftButtonTitle: "가입 취소하기",
+            rightButtonTitle: "계속 진행하기",
+            leftAction: {
+                self.dismiss(animated: true, completion: nil)
+            },
+            rightAction: {
+                dialog?.removeFromSuperview()
+            }
+        )
+        
+        if let dialog = dialog {
+            view.addSubview(dialog)
+            
+            dialog.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.equalTo(270)
+                make.height.equalTo(177)
+            }
+        }
     }
 }

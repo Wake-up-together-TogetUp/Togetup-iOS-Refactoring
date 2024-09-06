@@ -24,6 +24,8 @@ class DialogTypeChoice: UIView {
     private var subtitleLabel = UILabel().then {
         $0.font = .bodyMedium
         $0.textColor = UIColor(named: "neutral800")
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
     }
     private var leftButton = UIButton().then {
         $0.setTitleColor(UIColor(named: "neutral700"), for: .normal)
@@ -87,7 +89,6 @@ class DialogTypeChoice: UIView {
         }
         
         subtitleLabel.snp.makeConstraints { make in
-            make.height.equalTo(20)
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
