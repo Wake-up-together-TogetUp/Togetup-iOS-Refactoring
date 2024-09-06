@@ -36,7 +36,7 @@ class CreateGroupView: UIView {
     
     let groupNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "그룹의 이름을 작성해주세요"
+        textField.placeholder = " 그룹의 이름을 작성해주세요"
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 10

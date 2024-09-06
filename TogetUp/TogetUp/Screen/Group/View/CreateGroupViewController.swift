@@ -30,6 +30,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         setupUI()
         addMissionNotificationCenter()
         configureAlarmNameTextField()
+        setupTapGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -164,6 +165,15 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc private func cancelButtonTapped() {
