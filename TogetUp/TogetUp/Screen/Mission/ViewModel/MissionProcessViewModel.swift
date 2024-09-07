@@ -43,6 +43,9 @@ class MissionProcessViewModel {
                         ThemeManager.shared.updateIsNewForAvatar(withUnlockLevel: userStat.level, isNew: response.result?.avatarUnlockAvailable ?? false)
                     }
                 case .failure(let error):
+                    if case NetWorkingError.tooManyRequests = error {
+                        completion(.failure(NetWorkingError.tooManyRequests))
+                    }
                     completion(.failure(error))
                 }
             }, onFailure: { error in
