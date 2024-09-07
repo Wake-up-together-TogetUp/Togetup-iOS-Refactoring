@@ -14,6 +14,7 @@ enum UserService {
     case sendFcmToken(fcmToken: String)
     case getAvatarList
     case changeAvatar(avatarId: Int)
+    case agreePush(agree: Bool)
 }
 
 extension UserService: TargetType {
@@ -33,6 +34,8 @@ extension UserService: TargetType {
             return URLConstant.getAvatarList
         case .changeAvatar(let avatarId):
             return URLConstant.changeAvatar + "/\(avatarId)" + "/change"
+        case .agreePush:
+            return URLConstant.agreePush
         }
     }
     
@@ -44,7 +47,7 @@ extension UserService: TargetType {
             return .post
         case .getAvatarList:
             return .get
-        case .changeAvatar:
+        case .changeAvatar, .agreePush:
             return .patch
         }
     }
@@ -57,6 +60,8 @@ extension UserService: TargetType {
             return .requestParameters(parameters: ["authorizationCode": code], encoding: JSONEncoding.default)
         case .sendFcmToken(let fcmToken):
             return .requestParameters(parameters: ["fcmToken": fcmToken], encoding: URLEncoding.queryString)
+        case .agreePush(let agree):
+            return .requestParameters(parameters: ["agreePush" : agree], encoding: URLEncoding.queryString)
         }
     }
     

@@ -514,6 +514,7 @@
 				F97CDC252B1458E10057AA82 /* AvatarModel.swift */,
 				F915EA172BF1D0A6002B84BC /* VersionCheckResponseModel.swift */,
 				959E2BDA2C722FB700050912 /* NotificationModel.swift */,
+				F95564DD2C885BD400028D68 /* AgreePushModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

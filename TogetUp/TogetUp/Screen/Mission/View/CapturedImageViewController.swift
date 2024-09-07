@@ -38,7 +38,6 @@ class CapturedImageViewController: UIViewController {
     private var filePath = ""
     var alarmId = 0
     lazy var isPersonlAlarm = realmManager.checkIfAlarmIsPersonal(withId: alarmId)
-    var onNavigateToGroup: ((Bool, Int) -> Void)?
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -94,8 +93,7 @@ class CapturedImageViewController: UIViewController {
     }
     
     private func handleMissionDetectResponse(_ response: MissionDetectResponse) {
-        progressView.backgroundColor = UIColor(named: "secondary050")
-        progressBar.isHidden = true
+        updateUIForFailure()
         if response.message == "미션을 성공하지 못했습니다." || response.message == "탐지된 객체가 없습니다." {
             statusLabel.text = "인식에 실패했어요😢"
             filmAgainButton.isHidden = false
@@ -129,7 +127,11 @@ class CapturedImageViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                if case NetWorkingError.tooManyRequests = error {
+                    self.updateUIForFailure(message: "최대 요청 횟수를 초과했습니다.", buttonTitle: "홈으로 이동", action: #selector(self.navigateToHomeAction))
+                } else {
+                    self.updateUIForFailure(message: "인식에 실패했어요😢", buttonTitle: "다시 시도", action: #selector(self.filmAgainButtonTapped(_:)))
+                }
             }
         }
     }
@@ -218,21 +220,22 @@ class CapturedImageViewController: UIViewController {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = scene.windows.first else { return }
         
-        guard let tabBarVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else { return }
-        
-        tabBarVC.selectedIndex = 2
-        
-        let navController = UINavigationController(rootViewController: tabBarVC)
-        navController.modalPresentationStyle = .fullScreen
-        
-        window.rootViewController = navController
-        window.makeKeyAndVisible()
-        
-        let roomId = realmManager.getRoomId(for: alarmId) ?? 0
-        onNavigateToGroup?(true, roomId)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController {
+            tabBarVC.selectedIndex = 2
+            
+            window.rootViewController = tabBarVC
+            window.makeKeyAndVisible()
+            DispatchQueue.main.async { [self] in
+                if let roomId = realmManager.getRoomId(for: alarmId) {
+                    NotificationCenter.default.post(name: .navigateToGroup, object: nil, userInfo: ["shouldNavigate": true, "roomId": roomId])
+                    print("Posted Notification: shouldNavigate = true, roomId = \(roomId)")
+                }
+            }
+        }
     }
-
-    private func setLottieAnimation() {
+    
+    private func setLottieAnimation() {        
         let animation = LottieAnimation.named("progress")
         progressBar.animation = animation
         progressBar.loopMode = .loop
@@ -240,8 +243,22 @@ class CapturedImageViewController: UIViewController {
         progressBar.play()
     }
     
+    private func updateUIForFailure(message: String = "인식에 실패했어요😢", buttonTitle: String = "다시 시도", action: Selector = #selector(filmAgainButtonTapped(_:))) {
+        progressView.backgroundColor = UIColor(named: "secondary050")
+        progressBar.isHidden = true
+        statusLabel.text = message
+        filmAgainButton.isHidden = false
+        filmAgainButton.setTitle(buttonTitle, for: .normal)
+        filmAgainButton.removeTarget(nil, action: nil, for: .allEvents)
+        filmAgainButton.addTarget(self, action: action, for: .touchUpInside)
+    }
+    
     // MARK: - @
     @IBAction func filmAgainButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
+    }
+    
+    @objc private func navigateToHomeAction() {
+        navigateToHome()
     }
 }
