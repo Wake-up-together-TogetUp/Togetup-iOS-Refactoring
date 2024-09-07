@@ -118,7 +118,7 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
         thursday.isSelected = result.thursday
         friday.isSelected = result.friday
         saturday.isSelected = result.saturday
-        missionIcon = result.icon ?? "📷"
+        missionIcon = result.missionObjectRes?.icon ?? "📷"
     }
     
     private func customUI() {
@@ -175,16 +175,16 @@ class EditAlarmViewController: UIViewController, UIGestureRecognizerDelegate, UI
     }
     
     private func configureMission(with result: GetAlarmResult) {
-        if let missionResId = result.getMissionRes?.id, missionResId == 1 {
+        if let missionResId = result.missionRes?.id, missionResId == 1 {
             missionTitleLabel.text = "직접 등록 미션"
             missionIconLabel.text = "📷"
             self.missionId = 1
             self.missionObjectId = nil
-        } else if let missionObjectRes = result.getMissionObjectRes {
+        } else if let missionObjectRes = result.missionObjectRes {
             missionTitleLabel.text = missionObjectRes.kr
             missionIconLabel.text = missionObjectRes.icon
             self.missionIcon = missionObjectRes.icon
-            self.missionId = result.getMissionRes?.id ?? 0
+            self.missionId = result.missionRes?.id ?? 0
             self.missionObjectId = missionObjectRes.id
             self.missionEndpoint = missionObjectRes.name
             self.missionKoreanName = missionObjectRes.kr

@@ -119,7 +119,7 @@ final class GroupAlarmCollectionViewCell: UICollectionViewCell {
         timeLabel.text = formatAlarmTime(alarm.alarmTime)
         subTitleLabel.text = formatSubtitleText(from: alarm)
         groupNameLabel.text = alarm.alarmRoomRes?.name ?? "그룹 없음"
-        img.text = alarm.icon
+        img.text = alarm.missionObjectRes?.icon
     }
 
     private func formatAlarmTime(_ time: String) -> String? {
