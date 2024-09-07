@@ -69,10 +69,10 @@ class AlarmListViewModel {
             let alarm = Alarm()
             alarm.id = apiAlarm.id
             
-            if let missionId = apiAlarm.getMissionRes?.id,
-               let missionObjectId = apiAlarm.getMissionObjectRes?.id,
-               let missionName = apiAlarm.getMissionObjectRes?.kr,
-               let missionEndpoint = apiAlarm.getMissionObjectRes?.name {
+            if let missionId = apiAlarm.missionRes?.id,
+               let missionObjectId = apiAlarm.missionObjectRes?.id,
+               let missionName = apiAlarm.missionObjectRes?.kr,
+               let missionEndpoint = apiAlarm.missionObjectRes?.name {
                 alarm.missionId = missionId
                 alarm.missionObjectId = missionObjectId
                 alarm.missionName = missionName
@@ -80,7 +80,7 @@ class AlarmListViewModel {
             }
             
             alarm.name = apiAlarm.name
-            alarm.icon = apiAlarm.icon ?? "📷"
+            alarm.icon = apiAlarm.missionObjectRes?.icon ?? "📷"
             alarm.isVibrate = apiAlarm.isVibrate
             alarm.monday = apiAlarm.monday
             alarm.tuesday = apiAlarm.tuesday
