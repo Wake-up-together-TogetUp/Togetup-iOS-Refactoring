@@ -53,6 +53,8 @@ class AlarmListCollectionViewCell: UICollectionViewCell {
     }
     
     func setAttributes(with model: Alarm) {
+        self.clipsToBounds = true
+        
         iconLabel.text = model.icon
         isActivated.isOn = model.isActivated
         if !isActivated.isOn {

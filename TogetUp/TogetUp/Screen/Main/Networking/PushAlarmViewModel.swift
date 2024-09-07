@@ -23,4 +23,14 @@ class PushAlarmViewModel {
             .map(PushAlarmResponse.self)
             .asObservable()
     }
+    
+    func sendPushAgreement(agree: Bool) {
+        provider.rx.request(.agreePush(agree: agree))
+            .filterSuccessfulStatusCodes()
+            .subscribe(onSuccess: { response in
+                print(response)
+            }, onFailure: { error in
+                print(error.localizedDescription)
+            })
+    }
 }

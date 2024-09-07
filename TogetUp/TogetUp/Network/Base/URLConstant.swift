@@ -25,6 +25,7 @@ struct URLConstant {
     static let sendFcmToken = "users/fcm-token"
     static let getAvatarList = "users/avatars"
     static let changeAvatar = "users/avatars"
+    static let agreePush = "users/push"
     
     // MARK: - 알람
     static let getAlarmList = "alarms"

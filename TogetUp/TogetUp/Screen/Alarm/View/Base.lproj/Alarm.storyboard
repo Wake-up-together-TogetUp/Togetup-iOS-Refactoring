@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -41,7 +42,7 @@
                                 </connections>
                             </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="a2T-0K-ZQl">
-                                <rect key="frame" x="20" y="207" width="353" height="562"/>
+                                <rect key="frame" x="20" y="207" width="353" height="542"/>
                                 <color key="backgroundColor" name="primary025"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mPX-UH-WGr">
                                     <size key="itemSize" width="344" height="124"/>
@@ -182,7 +183,7 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="primary025"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="a2T-0K-ZQl" secondAttribute="bottom" id="13O-zB-Dj3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="a2T-0K-ZQl" secondAttribute="bottom" constant="20" id="13O-zB-Dj3"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="9c3-r1-n8m" secondAttribute="trailing" constant="20" id="1QY-6j-a03"/>
                             <constraint firstItem="bAe-d5-LuO" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="4D3-xd-6ps"/>
                             <constraint firstItem="7oe-4B-CTF" firstAttribute="top" secondItem="bAe-d5-LuO" secondAttribute="bottom" constant="8" id="BAb-ga-jU0"/>

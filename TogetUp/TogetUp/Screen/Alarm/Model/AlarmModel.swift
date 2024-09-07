@@ -49,13 +49,12 @@ struct GetAlarmResult: Codable {
     let id: Int
     let userId: Int?
     let name: String
-    let icon: String?
     let alarmTime: String
     let monday, tuesday, wednesday, thursday, friday, saturday, sunday: Bool
     let isVibrate, isActivated: Bool
-    let getMissionRes: MissionRes?
-    let getMissionObjectRes: MissionObjectRes?
-    let roomRes: RoomRes?
+    let missionRes: MissionRes?
+    let missionObjectRes: MissionObjectRes?
+    let alarmRoomRes: RoomRes?
 }
 
 struct MissionRes: Codable {

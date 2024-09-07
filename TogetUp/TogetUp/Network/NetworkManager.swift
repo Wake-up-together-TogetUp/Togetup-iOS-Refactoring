@@ -16,6 +16,7 @@ enum NetWorkingError: Error {
     case timeout
     case authenticationError
     case noInternetConnection
+    case tooManyRequests
 }
 
 class NetworkManager {
@@ -33,6 +34,9 @@ class NetworkManager {
                 if let moyaError = error as? MoyaError {
                     switch moyaError {
                     case .statusCode(let response):
+                        if response.statusCode == 429 {
+                            return .just(.failure(.tooManyRequests))
+                        }
                         return .just(.failure(.server(response.statusCode)))
                     case .underlying(let underlyingError, _):
                         if (underlyingError as NSError).code == NSURLErrorNotConnectedToInternet {

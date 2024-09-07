@@ -118,7 +118,7 @@ final class GroupAlarmCollectionViewCell: UICollectionViewCell {
     func configure(with alarm: GetAlarmResult) {
         timeLabel.text = formatAlarmTime(alarm.alarmTime)
         subTitleLabel.text = formatSubtitleText(from: alarm)
-        groupNameLabel.text = alarm.roomRes?.name ?? "그룹 없음"
+        groupNameLabel.text = alarm.alarmRoomRes?.name ?? "그룹 없음"
         img.text = alarm.icon
     }
 
@@ -163,7 +163,7 @@ final class GroupAlarmCollectionViewCell: UICollectionViewCell {
             dayString = activeDays.joined(separator: ", ") + "요일마다"
         }
         
-        let missionObject = alarm.getMissionObjectRes?.kr ?? ""
+        let missionObject = alarm.missionObjectRes?.kr ?? ""
         return "\(dayString) | \(missionObject) 사진"
     }
 }
