@@ -201,7 +201,7 @@ class CreateAlarmViewController: UIViewController {
     }
     
     private func setupWeekdayButtons() {
-        let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
+        let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
         for (index, weekday) in weekdays.enumerated() {
             let button = UIButton()
             button.setTitle(weekday, for: .normal)
