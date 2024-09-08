@@ -71,6 +71,5 @@ struct MissionObjectRes: Codable {
 
 struct RoomRes: Codable {
     let id: Int?
-    let name, intro, groupProfileImgLink, password: String?
-    let state: Int?
+    let name: String?
 }

@@ -53,7 +53,7 @@ class AlarmListViewModel {
     }
     
     func getGroupAlarmList() -> Observable<[GetAlarmResult]> {
-        return provider.rx.request(.getAlarmList(type: "group"))
+        return provider.rx.request(.getAlarmList(type: "GROUP"))
             .filterSuccessfulStatusCodes()
             .map(GetAlarmListResponse.self)
             .map { $0.result ?? [] }
