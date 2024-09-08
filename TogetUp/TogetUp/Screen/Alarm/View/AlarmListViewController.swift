@@ -244,6 +244,7 @@ class AlarmListViewController: UIViewController {
     private func fetchAndSaveAlarmsIfFirstLogin() {
         if AppStatusManager.shared.isFirstLogin {
             viewModel.getAndSaveAlarmList(type: "PERSONAL")
+            viewModel.getAndSaveAlarmList(type: "GROUP")
             AppStatusManager.shared.markAsLogined()
         }
     }
