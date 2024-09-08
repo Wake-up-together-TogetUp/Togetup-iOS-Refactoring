@@ -30,6 +30,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         setupUI()
         addMissionNotificationCenter()
         configureAlarmNameTextField()
+        setupTapGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,13 +62,13 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             groupIntro: createGroupView.groupIntroTextView.rx.text.orEmpty.asObservable(),
             nextButtonTapped: createGroupView.nextButton.rx.tap.asObservable()
         )
-
+        
         let output = viewModel.transform(input: input)
-
+        
         output.isNextButtonEnabled
             .bind(to: createGroupView.nextButton.rx.isEnabled)
             .disposed(by: disposeBag)
-
+        
         createGroupView.nextButton.rx.tap
             .withLatestFrom(Observable.combineLatest(output.groupName, output.groupIntro))
             .subscribe(onNext: { [weak self] groupName, groupIntro in
@@ -83,7 +84,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
             })
             .disposed(by: disposeBag)
     }
-
+    
     private func addMissionNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(missionSelected(_:)), name: .init("MissionSelected"), object: nil)
     }
@@ -93,7 +94,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func limitTextLength(text: String) -> String {
-        return String(text.prefix(50))
+        return String(text.prefix(30))
     }
     
     private func updateGroupNameLabelColorAndText(truncatedText: String, originalText: String) {
@@ -102,8 +103,8 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func updateGroupIntroLabelColorAndText(limitTextLength: String, originalText: String) {
-        createGroupView.groupIntroCountLabel.text = "\(limitTextLength.count)/50"
-        createGroupView.groupIntroCountLabel.textColor = originalText.count > 50 ? UIColor(named: "error500") : UIColor(named: "neutral500")
+        createGroupView.groupIntroCountLabel.text = "\(limitTextLength.count)/30"
+        createGroupView.groupIntroCountLabel.textColor = originalText.count > 30 ? UIColor(named: "error500") : UIColor(named: "neutral500")
     }
     
     private func configureAlarmNameTextField() {
@@ -146,7 +147,7 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         self.missionEndpoint = missionName
         self.createGroupView.missionTextLabel.text = kr
     }
-
+    
     @objc private func addMissionButtonTapped() {
         let storyboard = UIStoryboard(name: "Alarm", bundle: nil)
         guard let vc = storyboard.instantiateViewController(identifier: "MissionListViewController") as? MissionListViewController else { return }
@@ -166,7 +167,43 @@ class CreateGroupViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     @objc private func cancelButtonTapped() {
-        dismiss(animated: true, completion: nil)
+        showCancelGroupPopUpView()
+    }
+    
+    private func showCancelGroupPopUpView() {
+        var dialog: DialogTypeChoice?
+        
+        dialog = DialogTypeChoice(
+            title: "그룹 개설 취소",
+            subtitle: "알람 설정을 그만두면\n그룹도 함께 삭제됩니다",
+            leftButtonTitle: "가입 취소하기",
+            rightButtonTitle: "계속 진행하기",
+            leftAction: {
+                self.dismiss(animated: true, completion: nil)
+            },
+            rightAction: {
+                dialog?.removeFromSuperview()
+            }
+        )
+        
+        if let dialog = dialog {
+            view.addSubview(dialog)
+            
+            dialog.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.equalTo(270)
+                make.height.equalTo(177)
+            }
+        }
     }
 }

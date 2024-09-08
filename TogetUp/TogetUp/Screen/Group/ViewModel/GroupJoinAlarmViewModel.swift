@@ -36,9 +36,9 @@ class GroupJoinAlarmViewModel: ViewModelType {
     private let realmManager = RealmAlarmDataManager()
     
     func transform(input: Input) -> Output {
-        let isJoinButtonEnabled = Observable.combineLatest(input.alarmName, input.weekdaySelection)
-            .map { alarmName, weekdays in
-                !alarmName.isEmpty && weekdays.contains(true)
+        let isJoinButtonEnabled = input.weekdaySelection
+            .map { weekdays in
+                weekdays.contains(true)
             }
             .startWith(false)
         
@@ -52,6 +52,7 @@ class GroupJoinAlarmViewModel: ViewModelType {
         let joinGroupResponse = input.joinButtonTapped
             .withLatestFrom(combinedInputs)
             .flatMapLatest { alarmName, timeSelected, weekdays, vibrationEnabled -> Observable<Result<CreateGroupResponse, NetWorkingError>> in
+                // alarmName이 비어 있으면 기본값 "알람"으로 설정
                 let finalAlarmName = alarmName.isEmpty ? "알람" : alarmName
                 let formattedTime = self.formatDate(date: timeSelected)
                 let request = GroupAlarmRequest(
@@ -106,7 +107,6 @@ class GroupJoinAlarmViewModel: ViewModelType {
             }
         
         return Output(isJoinButtonEnabled: isJoinButtonEnabled, joinGroupResponse: joinGroupResponse)
-        
     }
     
     private func formatDate(date: Date) -> String {

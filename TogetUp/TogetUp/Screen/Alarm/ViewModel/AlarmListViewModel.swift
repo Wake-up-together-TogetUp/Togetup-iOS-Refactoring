@@ -37,7 +37,8 @@ class AlarmListViewModel {
             .map(GetAlarmListResponse.self)
             .subscribe(onSuccess: { [weak self] response in
                 if let result = response.result {
-                    self?.saveAlarmsToRealm(result)
+                    let isPersonalAlarm = (type == "PERSONAL")
+                    self?.saveAlarmsToRealm(result, isPersonal: isPersonalAlarm)
                     self?.scheduleActiveAlarms()
                     self?.fetchAlarmsFromRealm()
                 }
@@ -53,7 +54,7 @@ class AlarmListViewModel {
     }
     
     func getGroupAlarmList() -> Observable<[GetAlarmResult]> {
-        return provider.rx.request(.getAlarmList(type: "group"))
+        return provider.rx.request(.getAlarmList(type: "GROUP"))
             .filterSuccessfulStatusCodes()
             .map(GetAlarmListResponse.self)
             .map { $0.result ?? [] }
@@ -64,7 +65,7 @@ class AlarmListViewModel {
         print(error.localizedDescription)
     }
     
-    private func saveAlarmsToRealm(_ alarms: [GetAlarmResult]) {
+    private func saveAlarmsToRealm(_ alarms: [GetAlarmResult], isPersonal: Bool) {
         realmManager.saveAlarms(alarms) { apiAlarm in
             let alarm = Alarm()
             alarm.id = apiAlarm.id
@@ -90,7 +91,7 @@ class AlarmListViewModel {
             alarm.saturday = apiAlarm.saturday
             alarm.sunday = apiAlarm.sunday
             alarm.isActivated = apiAlarm.isActivated
-            alarm.isPersonalAlarm = true
+            alarm.isPersonalAlarm = isPersonal
             
             let timeComponents = apiAlarm.alarmTime.split(separator: ":").map { Int($0) }
             
@@ -102,6 +103,11 @@ class AlarmListViewModel {
             } else {
                 print(#function, "Invalid time format:", apiAlarm.alarmTime)
             }
+            
+            if !isPersonal {
+                alarm.roomId.value = apiAlarm.alarmRoomRes?.id
+            }
+            
             return alarm
         }
         AlarmScheduleManager.shared.refreshAllScheduledNotifications()

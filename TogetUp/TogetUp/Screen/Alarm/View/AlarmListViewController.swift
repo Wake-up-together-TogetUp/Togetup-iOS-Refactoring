@@ -155,7 +155,7 @@ class AlarmListViewController: UIViewController {
     
     private func fetchAndSaveGroupAlarmsIfFirstLogin() {
         if AppStatusManager.shared.isFirstLogin {
-            viewModel.getAndSaveAlarmList(type: "group")
+            viewModel.getAndSaveAlarmList(type: "GROUP")
             AppStatusManager.shared.markAsLogined()
         }
     }
@@ -188,8 +188,9 @@ class AlarmListViewController: UIViewController {
     
     private func groupCollectionViewItemSelected() {
         groupCollectionView.rx.itemSelected
-            .withLatestFrom(viewModel.getGroupAlarmList()) { (indexPath, groupAlarms) in
-                (indexPath, groupAlarms)
+            .flatMapLatest { [weak self] indexPath -> Observable<(IndexPath, [GetAlarmResult])> in
+                guard let self = self else { return .empty() }
+                return self.viewModel.getGroupAlarmList().map { (indexPath, $0) }
             }
             .subscribe(onNext: { [weak self] indexPath, groupAlarms in
                 guard let self = self else { return }
@@ -242,7 +243,8 @@ class AlarmListViewController: UIViewController {
     
     private func fetchAndSaveAlarmsIfFirstLogin() {
         if AppStatusManager.shared.isFirstLogin {
-            viewModel.getAndSaveAlarmList(type: "personal")
+            viewModel.getAndSaveAlarmList(type: "PERSONAL")
+            viewModel.getAndSaveAlarmList(type: "GROUP")
             AppStatusManager.shared.markAsLogined()
         }
     }

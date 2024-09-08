@@ -106,6 +106,19 @@ class RealmAlarmDataManager {
         }
     }
     
+    func deleteGroupAlarms(forRoomId roomId: Int) {
+        do {
+            let realm = try Realm()
+            let alarms = realm.objects(Alarm.self).filter("roomId == %@", roomId)
+            try realm.write {
+                realm.delete(alarms)
+            }
+        } catch {
+            print("에러입니다: \(error)")
+        }
+    }
+
+    
     func fetchTodayNonRepeatingActivatedAlarms() -> [Int] {
         let now = Date()
         let startOfDay = calendar.startOfDay(for: now)

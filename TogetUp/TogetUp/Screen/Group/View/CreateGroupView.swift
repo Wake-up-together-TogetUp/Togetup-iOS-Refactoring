@@ -21,7 +21,7 @@ class CreateGroupView: UIView {
     let groupTitle: UILabel = {
         let label = UILabel()
         label.text = "그룹 생성"
-        label.font = UIFont(name: "AppleSDGothicNeo-ExtraBold", size: 18)
+        label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 18)
         label.textAlignment = .center
         return label
     }()
@@ -36,7 +36,7 @@ class CreateGroupView: UIView {
     
     let groupNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "그룹의 이름을 작성해주세요"
+        textField.placeholder = " 그룹의 이름을 작성해주세요"
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 10
@@ -70,7 +70,7 @@ class CreateGroupView: UIView {
     }()
     
     let groupIntroCountLabel = UILabel().then {
-        $0.text = "0/50"
+        $0.text = "0/30"
         $0.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
         $0.textColor = UIColor(named: "neutral500")
     }

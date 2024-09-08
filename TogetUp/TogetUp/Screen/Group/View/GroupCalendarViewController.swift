@@ -198,7 +198,7 @@ class GroupCalendarViewController: UIViewController {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(toggleCalendarButton.snp.bottom).offset(16)
+            $0.top.equalTo(toggleCalendarButton.snp.bottom).offset(0)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().offset(0)
         }
@@ -344,4 +344,10 @@ extension GroupCalendarViewController: UICollectionViewDelegate {
       }
       self.view.layoutIfNeeded()
      }
+}
+
+extension GroupCalendarViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
 }
