@@ -27,6 +27,7 @@ final class GroupSettingsViewModel: ViewModelType {
     
     var disposeBag = DisposeBag()
     private let provider = MoyaProvider<GroupAPI>()
+    private let realmManager = RealmAlarmDataManager()
     private let roomId: Int
     
     init(roomId: Int) {
@@ -68,7 +69,10 @@ final class GroupSettingsViewModel: ViewModelType {
                 guard let self = self else { return .just(false) }
                 return self.provider.rx.request(.deleteMember(roomId: self.roomId))
                     .filterSuccessfulStatusCodes()
-                    .map { _ in true }
+                    .flatMap { _ -> Single<Bool> in
+                        self.realmManager.deleteGroupAlarms(forRoomId: self.roomId)
+                        return .just(true)
+                    }
                     .asObservable()
                     .catchAndReturn(false)
             }
