@@ -119,6 +119,11 @@ class GroupListViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         self.tabBarController?.tabBar.isHidden = false
         fetchGroupList.onNext(())
+        if shouldNavigateToGroupCalendar {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.navigateToGroupCalendarIfNeeded()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,11 +137,6 @@ class GroupListViewController: UIViewController {
         setupBindings()
         setupButtonActions()
         setupTextFieldBinding()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNavigationNotification(_:)), name: .navigateToGroup, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupUI() {
@@ -337,21 +337,16 @@ class GroupListViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    @objc private func handleNavigationNotification(_ notification: Notification) {
-        if let shouldNavigate = notification.userInfo?["shouldNavigate"] as? Bool,
-           let roomId = notification.userInfo?["roomId"] as? Int, shouldNavigate {
-            print(shouldNavigate, roomId)
-            navigateToGroupCalendar(roomId: roomId)
+    func navigateToGroupCalendarIfNeeded() {
+        guard let roomId = roomIdToNavigate else { return }
+        guard let index = groupResults.firstIndex(where: { $0.roomId == roomId }) else { return }
+        let indexPath = IndexPath(item: index, section: 0)
+        
+        shouldNavigateToGroupCalendar = false
+        
+        DispatchQueue.main.async {
+            self.collectionView.delegate?.collectionView?(self.collectionView, didSelectItemAt: indexPath)
         }
-    }
-
-    private func navigateToGroupCalendar(roomId: Int) {
-        let groupCalendarVC = GroupCalendarViewController(roomId: roomId)
-        groupCalendarVC.hidesBottomBarWhenPushed = true
-        groupCalendarVC.selectedRoomId = roomId
-        navigationController?.pushViewController(groupCalendarVC, animated: true)
-        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        navigationItem.backBarButtonItem = backButton
     }
 }
 
@@ -388,8 +383,4 @@ extension GroupListViewController: UICollectionViewDelegate {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.backBarButtonItem = backButton
     }
-}
-
-extension Notification.Name {
-    static let navigateToGroup = Notification.Name("navigateToGroup")
 }

@@ -11,11 +11,7 @@ import RxMoya
 import Moya
 
 class PushAlarmViewModel {
-    private let provider: MoyaProvider<UserService>
-    
-    init(provider: MoyaProvider<UserService> = MoyaProvider<UserService>(plugins: [NetworkLogger()])) {
-        self.provider = provider
-    }
+    private let provider = MoyaProvider<UserService>()
     
     func sendFcmToken(token: String) -> Observable<PushAlarmResponse> {
         return provider.rx.request(.sendFcmToken(fcmToken: token))
