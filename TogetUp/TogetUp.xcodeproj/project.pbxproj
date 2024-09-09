@@ -237,7 +237,7 @@
 		F97CDC272B14CA220057AA82 /* AvatarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionViewCell.swift; sourceTree = "<group>"; };
 		F97CDC292B15DDA50057AA82 /* TimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		F982EB242BE34AC100392314 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		F98600ED2AAE289200595646 /* ObjectMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectMissionCollectionViewCell.swift; path = TogetUp/Screen/Alarm/View/Cell/ObjectMissionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F98600ED2AAE289200595646 /* ObjectMissionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectMissionCollectionViewCell.swift; path = TogetUp/Presentation/Alarm/View/ObjectMissionCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F98600EF2AAEC04A00595646 /* MissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionViewModel.swift; sourceTree = "<group>"; };
 		F98600F12AAEC1A400595646 /* MissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionService.swift; sourceTree = "<group>"; };
 		F98600F32AAEF3E900595646 /* MissionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionModel.swift; sourceTree = "<group>"; };
@@ -389,6 +389,76 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		95C90B202C8F06C4002B48B0 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				95C90B272C8F0BB7002B48B0 /* Interfaces */,
+				95C90B262C8F0BAC002B48B0 /* UseCases */,
+				95C90B252C8F0BA3002B48B0 /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		95C90B222C8F06E5002B48B0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F96B32792A8A022100BD3BF9 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		95C90B232C8F0777002B48B0 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				95C90B282C8F0C23002B48B0 /* Foundation */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		95C90B242C8F0B35002B48B0 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		95C90B252C8F0BA3002B48B0 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		95C90B262C8F0BAC002B48B0 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		95C90B272C8F0BB7002B48B0 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		95C90B282C8F0C23002B48B0 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		95C90B292C8F0E37002B48B0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F96B32632A8A002800BD3BF9 /* AppDelegate.swift */,
+				F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		95F198AF2BF760B7002BD1B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,7 +584,6 @@
 				F97CDC252B1458E10057AA82 /* AvatarModel.swift */,
 				F915EA172BF1D0A6002B84BC /* VersionCheckResponseModel.swift */,
 				959E2BDA2C722FB700050912 /* NotificationModel.swift */,
-				F95564DD2C885BD400028D68 /* AgreePushModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -549,17 +618,20 @@
 			isa = PBXGroup;
 			children = (
 				F96B329B2A8E07A900BD3BF9 /* TogetUp.entitlements */,
+				95C90B292C8F0E37002B48B0 /* App */,
 				F98600FC2AB0B06100595646 /* RealmDB */,
-				F96B327A2A8A022700BD3BF9 /* Global */,
-				F96B32792A8A022100BD3BF9 /* Network */,
+				95C90B222C8F06E5002B48B0 /* Data */,
+				95C90B202C8F06C4002B48B0 /* Domain */,
+				95C90B232C8F0777002B48B0 /* Infrastructure */,
+				F96B32772A8A020F00BD3BF9 /* Presentation */,
 				F96B32782A8A021900BD3BF9 /* Resource */,
-				F96B32772A8A020F00BD3BF9 /* Screen */,
+				F96B327A2A8A022700BD3BF9 /* Util */,
 				9562FCB22C3C0118009ED55F /* apple-app-site-association */,
 			);
 			path = TogetUp;
 			sourceTree = "<group>";
 		};
-		F96B32772A8A020F00BD3BF9 /* Screen */ = {
+		F96B32772A8A020F00BD3BF9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				F9D679D42AC1A050006B1643 /* Main */,
@@ -571,7 +643,7 @@
 				F915B3892A8F8D9400E4696C /* Setting */,
 				95F198BD2BFB374D002BD1B4 /* ViewModelType.swift */,
 			);
-			path = Screen;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		F96B32782A8A021900BD3BF9 /* Resource */ = {
@@ -587,22 +659,23 @@
 		F96B32792A8A022100BD3BF9 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B242C8F0B35002B48B0 /* DTOs */,
 				F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */,
 				95F198BA2BFB17F3002BD1B4 /* APIs */,
-				F99BE8042AA1BBCD0005E66F /* Service */,
+				F99BE8042AA1BBCD0005E66F /* Services */,
 				F99BE7FF2AA1BA3C0005E66F /* Base */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		F96B327A2A8A022700BD3BF9 /* Global */ = {
+		F96B327A2A8A022700BD3BF9 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				F95564DF2C8890EC00028D68 /* Components */,
 				F96B32A22A8E8D6200BD3BF9 /* Helpers */,
 				F96B32892A8A916C00BD3BF9 /* Extensions */,
 			);
-			path = Global;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		F96B327B2A8A023800BD3BF9 /* Supports */ = {
@@ -613,8 +686,6 @@
 				F982EB242BE34AC100392314 /* Config.xcconfig */,
 				F91B2C0E2BDEA3EB00A23A59 /* Jua-Regular.ttf */,
 				F9387BC52AD569D9000A5121 /* alarmSound.mp3 */,
-				F96B32632A8A002800BD3BF9 /* AppDelegate.swift */,
-				F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */,
 				F96B32712A8A002900BD3BF9 /* Info.plist */,
 			);
 			path = Supports;
@@ -716,7 +787,7 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		F99BE8042AA1BBCD0005E66F /* Service */ = {
+		F99BE8042AA1BBCD0005E66F /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				F99BE8022AA1BBC80005E66F /* LoginService.swift */,
@@ -726,7 +797,7 @@
 				F97CDC212B133CBE0057AA82 /* AvatarService.swift */,
 				F915EA122BF05A92002B84BC /* DevService.swift */,
 			);
-			path = Service;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		F99D0E912BB8416A00437025 /* JsonFiles */ = {
