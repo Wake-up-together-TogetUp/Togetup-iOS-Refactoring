@@ -37,6 +37,20 @@ class Alarm: Object {
         return "id"
     }
     
+    convenience init(id: Int, missionId: Int, missionObjectId: Int, name: String, icon: String, isVibrate: Bool, alarmHour: Int, alarmMinute: Int, isActivated: Bool) {
+        self.init()
+        self.id = id
+        self.missionId = missionId
+        self.missionObjectId = missionObjectId
+        self.name = name
+        self.icon = icon
+        self.isVibrate = isVibrate
+        self.alarmHour = alarmHour
+        self.alarmMinute = alarmMinute
+        self.isActivated = isActivated
+        self.alarmDate = getAlarmTime()
+    }
+    
     func getAlarmTime() -> Date? {
         var dateComponents = DateComponents()
         dateComponents.hour = self.alarmHour
@@ -52,6 +66,6 @@ class Alarm: Object {
     }
     
     func isRepeatAlarm() -> Bool {
-            return monday || tuesday || wednesday || thursday || friday || saturday || sunday
-        }
+        return monday || tuesday || wednesday || thursday || friday || saturday || sunday
+    }
 }
