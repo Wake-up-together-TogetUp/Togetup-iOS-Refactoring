@@ -35,6 +35,11 @@ class RealmAlarmDataManager {
         Realm.Configuration.defaultConfiguration = config
     }
     
+    func isAlarmTableEmpty() -> Bool {
+        let alarms = realm.objects(Alarm.self)
+        return alarms.isEmpty
+    }
+    
     func fetchAlarms() -> [Alarm] {
         let alarms = realm.objects(Alarm.self)
             .filter("isPersonalAlarm == true")
@@ -90,7 +95,7 @@ class RealmAlarmDataManager {
         guard let alarm = realm.object(ofType: Alarm.self, forPrimaryKey: alarmId) else {
             print("Alarm with id \(alarmId) not found.")
             return nil
-        }        
+        }
         return alarm.roomId.value
     }
     
@@ -117,7 +122,7 @@ class RealmAlarmDataManager {
             print("에러입니다: \(error)")
         }
     }
-
+    
     
     func fetchTodayNonRepeatingActivatedAlarms() -> [Int] {
         let now = Date()

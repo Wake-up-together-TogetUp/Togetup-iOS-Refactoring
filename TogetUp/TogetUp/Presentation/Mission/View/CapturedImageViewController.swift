@@ -64,6 +64,9 @@ class CapturedImageViewController: UIViewController {
         }
         progressView.layer.cornerRadius = 12
         progressView.layer.borderWidth = 2
+        
+        filmAgainButton.layer.cornerRadius = 18.5
+        filmAgainButton.layer.borderWidth = 2
     }
     
     private func postMissionImage() {
@@ -93,10 +96,10 @@ class CapturedImageViewController: UIViewController {
     }
     
     private func handleMissionDetectResponse(_ response: MissionDetectResponse) {
-        updateUIForFailure()
+        progressView.backgroundColor = UIColor(named: "secondary050")
+        progressBar.isHidden = true
         if response.message == "미션을 성공하지 못했습니다." || response.message == "탐지된 객체가 없습니다." {
-            statusLabel.text = "인식에 실패했어요😢"
-            filmAgainButton.isHidden = false
+            updateUIForFailure()
         } else {
             statusLabel.text = "미션 성공🎉"
             successLabel.isHidden = false
@@ -130,7 +133,7 @@ class CapturedImageViewController: UIViewController {
                 if case NetWorkingError.tooManyRequests = error {
                     self.updateUIForFailure(message: "최대 요청 횟수를 초과했습니다.", buttonTitle: "홈으로 이동", action: #selector(self.navigateToHomeAction))
                 } else {
-                    self.updateUIForFailure(message: "인식에 실패했어요😢", buttonTitle: "다시 시도", action: #selector(self.filmAgainButtonTapped(_:)))
+                    self.updateUIForFailure(message: "인식에 실패했어요😢", buttonTitle: "다시 촬영하기", action: #selector(self.filmAgainButtonTapped(_:)))
                 }
             }
         }
@@ -219,23 +222,34 @@ class CapturedImageViewController: UIViewController {
     private func navigateToGroup() {
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = scene.windows.first else { return }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let tabBarVC = storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController {
-            tabBarVC.selectedIndex = 2
-            
-            window.rootViewController = tabBarVC
-            window.makeKeyAndVisible()
-            DispatchQueue.main.async { [self] in
-                if let roomId = realmManager.getRoomId(for: alarmId) {
-                    NotificationCenter.default.post(name: .navigateToGroup, object: nil, userInfo: ["shouldNavigate": true, "roomId": roomId])
-                    print("Posted Notification: shouldNavigate = true, roomId = \(roomId)")
-                }
-            }
+
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let tabBarVC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as? UITabBarController else { return }
+
+        tabBarVC.selectedIndex = 2
+
+        let groupStoryboard = UIStoryboard(name: "Group", bundle: nil)
+        guard let groupListVC = groupStoryboard.instantiateViewController(withIdentifier: "GroupListViewController") as? GroupListViewController else { return }
+
+        if let roomId = realmManager.getRoomId(for: alarmId) {
+            groupListVC.roomIdToNavigate = roomId
+            groupListVC.shouldNavigateToGroupCalendar = true
         }
+
+        if let groupListNavController = tabBarVC.viewControllers?[2] as? UINavigationController {
+            groupListNavController.setViewControllers([groupListVC], animated: true)
+        }
+
+        window.rootViewController = tabBarVC
+        window.makeKeyAndVisible()
+
+        self.dismiss(animated: true, completion: nil)
     }
+
+
     
-    private func setLottieAnimation() {        
+    
+    private func setLottieAnimation() {
         let animation = LottieAnimation.named("progress")
         progressBar.animation = animation
         progressBar.loopMode = .loop
@@ -243,9 +257,7 @@ class CapturedImageViewController: UIViewController {
         progressBar.play()
     }
     
-    private func updateUIForFailure(message: String = "인식에 실패했어요😢", buttonTitle: String = "다시 시도", action: Selector = #selector(filmAgainButtonTapped(_:))) {
-        progressView.backgroundColor = UIColor(named: "secondary050")
-        progressBar.isHidden = true
+    private func updateUIForFailure(message: String = "인식에 실패했어요😢", buttonTitle: String = "다시 촬영하기", action: Selector = #selector(filmAgainButtonTapped(_:))) {
         statusLabel.text = message
         filmAgainButton.isHidden = false
         filmAgainButton.setTitle(buttonTitle, for: .normal)
