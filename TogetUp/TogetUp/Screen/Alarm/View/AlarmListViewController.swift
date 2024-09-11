@@ -65,7 +65,7 @@ class AlarmListViewController: UIViewController {
         super.viewDidLoad()
         setupGroupCollectionView()
         bindLabels()
-        fetchAndSaveAlarmsIfFirstLogin()
+        fetchAndSaveAlarmsIfFirstLoginOrEmpty()
         fetchAndSaveGroupAlarmsIfFirstLogin()
         setUpNavigationBar()
         setCollectionViewFlowLayout()
@@ -241,8 +241,8 @@ class AlarmListViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    private func fetchAndSaveAlarmsIfFirstLogin() {
-        if AppStatusManager.shared.isFirstLogin {
+    private func fetchAndSaveAlarmsIfFirstLoginOrEmpty() {
+        if AppStatusManager.shared.isFirstLogin || realmManger.isAlarmTableEmpty() {
             viewModel.getAndSaveAlarmList(type: "PERSONAL")
             viewModel.getAndSaveAlarmList(type: "GROUP")
             AppStatusManager.shared.markAsLogined()
