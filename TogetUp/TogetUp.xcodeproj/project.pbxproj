@@ -186,6 +186,11 @@
 		95B4F3202BB2E79B00AB4952 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewController.swift; sourceTree = "<group>"; };
 		95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
+		95C90B342C934931002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		95C90B362C934948002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		95C90B382C934AE8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		95C90B3A2C934AF8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		95C90B3C2C934B05002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95F198B22BFB0A36002BD1B4 /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		95F198B42BFB0A95002BD1B4 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAPI.swift; sourceTree = "<group>"; };
@@ -418,6 +423,7 @@
 		95C90B242C8F0B35002B48B0 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B342C934931002B48B0 /* .gitkeep */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -425,6 +431,7 @@
 		95C90B252C8F0BA3002B48B0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B3A2C934AF8002B48B0 /* .gitkeep */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -432,6 +439,7 @@
 		95C90B262C8F0BAC002B48B0 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B382C934AE8002B48B0 /* .gitkeep */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -439,6 +447,7 @@
 		95C90B272C8F0BB7002B48B0 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B362C934948002B48B0 /* .gitkeep */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -446,6 +455,7 @@
 		95C90B282C8F0C23002B48B0 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				95C90B3C2C934B05002B48B0 /* .gitkeep */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
