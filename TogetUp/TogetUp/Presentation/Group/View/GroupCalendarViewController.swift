@@ -77,7 +77,8 @@ class GroupCalendarViewController: UIViewController {
     private let calendarView: FSCalendar = {
         let calendar = FSCalendar()
         calendar.scope = .week
-        calendar.headerHeight = 52
+        calendar.headerHeight = 64
+        calendar.appearance.calendar.locale = Locale(identifier: "en_US")
         calendar.appearance.headerDateFormat = "YYYY년 MM월 W주차"
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.weekdayTextColor = UIColor(named: "neutral300")
@@ -87,7 +88,15 @@ class GroupCalendarViewController: UIViewController {
         calendar.appearance.headerTitleAlignment = .left
         calendar.appearance.headerTitleOffset = CGPoint(x: -UIScreen.main.bounds.width / 5, y: 0)
         calendar.backgroundColor = .white
+        calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase
+        calendar.appearance.weekdayFont = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)
         return calendar
+    }()
+    
+    private let weekdayOffsetView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
     }()
     
     private let toggleCalendarButton: UIButton = {
@@ -126,7 +135,6 @@ class GroupCalendarViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(backGroundImage)
-        view.addSubview(headerSeparatorView)
         view.addSubview(collectionView)
         view.addSubview(rightCharacter)
         view.addSubview(calendarView)
@@ -135,6 +143,8 @@ class GroupCalendarViewController: UIViewController {
         view.addSubview(centerCharacter)
         view.addSubview(previousMonthButton)
         view.addSubview(nextMonthButton)
+        view.addSubview(weekdayOffsetView)
+        view.addSubview(headerSeparatorView)
         
         calendarView.delegate = self
         calendarView.dataSource = self
@@ -176,8 +186,14 @@ class GroupCalendarViewController: UIViewController {
             $0.trailing.equalTo(headerView).offset(-8)
         }
         
+        weekdayOffsetView.snp.makeConstraints {
+            $0.bottom.equalTo(headerView.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(10)
+        }
+        
         headerSeparatorView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
+            $0.top.equalTo(weekdayOffsetView.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(2)
         }
