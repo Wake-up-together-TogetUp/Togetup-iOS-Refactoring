@@ -105,4 +105,22 @@ class NotificationCollectionViewCell: UICollectionViewCell {
     @objc private func cellTapped() {
         onCellTapped.onNext(())
     }
+
+    /// 터치 이벤트 우선순위 처리
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        // deleteButton이 터치되었을 경우 우선 처리
+        if deleteButton.frame.contains(point) {
+            return deleteButton
+        }
+        return super.hitTest(point, with: event)
+    }
+
+    /// deleteButton의 터치 영역을 확대
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let buttonTouchArea = deleteButton.frame.insetBy(dx: -10, dy: -10)
+        if buttonTouchArea.contains(point) {
+            return true
+        }
+        return super.point(inside: point, with: event)
+    }
 }
