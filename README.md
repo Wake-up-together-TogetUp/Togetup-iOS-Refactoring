@@ -1,4 +1,4 @@
-# TogetUp: 1.0.3
+# TogetUp: 2.0.0
 ![](https://github.com/Wake-up-together-TogetUp/Togetup-iOS-Refactoring/assets/78905994/5af4b461-1fc5-4854-9bb1-aba8d65cd2b8)
 ![](https://github.com/Wake-up-together-TogetUp/Togetup-iOS-Refactoring/assets/78905994/72b58941-826e-4301-9d1e-6a84f910be94)
 
@@ -18,6 +18,9 @@ AI 기술을 통해 촬영한 사진을 인식해요
 
 ### ⏰ 수십여 종류의 촬영 미션
 다양한 사물과 표정인식 미션을 사용해 보세요
+
+### ⏰ 친구들과 함께하는 그룹 미션
+같은 목표를 가진 친구들과 미션 결과를 공유해보세요
 
 ## Tech
 * iOS 16.0+
