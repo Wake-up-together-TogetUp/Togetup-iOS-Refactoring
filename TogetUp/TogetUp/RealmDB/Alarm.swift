@@ -12,7 +12,6 @@ class Alarm: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var missionId: Int = 0
     @objc dynamic var missionObjectId: Int = 0
-    @objc dynamic var isSnoozeActivated: Bool = false
     @objc dynamic var name: String = ""
     @objc dynamic var icon: String = ""
     @objc dynamic var isVibrate: Bool = false
@@ -28,8 +27,45 @@ class Alarm: Object {
     @objc dynamic var isActivated: Bool = false
     @objc dynamic var missionName: String = ""
     @objc dynamic var missionEndpoint: String = ""
-
+    @objc dynamic var completedTime: Date? = nil
+    @objc dynamic var createdDate: Date =  Date()
+    @objc dynamic var isPersonalAlarm: Bool = false
+    @objc dynamic var alarmDate: Date? = nil
+    var roomId = RealmProperty<Int?>()
+    
     override static func primaryKey() -> String? {
         return "id"
+    }
+    
+    convenience init(id: Int, missionId: Int, missionObjectId: Int, name: String, icon: String, isVibrate: Bool, alarmHour: Int, alarmMinute: Int, isActivated: Bool) {
+        self.init()
+        self.id = id
+        self.missionId = missionId
+        self.missionObjectId = missionObjectId
+        self.name = name
+        self.icon = icon
+        self.isVibrate = isVibrate
+        self.alarmHour = alarmHour
+        self.alarmMinute = alarmMinute
+        self.isActivated = isActivated
+        self.alarmDate = getAlarmTime()
+    }
+    
+    func getAlarmTime() -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.hour = self.alarmHour
+        dateComponents.minute = self.alarmMinute
+        
+        let currentDate = Date()
+        
+        if let alarmDate = Calendar.current.date(bySettingHour: self.alarmHour, minute: self.alarmMinute, second: 0, of: currentDate) {
+            return alarmDate
+        } else {
+            return nil
+        }
+    }
+    
+    func isRepeatAlarm() -> Bool {
+        return monday || tuesday || wednesday || thursday || friday || saturday || sunday
     }
 }
