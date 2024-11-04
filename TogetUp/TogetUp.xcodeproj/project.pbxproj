@@ -73,6 +73,7 @@
 		F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */; };
 		F95564DC2C86045200028D68 /* DialogTypeChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95564DB2C86045200028D68 /* DialogTypeChoice.swift */; };
 		F9614A4C2A8FAC0A00610784 /* Alarm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9614A4E2A8FAC0A00610784 /* Alarm.storyboard */; };
+		F962F9792CCF98C200A3ECAE /* AppleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */; };
 		F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32632A8A002800BD3BF9 /* AppDelegate.swift */; };
 		F96B32662A8A002800BD3BF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */; };
 		F96B32682A8A002800BD3BF9 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32672A8A002800BD3BF9 /* AlarmListViewController.swift */; };
@@ -221,6 +222,7 @@
 		F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F95564DB2C86045200028D68 /* DialogTypeChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTypeChoice.swift; sourceTree = "<group>"; };
 		F9614A4D2A8FAC0A00610784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Alarm.storyboard; sourceTree = "<group>"; };
+		F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthManager.swift; sourceTree = "<group>"; };
 		F96B32602A8A002800BD3BF9 /* TogetUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TogetUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96B32632A8A002800BD3BF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 				F9A7CC322B8DA36600C73401 /* ThemeManager.swift */,
 				F915EA152BF05E67002B84BC /* AppVersionCheckManager.swift */,
 				95C3ECF72C94223300B3C834 /* RemoteConfigManager.swift */,
+				F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1028,6 +1031,7 @@
 				F98600F62AAF701E00595646 /* AlarmListCollectionViewCell.swift in Sources */,
 				F96B32682A8A002800BD3BF9 /* AlarmListViewController.swift in Sources */,
 				F9DA5D862AC16526008E16A6 /* CapturedImageViewController.swift in Sources */,
+				F962F9792CCF98C200A3ECAE /* AppleAuthManager.swift in Sources */,
 				F98600EE2AAE289200595646 /* ObjectMissionCollectionViewCell.swift in Sources */,
 				F9E6D2DB2ABFCDEE009004D9 /* MissionPerformViewController.swift in Sources */,
 				F97CDC1C2B0B7ACC0057AA82 /* PushAlarmViewModel.swift in Sources */,
