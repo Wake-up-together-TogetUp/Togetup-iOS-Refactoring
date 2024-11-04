@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-enum UserService {
+enum UserAPI {
     case deleteUser
     case deleteAppleUser(code: String)
     case sendFcmToken(fcmToken: String)
@@ -17,7 +17,7 @@ enum UserService {
     case agreePush(agree: Bool)
 }
 
-extension UserService: TargetType {
+extension UserAPI: TargetType {
     var baseURL: URL {
         return URL(string: URLConstant.baseURL)!
     }
