@@ -7,8 +7,6 @@
 
 import UIKit
 import RxSwift
-import KakaoSDKUser
-import AuthenticationServices
 import Then
 import SnapKit
 
@@ -20,9 +18,7 @@ class SettingViewController: UIViewController {
     private let userNameLabel = UILabel().then {
         $0.font = .titleMedium
     }
-    private let loginMethodImageView = UIImageView().then {
-        $0.image = UIImage(named: "Kakao ID mini")
-    }
+    private let loginMethodImageView = UIImageView()
     private let userEmailLabel = UILabel().then {
         $0.font = .labelLarge
     }
@@ -75,18 +71,29 @@ class SettingViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private let viewModel = SettingViewModel()
+    private let viewModel: SettingViewModel
     private let disposeBag = DisposeBag()
     private let realmManger = RealmAlarmDataManager()
     private let personalnfoURL = "https://togetup.notion.site/TogetUp-47ab1dff223e403db68fbf90b8715b17"
     private let termsAndConditionsURL = "https://togetup.notion.site/33a5e6556541426b998423370b63397b"
     
+    init(viewModel: SettingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        self.viewModel = SettingViewModel(userUseCase: DefaultUserUseCase(userRepository: DefaultUserRepository()))
+        super.init(coder: coder)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         setupStackView()
-        configureUserInfo()
         addTargets()
+        bindViewModel()
     }
     
     private func setupStackView() {
@@ -94,15 +101,51 @@ class SettingViewController: UIViewController {
         stackView.addArrangedSubview(withdrawlButton)
     }
     
-    private func configureUserInfo() {
-        let userInfo = KeyChainManager.shared.getUserInformation()
-        userNameLabel.text = userInfo.name
-        userEmailLabel.text = userInfo.email
+    private func bindViewModel() {
+        viewModel.userName
+            .bind(to: userNameLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        if let loginMethod = UserDefaults.standard.string(forKey: "loginMethod"), loginMethod == "Apple" {
-            loginMethodImageView.image = UIImage(named: "Apple ID mini")
-        }
+        viewModel.userEmail
+            .bind(to: userEmailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.loginMethod
+            .map { loginMethod -> UIImage? in
+                switch loginMethod {
+                case .apple:
+                    return UIImage(named: "Apple ID mini")
+                case .kakao:
+                    return UIImage(named: "Kakao ID mini")
+                }
+            }
+            .bind(to: loginMethodImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        viewModel.isLoggedOut
+            .subscribe(onNext: { [weak self] success in
+                if success {
+                    self?.switchView()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.userDeleted
+            .subscribe(onNext: { [weak self] message in
+                print("탈퇴 성공:", message)
+                self?.switchView()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.errorMessage
+            .subscribe(onNext: { [weak self] errorMessage in
+                let alert = UIAlertController(title: "오류", message: errorMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
+    
     
     private func addTargets() {
         personalInfoButton.addTarget(self, action: #selector(moveToPersonalInfoPage), for: .touchUpInside)
@@ -119,14 +162,6 @@ class SettingViewController: UIViewController {
         self.present(vc, animated: true)
     }
     
-    private func setUpUserDefaultsAndNavigate() {
-        KeyChainManager.shared.removeToken()
-        AppStatusManager.shared.markAsLoginedToFalse()
-        self.realmManger.deleteAllDataFromRealm()
-        AlarmScheduleManager.shared.removeAllScheduledNotifications()
-        self.switchView()
-    }
-    
     private func navigate(to url: String) {
         let vc = WebkitViewController()
         vc.urlString = url
@@ -136,17 +171,9 @@ class SettingViewController: UIViewController {
     @objc private func logout(_ sender: Any) {
         let sheet = UIAlertController(title: "로그아웃", message: "로그아웃하시겠습니까?", preferredStyle: .alert)
         sheet.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
-        let okAction = UIAlertAction(title: "로그아웃", style: .destructive) { [weak self] _ in
+        let okAction = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
             if UserDefaults.standard.string(forKey: "loginMethod") == "Kakao" {
-                UserApi.shared.rx.logout()
-                    .subscribe(onCompleted:{
-                        self?.setUpUserDefaultsAndNavigate()
-                    }, onError: { error in
-                        print(error.localizedDescription)
-                    })
-                    .disposed(by: self?.disposeBag ?? DisposeBag())
-            } else {
-                self?.setUpUserDefaultsAndNavigate()
+                self.viewModel.logout()
             }
         }
         sheet.addAction(okAction)
@@ -157,31 +184,7 @@ class SettingViewController: UIViewController {
         let sheet = UIAlertController(title: "회원 탈퇴", message: "탈퇴하시겠습니까?", preferredStyle: .alert)
         sheet.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
         let okAction = UIAlertAction(title: "탈퇴하기", style: .destructive) { _ in
-            if UserDefaults.standard.string(forKey: "loginMethod") == "Kakao" {
-                UserApi.shared.rx.unlink()
-                    .subscribe(onCompleted: { [weak self] in
-                        self?.viewModel.deleteUser()
-                            .subscribe(onNext: { [weak self] response in
-                                if response.httpStatusCode == 200 {
-                                    self?.setUpUserDefaultsAndNavigate()
-                                }
-                            }, onError: { error in
-                                print("Failed to delete user on our server:", error)
-                            }).disposed(by: self?.disposeBag ?? DisposeBag())
-                    }, onError: { error in
-                        print(error.localizedDescription)
-                    })
-                    .disposed(by: self.disposeBag)
-            } else {
-                let provider = ASAuthorizationAppleIDProvider()
-                let request = provider.createRequest()
-                request.requestedScopes = [.fullName, .email]
-                
-                let controller = ASAuthorizationController(authorizationRequests: [request])
-                controller.delegate = self
-                controller.presentationContextProvider = self
-                controller.performRequests()
-            }
+            self.viewModel.deleteUser()
         }
         sheet.addAction(okAction)
         present(sheet, animated: true)
@@ -194,32 +197,6 @@ class SettingViewController: UIViewController {
     
     @objc private func moveTotermsAndConditionsPage(_ sender: UIButton) {
         navigate(to: termsAndConditionsURL)
-    }
-}
-
-extension SettingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-    
-    func authorizationController(controller :ASAuthorizationController ,didCompleteWithError error :Error){
-        print("Sign in with Apple errored:", error.localizedDescription )
-    }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let authorizationCode = appleIDCredential.authorizationCode
-            let authorizationCodeString = String(data: authorizationCode!, encoding:.utf8)
-            viewModel.deleteAppleUser(authorizationCode: authorizationCodeString!)
-                .subscribe(onNext:{ [weak self] response in
-                    if response.httpStatusCode == 200 {
-                        self?.setUpUserDefaultsAndNavigate()
-                    }
-                }, onError:{ error in
-                    print("Failed to delete user on our server:", error)
-                })
-                .disposed(by:disposeBag)
-        }
     }
 }
 
