@@ -190,10 +190,7 @@
 		95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewController.swift; sourceTree = "<group>"; };
 		95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		95C3ECF72C94223300B3C834 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
-		95C90B342C934931002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95C90B362C934948002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		95C90B382C934AE8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		95C90B3A2C934AF8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95C90B3C2C934B05002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95F198B22BFB0A36002BD1B4 /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		95F198B42BFB0A95002BD1B4 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
@@ -429,7 +426,7 @@
 		95C90B242C8F0B35002B48B0 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B342C934931002B48B0 /* .gitkeep */,
+				F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -437,7 +434,7 @@
 		95C90B252C8F0BA3002B48B0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B3A2C934AF8002B48B0 /* .gitkeep */,
+				F962F9702CCDD23400A3ECAE /* User.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -445,7 +442,7 @@
 		95C90B262C8F0BAC002B48B0 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B382C934AE8002B48B0 /* .gitkeep */,
+				F962F97C2CCFAD6200A3ECAE /* Setting */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -531,7 +528,6 @@
 		F915B38C2A8F960000E4696C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
