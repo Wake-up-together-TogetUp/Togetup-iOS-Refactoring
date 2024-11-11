@@ -12,7 +12,7 @@ import RxMoya
 import RxCocoa
 
 class HomeViewModel {
-    private let userProvider = MoyaProvider<UserService>()
+    private let userProvider = MoyaProvider<UserAPI>()
     private var homeProvider = MoyaProvider<AvatarService>()
     private var devProvider = MoyaProvider<DevService>()
     private let alarmProvider = MoyaProvider<AlarmService>()

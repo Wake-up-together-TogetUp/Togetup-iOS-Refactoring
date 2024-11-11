@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -65,7 +65,7 @@
 		F93F3AD62C7C8EA0008D2136 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3AD52C7C8EA0008D2136 /* RxMoya */; };
 		F93F3AD92C7C8F21008D2136 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3AD82C7C8F21008D2136 /* RxKakaoSDKAuth */; };
 		F93F3ADB2C7C8F21008D2136 /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = F93F3ADA2C7C8F21008D2136 /* RxKakaoSDKUser */; };
-		F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D14C2AA4A8C60093F896 /* UserService.swift */; };
+		F945D14D2AA4A8C60093F896 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D14C2AA4A8C60093F896 /* UserAPI.swift */; };
 		F945D14F2AA4AA1E0093F896 /* WithdrawlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */; };
 		F945D1512AA4AAFE0093F896 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D1502AA4AAFE0093F896 /* SettingViewModel.swift */; };
 		F945D1552AA4DE7C0093F896 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F945D1542AA4DE7C0093F896 /* AlarmService.swift */; };
@@ -73,6 +73,8 @@
 		F9523E4F2B5E7FC100B16CCB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */; };
 		F95564DC2C86045200028D68 /* DialogTypeChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95564DB2C86045200028D68 /* DialogTypeChoice.swift */; };
 		F9614A4C2A8FAC0A00610784 /* Alarm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9614A4E2A8FAC0A00610784 /* Alarm.storyboard */; };
+		F962F9712CCDD23400A3ECAE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F962F9702CCDD23400A3ECAE /* User.swift */; };
+		F962F9792CCF98C200A3ECAE /* AppleAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */; };
 		F96B32642A8A002800BD3BF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32632A8A002800BD3BF9 /* AppDelegate.swift */; };
 		F96B32662A8A002800BD3BF9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */; };
 		F96B32682A8A002800BD3BF9 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96B32672A8A002800BD3BF9 /* AlarmListViewController.swift */; };
@@ -178,7 +180,7 @@
 		9576DABD2C20A58D00AB62AA /* InviteScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteScreenViewController.swift; sourceTree = "<group>"; };
 		957D7E8A2C6A0EF100A45BD6 /* GroupAlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		95901F442BC90DD1003DAD74 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
-		959E2BD82C721A8900050912 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		959E2BD82C721A8900050912 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959E2BDA2C722FB700050912 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		95B1C28E2C245CF100A04364 /* GroupCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarModel.swift; sourceTree = "<group>"; };
 		95B1C2902C245FF200A04364 /* GroupCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -189,10 +191,7 @@
 		95B4F3222BB2EEF900AB4952 /* CreateAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmViewController.swift; sourceTree = "<group>"; };
 		95B4F3242BB2F39B00AB4952 /* CreateAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlarmView.swift; sourceTree = "<group>"; };
 		95C3ECF72C94223300B3C834 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
-		95C90B342C934931002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95C90B362C934948002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		95C90B382C934AE8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		95C90B3A2C934AF8002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95C90B3C2C934B05002B48B0 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		95F198B22BFB0A36002BD1B4 /* GroupListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewModel.swift; sourceTree = "<group>"; };
 		95F198B42BFB0A95002BD1B4 /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
@@ -213,7 +212,7 @@
 		F93140652A8FBBFB000FB717 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F93140682A8FBD30000FB717 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		F9387BC52AD569D9000A5121 /* alarmSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarmSound.mp3; sourceTree = "<group>"; };
-		F945D14C2AA4A8C60093F896 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		F945D14C2AA4A8C60093F896 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawlModel.swift; sourceTree = "<group>"; };
 		F945D1502AA4AAFE0093F896 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		F945D1542AA4DE7C0093F896 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
@@ -221,6 +220,8 @@
 		F9523E4E2B5E7FC100B16CCB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F95564DB2C86045200028D68 /* DialogTypeChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTypeChoice.swift; sourceTree = "<group>"; };
 		F9614A4D2A8FAC0A00610784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Alarm.storyboard; sourceTree = "<group>"; };
+		F962F9702CCDD23400A3ECAE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthManager.swift; sourceTree = "<group>"; };
 		F96B32602A8A002800BD3BF9 /* TogetUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TogetUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96B32632A8A002800BD3BF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F96B32652A8A002800BD3BF9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -284,6 +285,11 @@
 		F9EAA56D2B1B0CA80087734E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		F9F52C382C319C6D006BCC10 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F92BDD0D2CC40D2000293D65 /* Repositories */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Repositories; sourceTree = "<group>"; };
+		F962F97C2CCFAD6200A3ECAE /* Setting */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Setting; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F96B325D2A8A002800BD3BF9 /* Frameworks */ = {
@@ -411,6 +417,7 @@
 		95C90B222C8F06E5002B48B0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F92BDD0D2CC40D2000293D65 /* Repositories */,
 				F96B32792A8A022100BD3BF9 /* Network */,
 			);
 			path = Data;
@@ -427,7 +434,7 @@
 		95C90B242C8F0B35002B48B0 /* DTOs */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B342C934931002B48B0 /* .gitkeep */,
+				F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */,
 			);
 			path = DTOs;
 			sourceTree = "<group>";
@@ -435,7 +442,7 @@
 		95C90B252C8F0BA3002B48B0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B3A2C934AF8002B48B0 /* .gitkeep */,
+				F962F9702CCDD23400A3ECAE /* User.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -443,7 +450,7 @@
 		95C90B262C8F0BAC002B48B0 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				95C90B382C934AE8002B48B0 /* .gitkeep */,
+				F962F97C2CCFAD6200A3ECAE /* Setting */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -485,6 +492,7 @@
 			children = (
 				95F198BB2BFB1854002BD1B4 /* GroupAPI.swift */,
 				95164C522C71491000ECF275 /* NotificationAPI.swift */,
+				F945D14C2AA4A8C60093F896 /* UserAPI.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -529,7 +537,6 @@
 		F915B38C2A8F960000E4696C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F945D14E2AA4AA1E0093F896 /* WithdrawlModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -772,6 +779,7 @@
 				F9A7CC322B8DA36600C73401 /* ThemeManager.swift */,
 				F915EA152BF05E67002B84BC /* AppVersionCheckManager.swift */,
 				95C3ECF72C94223300B3C834 /* RemoteConfigManager.swift */,
+				F962F9782CCF98C200A3ECAE /* AppleAuthManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -806,7 +814,6 @@
 			isa = PBXGroup;
 			children = (
 				F99BE8022AA1BBC80005E66F /* LoginService.swift */,
-				F945D14C2AA4A8C60093F896 /* UserService.swift */,
 				F945D1542AA4DE7C0093F896 /* AlarmService.swift */,
 				F98600F12AAEC1A400595646 /* MissionService.swift */,
 				F97CDC212B133CBE0057AA82 /* AvatarService.swift */,
@@ -902,6 +909,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F92BDD0D2CC40D2000293D65 /* Repositories */,
+				F962F97C2CCFAD6200A3ECAE /* Setting */,
 			);
 			name = TogetUp;
 			packageProductDependencies = (
@@ -1011,7 +1022,7 @@
 				F99D0E992BB84B8100437025 /* ContentViewController.swift in Sources */,
 				F95564DC2C86045200028D68 /* DialogTypeChoice.swift in Sources */,
 				F96B32962A8CBA5500BD3BF9 /* LoginViewController.swift in Sources */,
-				F945D14D2AA4A8C60093F896 /* UserService.swift in Sources */,
+				F945D14D2AA4A8C60093F896 /* UserAPI.swift in Sources */,
 				9576DAC82C20A58D00AB62AA /* GroupListCollectionViewCell.swift in Sources */,
 				95B1C2912C245FF200A04364 /* GroupCalendarViewModel.swift in Sources */,
 				F98600FE2AB0B07E00595646 /* Alarm.swift in Sources */,
@@ -1028,10 +1039,12 @@
 				F98600F62AAF701E00595646 /* AlarmListCollectionViewCell.swift in Sources */,
 				F96B32682A8A002800BD3BF9 /* AlarmListViewController.swift in Sources */,
 				F9DA5D862AC16526008E16A6 /* CapturedImageViewController.swift in Sources */,
+				F962F9792CCF98C200A3ECAE /* AppleAuthManager.swift in Sources */,
 				F98600EE2AAE289200595646 /* ObjectMissionCollectionViewCell.swift in Sources */,
 				F9E6D2DB2ABFCDEE009004D9 /* MissionPerformViewController.swift in Sources */,
 				F97CDC1C2B0B7ACC0057AA82 /* PushAlarmViewModel.swift in Sources */,
 				9576DAC52C20A58D00AB62AA /* CreateAlarmViewController.swift in Sources */,
+				F962F9712CCDD23400A3ECAE /* User.swift in Sources */,
 				F97CDC192B0B79370057AA82 /* PushAlarmModel.swift in Sources */,
 				F99BE7FE2AA0E2440005E66F /* URLConstant.swift in Sources */,
 				F93140642A8FBB43000FB717 /* HomeViewController.swift in Sources */,
